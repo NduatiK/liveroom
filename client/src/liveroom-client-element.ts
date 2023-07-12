@@ -1,7 +1,13 @@
 import { html, css, LitElement, PropertyValueMap } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
+import { customElement, property, queryAsync, state } from "lit/decorators.js";
 import { LiveState, connectElement } from "phx-live-state";
-import { Room } from "livekit-client";
+import {
+  RemoteParticipant,
+  RemoteTrackPublication,
+  Room,
+  RoomEvent,
+  Track,
+} from "livekit-client";
 
 @customElement("liveroom-client-element")
 export class LiveroomClientElement extends LitElement {
@@ -24,6 +30,11 @@ export class LiveroomClientElement extends LitElement {
   livekit_ws_url?: string;
   @state()
   livekit_token?: string;
+
+  @queryAsync("video#local-video")
+  _localVideoEl!: Promise<HTMLVideoElement>;
+  @queryAsync("video#admin-video")
+  _adminVideoEl!: Promise<HTMLVideoElement>;
 
   render() {
     return html`
@@ -61,26 +72,32 @@ export class LiveroomClientElement extends LitElement {
 
       <div class="banner" style="--color: ${this.me?.color}">
         <div class="pills">
-          <div class="current_user">
-            <span class="colorpoint"></span>
-            <p class="name">${this.me?.name}</p>
+          <video id="local-video"></video>
+
+          <div class="infos">
+            <div class="current_user">
+              <span class="colorpoint"></span>
+              <p class="name">${this.me?.name}</p>
+            </div>
+
+            <div class="other_users">
+              <span>${Object.values(this.users).length}</span>
+              <svg
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-5.5-2.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM10 12a5.99 5.99 0 00-4.793 2.39A6.483 6.483 0 0010 16.5a6.483 6.483 0 004.793-2.11A5.99 5.99 0 0010 12z"
+                />
+              </svg>
+            </div>
           </div>
 
-          <div class="other_users">
-            <span>${Object.values(this.users).length}</span>
-            <svg
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-5.5-2.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM10 12a5.99 5.99 0 00-4.793 2.39A6.483 6.483 0 0010 16.5a6.483 6.483 0 004.793-2.11A5.99 5.99 0 0010 12z"
-              />
-            </svg>
-          </div>
+          <video id="admin-video"></video>
         </div>
       </div>
     `;
@@ -134,10 +151,10 @@ export class LiveroomClientElement extends LitElement {
     window.removeEventListener("mousemove", this._throttledDispatchMouseMove);
 
     // Disconnect LiveState
-    this.liveState && this.liveState.disconnect();
+    this.liveState?.disconnect();
 
     // Disconnect LiveKit
-    this.livekitRoom && this.livekitRoom.disconnect();
+    this.livekitRoom?.disconnect();
 
     super.disconnectedCallback();
   }
@@ -239,23 +256,78 @@ export class LiveroomClientElement extends LitElement {
   }
 
   async _setupLiveKit() {
-    this.livekitRoom = new Room({ dynacast: true });
+    this.livekitRoom = new Room({ dynacast: true }).on(
+      RoomEvent.TrackSubscribed,
+      async (
+        track: Track,
+        publication: RemoteTrackPublication,
+        participant: RemoteParticipant
+      ) => {
+        console.log(
+          "[LiveKit] Track Subscribed",
+          track,
+          publication,
+          participant
+        );
+
+        console.table({
+          identity: participant.identity,
+          source: publication.source,
+        });
+
+        switch (publication.source) {
+          case Track.Source.Camera: {
+            // FIXME: check that user is an admin
+            const admin_video_el = await this._adminVideoEl;
+            if (admin_video_el) {
+              console.log(
+                `[LiveKit] Attaching admin user camera (identity ${participant.identity})`
+              );
+              track.attach(admin_video_el);
+            }
+            break;
+          }
+          // TODO: handle microphone / audio
+        }
+      }
+    );
 
     if (!this.livekit_ws_url) throw new Error("LiveKit websocket URL not set");
     if (!this.livekit_token) throw new Error("LiveKit token not set");
 
-    await this.livekitRoom.connect(this.livekit_ws_url, this.livekit_token);
+    await this.livekitRoom.connect(this.livekit_ws_url, this.livekit_token, {
+      autoSubscribe: true,
+    });
 
     console.log("[LiveKit] Connected to room", this.livekitRoom.name);
 
-    await this.livekitRoom.localParticipant.setScreenShareEnabled(true, {
-      audio: false,
-      selfBrowserSurface: "include",
-      surfaceSwitching: "exclude",
-      systemAudio: "exclude",
-    });
+    await Promise.all([
+      this.livekitRoom.localParticipant
+        .enableCameraAndMicrophone()
+        .then(() => console.log("[LiveKit] Local camera & mic enabled"))
+        .then(async () => {
+          const local_video_el = await this._localVideoEl;
 
-    console.log("[LiveKit] Screen shared");
+          const local_video_tracks =
+            this.livekitRoom?.localParticipant?.videoTracks?.values();
+          const local_video_track =
+            local_video_tracks && Array.from(local_video_tracks)[0]?.track;
+
+          if (local_video_el && local_video_track) {
+            console.log("[LiveKit] Attaching local user camera");
+            local_video_track.attach(local_video_el);
+          }
+        }),
+
+      this.livekitRoom.localParticipant
+        .setScreenShareEnabled(true, {
+          audio: false,
+          selfBrowserSurface: "include",
+          surfaceSwitching: "exclude",
+          systemAudio: "exclude",
+        })
+        .then(() => console.log("[LiveKit] Local screen share enabled")),
+    ]);
   }
 
   static styles = css`
@@ -342,12 +414,21 @@ export class LiveroomClientElement extends LitElement {
       justify-content: between;
       align-items: center;
       gap: 36px;
-      padding: 3px 8px;
+      padding: 1px 5px;
       background-color: white;
       border-radius: 9999px;
       -webkit-user-select: none;
       -moz-user-select: none;
       user-select: none;
+    }
+
+    .banner .pills .infos {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 0;
     }
 
     .banner .pills .current_user {
@@ -365,7 +446,7 @@ export class LiveroomClientElement extends LitElement {
     }
     .banner .pills .current_user .name {
       margin: 0;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: bold;
       color: black;
     }
@@ -378,12 +459,25 @@ export class LiveroomClientElement extends LitElement {
       color: gray;
     }
     .banner .pills .other_users span {
-      font-size: 14px;
+      font-size: 12px;
       font-weight: bold;
     }
     .banner .pills .other_users svg {
-      width: 18px;
+      width: 16px;
       opacity: 0.8;
+    }
+
+    .banner .pills #local-video {
+      width: 75px;
+      aspect-ratio: 16 / 9;
+      border-radius: 9999px;
+      background-color: lightgrey;
+    }
+    .banner .pills #admin-video {
+      width: 75px;
+      aspect-ratio: 16 / 9;
+      border-radius: 9999px;
+      background-color: lightgrey;
     }
   `;
 }

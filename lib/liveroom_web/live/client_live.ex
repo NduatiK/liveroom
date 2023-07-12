@@ -45,6 +45,7 @@ defmodule LiveroomWeb.ClientLive do
       </div>
 
       <UserBanner.render
+        user_id={@_liveroom_user_id}
         name={@_liveroom_users[@_liveroom_user_id][:name]}
         color={@_liveroom_users[@_liveroom_user_id][:color]}
       />
