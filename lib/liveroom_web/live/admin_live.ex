@@ -68,7 +68,7 @@ defmodule LiveroomWeb.AdminLive do
             {view_width, view_height}
 
           false ->
-            view_height = 0.7 * assigns.inner_height
+            view_height = 0.6 * assigns.inner_height
             view_width = view_height * ratio
             {view_width, view_height}
         end
