@@ -179,8 +179,6 @@ defmodule LiveroomWeb.AdminLive do
           <div :if={@users[@card_user_id].type == :client} class="flex flex-col items-center p-4">
             <%!-- TODO: listen to mouse click only inside the container in TrackCursorHook --%>
             <%!-- TODO: same for keyboard press? --%>
-            <%!-- TODO: Use only 1 instance of LiveKit Screensharing Hook
-                  and attach each tracks to each Presence Card video element --%>
             <div
               id={"cursors_playground_#{@card_user_id}"}
               phx-hook="TrackCursorsHook"
