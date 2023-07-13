@@ -126,10 +126,12 @@ The HTML Custom Element allows Liveroom to be plug-and-play on any SaaS product 
 ## Setup
 
 1. install dependencies: `mix deps.get && npm install --prefix client`
-2. start the database: `docker-compose up -d db`
-3. setup the database: `mix setup`
-4. start the main app: `iex -S mix phx.server`
-5. start the client app: `npm run dev --prefix client`
+2. install the livekit local server: https://docs.livekit.io/getting-started/server-setup/#running-locally
+3. start the livekit local server: `livekit-server --dev`
+4. start the database: `docker-compose up -d db`
+5. setup the database: `mix setup`
+6. start the main app: `iex -S mix phx.server`
+7. start the client app: `npm run dev --prefix client`
 
 Now you can visit from your browser:
 
