@@ -22,6 +22,9 @@ processes = []
   # DISCORD_WEBHOOK_URL_APP_LOGS set as secret
   # ADMIN_BASIC_AUTH_USERNAME set as secret
   # ADMIN_BASIC_AUTH_PASSWORD set as secret
+  # LIVEKIT_WS_URL set as secret
+  # LIVEKIT_API_KEY set as secret
+  # LIVEKIT_API_SECRET set as secret
 
 [experimental]
   auto_rollback = true
