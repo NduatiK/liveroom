@@ -100,6 +100,13 @@
         </div>
       </div>
     `}connectedCallback(){super.connectedCallback();const s=new zs({url:this.url,topic:`liveroom-livestate:${this.room_id}`,params:{room_id:this.room_id,current_url:window.origin,inner_width:window.innerWidth,inner_height:window.innerHeight}});Bs(s,this,{properties:["room_id","me","users"],events:{send:["mouse_move","mouse_down","mouse_up","key_down","key_up","window_resize"],receive:[]}}),this.liveState=s,window.addEventListener("mousemove",this._throttledDispatchMouseMove),window.addEventListener("mousedown",this._dispatchMouseDown.bind(this)),window.addEventListener("mouseup",this._dispatchMouseUp.bind(this)),window.addEventListener("keydown",this._dispatchKeyDown.bind(this)),window.addEventListener("keyup",this._dispatchKeyUp.bind(this)),window.addEventListener("resize",this._dispatchWindowResize.bind(this))}disconnectedCallback(){window.removeEventListener("resize",this._dispatchWindowResize.bind(this)),window.removeEventListener("keyup",this._dispatchKeyUp.bind(this)),window.removeEventListener("keydown",this._dispatchKeyDown.bind(this)),window.removeEventListener("mouseup",this._dispatchMouseUp.bind(this)),window.removeEventListener("mousedown",this._dispatchMouseDown.bind(this)),window.removeEventListener("mousemove",this._throttledDispatchMouseMove),this.liveState&&this.liveState.disconnect(),super.disconnectedCallback()}_dispatchMouseMove(s){this.me&&this.dispatchEvent(new CustomEvent("mouse_move",{detail:{user_id:this.me.id,x:Number(s.pageX/window.innerWidth*100).toFixed(2),y:Number(s.pageY/window.innerHeight*100).toFixed(2)}}))}_dispatchMouseDown(s){this.me&&this.dispatchEvent(new CustomEvent("mouse_down",{detail:{user_id:this.me.id}}))}_dispatchMouseUp(s){this.me&&this.dispatchEvent(new CustomEvent("mouse_up",{detail:{user_id:this.me.id}}))}_dispatchKeyDown(s){!s.repeat&&fe.includes(s.key)&&this.me&&this.dispatchEvent(new CustomEvent("key_down",{detail:{key:s.key,user_id:this.me.id}}))}_dispatchKeyUp(s){fe.includes(s.key)&&this.me&&this.dispatchEvent(new CustomEvent("key_up",{detail:{key:s.key,user_id:this.me.id}}))}_dispatchWindowResize(s){this.me&&this.dispatchEvent(new CustomEvent("window_resize",{detail:{inner_width:window.innerWidth,inner_height:window.innerHeight,user_id:this.me.id}}))}},k.LiveroomClientElement.styles=ke`
+    #users-container {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
     .user {
       z-index: 1000;
       position: absolute;
@@ -179,6 +186,9 @@
       padding: 3px 8px;
       background-color: white;
       border-radius: 9999px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
     }
 
     .banner .pills .current_user {

@@ -270,7 +270,7 @@ var Tt;
 const vt = window, q = vt.trustedTypes, ie = q ? q.createPolicy("lit-html", { createHTML: (n) => n }) : void 0, Nt = "$lit$", I = `lit$${(Math.random() + "").slice(9)}$`, me = "?" + I, ns = `<${me}>`, z = document, nt = () => z.createComment(""), it = (n) => n === null || typeof n != "object" && typeof n != "function", _e = Array.isArray, is = (n) => _e(n) || typeof (n == null ? void 0 : n[Symbol.iterator]) == "function", kt = `[ 	
 \f\r]`, Y = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, re = /-->/g, oe = />/g, V = RegExp(`>|${kt}(?:([^\\s"'>=/]+)(${kt}*=${kt}*(?:[^ 	
 \f\r"'\`<>=]|("|')|))|$)`, "g"), ae = /'/g, he = /"/g, we = /^(?:script|style|textarea|title)$/i, rs = (n) => (s, ...t) => ({ _$litType$: n, strings: s, values: t }), le = rs(1), X = Symbol.for("lit-noChange"), S = Symbol.for("lit-nothing"), ce = /* @__PURE__ */ new WeakMap(), J = z.createTreeWalker(z, 129, null, !1);
-function Ae(n, s) {
+function be(n, s) {
   if (!Array.isArray(n) || !n.hasOwnProperty("raw"))
     throw Error("invalid template strings array");
   return ie !== void 0 ? ie.createHTML(s) : s;
@@ -286,7 +286,7 @@ const os = (n, s) => {
     const O = o === V && n[l + 1].startsWith("/>") ? " " : "";
     r += o === Y ? u + ns : w >= 0 ? (e.push(d), u.slice(0, w) + Nt + u.slice(w) + I + O) : u + I + (w === -2 ? (e.push(void 0), l) : O);
   }
-  return [Ae(n, r + (n[t] || "<?>") + (s === 2 ? "</svg>" : "")), e];
+  return [be(n, r + (n[t] || "<?>") + (s === 2 ? "</svg>" : "")), e];
 };
 class rt {
   constructor({ strings: s, _$litType$: t }, e) {
@@ -411,7 +411,7 @@ class at {
   }
   g(s) {
     var t;
-    const { values: e, _$litType$: i } = s, r = typeof i == "number" ? this._$AC(s) : (i.el === void 0 && (i.el = rt.createElement(Ae(i.h, i.h[0]), this.options)), i);
+    const { values: e, _$litType$: i } = s, r = typeof i == "number" ? this._$AC(s) : (i.el === void 0 && (i.el = rt.createElement(be(i.h, i.h[0]), this.options)), i);
     if (((t = this._$AH) === null || t === void 0 ? void 0 : t._$AD) === r)
       this._$AH.v(e);
     else {
@@ -594,7 +594,7 @@ function It(n) {
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-function Ee(n) {
+function Ae(n) {
   return It({ ...n, state: !0 });
 }
 /**
@@ -629,30 +629,30 @@ class N {
     this.path = s;
   }
 }
-const _s = /~1/g, ws = /~0/g, As = /~/g, Es = /\//g;
-function bs(n) {
+const _s = /~1/g, ws = /~0/g, bs = /~/g, As = /\//g;
+function Es(n) {
   return n.indexOf("~") === -1 ? n : n.replace(_s, "/").replace(ws, "~");
 }
 function $s(n) {
-  return n.indexOf("/") === -1 && n.indexOf("~") === -1 ? n : n.replace(As, "~0").replace(Es, "~1");
+  return n.indexOf("/") === -1 && n.indexOf("~") === -1 ? n : n.replace(bs, "~0").replace(As, "~1");
 }
 function Cs(n) {
-  return n ? n.slice(1).split("/").map(bs) : [];
+  return n ? n.slice(1).split("/").map(Es) : [];
 }
 function $(n) {
   return Ts(n) ? "" : "/" + n.map((s) => $s(String(s))).join("/");
 }
-const A = (n) => typeof n == "string" ? Cs(n) : n, Ts = (n) => !n.length, ks = Object.prototype.hasOwnProperty;
+const b = (n) => typeof n == "string" ? Cs(n) : n, Ts = (n) => !n.length, ks = Object.prototype.hasOwnProperty;
 function xs(n, s) {
   return ks.call(n, s);
 }
-const { isArray: be } = Array, C = (n, s) => {
+const { isArray: Ee } = Array, C = (n, s) => {
   const t = s.length;
   if (!t)
     return { val: n };
   let e, i;
   for (let o = 0; o < t; o++)
-    if (e = n, i = s[o], be(e)) {
+    if (e = n, i = s[o], Ee(e)) {
       const l = e.length;
       if (i === "-")
         i = l;
@@ -669,7 +669,7 @@ const { isArray: be } = Array, C = (n, s) => {
     else
       throw new Error("NOT_FOUND");
   return { val: n, obj: e, key: i };
-}, ht = (n) => be(n.obj) && typeof n.key == "number", _t = (n) => typeof n.obj == "object" && typeof n.key == "string";
+}, ht = (n) => Ee(n.obj) && typeof n.key == "number", _t = (n) => typeof n.obj == "object" && typeof n.key == "string";
 class Vt extends N {
   constructor(t, e) {
     super(t);
@@ -797,7 +797,7 @@ class Os extends N {
     return 4;
   }
   apply(t) {
-    const e = new $e(A(this.from), void 0).apply(t);
+    const e = new $e(b(this.from), void 0).apply(t);
     return new Vt(this.path, e.old).apply(e.doc);
   }
   toJson(t) {
@@ -1800,73 +1800,73 @@ class an extends M {
 const hn = (n, s) => {
   switch (n.op) {
     case "add":
-      return new Vt(A(n.path), n.value);
+      return new Vt(b(n.path), n.value);
     case "remove":
-      return new $e(A(n.path), n.oldValue);
+      return new $e(b(n.path), n.oldValue);
     case "replace":
-      return new Ss(A(n.path), n.value, n.oldValue);
+      return new Ss(b(n.path), n.value, n.oldValue);
     case "move":
-      return new Os(A(n.path), A(n.from));
+      return new Os(b(n.path), b(n.from));
     case "copy":
-      return new js(A(n.path), A(n.from));
+      return new js(b(n.path), b(n.from));
     case "flip":
-      return new Rs(A(n.path));
+      return new Rs(b(n.path));
     case "inc":
-      return new Ns(A(n.path), n.inc);
+      return new Ns(b(n.path), n.inc);
     case "str_ins":
-      return new Ps(A(n.path), n.pos, n.str);
+      return new Ps(b(n.path), n.pos, n.str);
     case "str_del":
-      return new Hs(A(n.path), n.pos, n.str, n.len);
+      return new Hs(b(n.path), n.pos, n.str, n.len);
     case "split":
-      return new Ds(A(n.path), n.pos, n.props || null);
+      return new Ds(b(n.path), n.pos, n.props || null);
     case "merge":
-      return new Is(A(n.path), n.pos, n.props || null);
+      return new Is(b(n.path), n.pos, n.props || null);
     case "extend":
-      return new Js(A(n.path), n.props, !!n.deleteNull);
+      return new Js(b(n.path), n.props, !!n.deleteNull);
     default:
       return dt(n, s);
   }
 }, dt = (n, s) => {
   switch (n.op) {
     case "test":
-      return new Ms(A(n.path), n.value, !!n.not);
+      return new Ms(b(n.path), n.value, !!n.not);
     case "defined":
-      return new zs(A(n.path));
+      return new zs(b(n.path));
     case "undefined":
-      return new Bs(A(n.path));
+      return new Bs(b(n.path));
     case "type":
-      return new an(A(n.path), n.value);
+      return new an(b(n.path), n.value);
     case "test_type":
-      return new Gs(A(n.path), n.type);
+      return new Gs(b(n.path), n.type);
     case "test_string":
-      return new Fs(A(n.path), n.pos, n.str, !!n.not);
+      return new Fs(b(n.path), n.pos, n.str, !!n.not);
     case "test_string_len":
-      return new qs(A(n.path), n.len, !!n.not);
+      return new qs(b(n.path), n.len, !!n.not);
     case "contains":
-      return new Xs(A(n.path), n.value, !!n.ignore_case);
+      return new Xs(b(n.path), n.value, !!n.ignore_case);
     case "ends":
-      return new Ks(A(n.path), n.value, !!n.ignore_case);
+      return new Ks(b(n.path), n.value, !!n.ignore_case);
     case "starts":
-      return new Zs(A(n.path), n.value, !!n.ignore_case);
+      return new Zs(b(n.path), n.value, !!n.ignore_case);
     case "matches":
-      return new rn(A(n.path), n.value, !!n.ignore_case, s.createMatcher || Us);
+      return new rn(b(n.path), n.value, !!n.ignore_case, s.createMatcher || Us);
     case "in":
-      return new Ys(A(n.path), n.value);
+      return new Ys(b(n.path), n.value);
     case "less":
-      return new Qs(A(n.path), n.value);
+      return new Qs(b(n.path), n.value);
     case "more":
-      return new tn(A(n.path), n.value);
+      return new tn(b(n.path), n.value);
     case "and": {
-      const t = A(n.path);
-      return new en(t, n.apply.map((e) => dt({ ...e, path: [...t, ...A(e.path)] }, s)));
+      const t = b(n.path);
+      return new en(t, n.apply.map((e) => dt({ ...e, path: [...t, ...b(e.path)] }, s)));
     }
     case "or": {
-      const t = A(n.path);
-      return new sn(t, n.apply.map((e) => dt({ ...e, path: [...t, ...A(e.path)] }, s)));
+      const t = b(n.path);
+      return new sn(t, n.apply.map((e) => dt({ ...e, path: [...t, ...b(e.path)] }, s)));
     }
     case "not": {
-      const t = A(n.path);
-      return new nn(t, n.apply.map((e) => dt({ ...e, path: [...t, ...A(e.path)] }, s)));
+      const t = b(n.path);
+      return new nn(t, n.apply.map((e) => dt({ ...e, path: [...t, ...b(e.path)] }, s)));
     }
     default:
       throw new Error("OP_UNKNOWN");
@@ -2511,7 +2511,7 @@ class yn {
 }
 const mn = (n, s, { properties: t, attributes: e, events: i }) => {
   var r, o;
-  s.liveState !== n && (n.connect(), t == null || t.forEach((l) => _n(n, s, l)), e == null || e.forEach((l) => wn(n, s, l)), (r = i == null ? void 0 : i.send) == null || r.forEach((l) => En(n, s, l)), (o = i == null ? void 0 : i.receive) == null || o.forEach((l) => An(n, s, l)), s.liveState = n);
+  s.liveState !== n && (n.connect(), t == null || t.forEach((l) => _n(n, s, l)), e == null || e.forEach((l) => wn(n, s, l)), (r = i == null ? void 0 : i.send) == null || r.forEach((l) => An(n, s, l)), (o = i == null ? void 0 : i.receive) == null || o.forEach((l) => bn(n, s, l)), s.liveState = n);
 }, _n = (n, s, t) => {
   n.addEventListener("livestate-change", ({ detail: { state: e } }) => {
     s[t] = e[t];
@@ -2520,11 +2520,11 @@ const mn = (n, s, { properties: t, attributes: e, events: i }) => {
   n.addEventListener("livestate-change", ({ detail: { state: e } }) => {
     s.setAttribute(t, e[t]);
   });
-}, An = (n, s, t) => {
+}, bn = (n, s, t) => {
   n.addEventListener(t, ({ detail: e }) => {
     s.dispatchEvent(new CustomEvent(t, { detail: e }));
   });
-}, En = (n, s, t) => {
+}, An = (n, s, t) => {
   s.addEventListener(t, (e) => {
     const { detail: i } = e;
     n.dispatchEvent(new CustomEvent(t, { detail: i }));
@@ -2560,11 +2560,11 @@ var fe;
     var t = Object.prototype.hasOwnProperty, e = typeof Symbol == "function", i = e && typeof Symbol.toPrimitive < "u" ? Symbol.toPrimitive : "@@toPrimitive", r = e && typeof Symbol.iterator < "u" ? Symbol.iterator : "@@iterator", o = typeof Object.create == "function", l = { __proto__: [] } instanceof Array, u = !o && !l, d = {
       // create an object in dictionary mode (a.k.a. "slow" mode in v8)
       create: o ? function() {
-        return bt(/* @__PURE__ */ Object.create(null));
+        return Et(/* @__PURE__ */ Object.create(null));
       } : l ? function() {
-        return bt({ __proto__: null });
+        return Et({ __proto__: null });
       } : function() {
-        return bt({});
+        return Et({});
       },
       has: u ? function(a, h) {
         return t.call(a, h);
@@ -2621,7 +2621,7 @@ var fe;
     function Oe(a, h, c) {
       if (!x(h))
         throw new TypeError();
-      return k(c) || (c = L(c)), At(a, h, c);
+      return k(c) || (c = L(c)), bt(a, h, c);
     }
     s("hasOwnMetadata", Oe);
     function je(a, h, c) {
@@ -2704,13 +2704,13 @@ var fe;
       return f;
     }
     function zt(a, h, c) {
-      var p = At(a, h, c);
+      var p = bt(a, h, c);
       if (p)
         return !0;
-      var f = Et(h);
+      var f = At(h);
       return W(f) ? !1 : zt(a, f, c);
     }
-    function At(a, h, c) {
+    function bt(a, h, c) {
       var p = Z(
         h,
         c,
@@ -2720,10 +2720,10 @@ var fe;
       return k(p) ? !1 : Ve(p.has(a));
     }
     function Bt(a, h, c) {
-      var p = At(a, h, c);
+      var p = bt(a, h, c);
       if (p)
         return Wt(a, h, c);
-      var f = Et(h);
+      var f = At(h);
       if (!W(f))
         return Bt(a, f, c);
     }
@@ -2747,7 +2747,7 @@ var fe;
       f.set(a, h);
     }
     function Ft(a, h) {
-      var c = qt(a, h), p = Et(a);
+      var c = qt(a, h), p = At(a);
       if (p === null)
         return c;
       var f = Ft(p, h);
@@ -2756,12 +2756,12 @@ var fe;
       if (c.length <= 0)
         return f;
       for (var j = new O(), y = [], m = 0, v = c; m < v.length; m++) {
-        var E = v[m], b = j.has(E);
-        b || (j.add(E), y.push(E));
+        var A = v[m], E = j.has(A);
+        E || (j.add(A), y.push(A));
       }
       for (var D = 0, Qt = f; D < Qt.length; D++) {
-        var E = Qt[D], b = j.has(E);
-        b || (j.add(E), y.push(E));
+        var A = Qt[D], E = j.has(A);
+        E || (j.add(A), y.push(A));
       }
       return y;
     }
@@ -2781,11 +2781,11 @@ var fe;
         var v = We(m);
         try {
           c[y] = v;
-        } catch (E) {
+        } catch (A) {
           try {
             Fe(j);
           } finally {
-            throw E;
+            throw A;
           }
         }
         y++;
@@ -2938,7 +2938,7 @@ var fe;
       var h = a.return;
       h && h.call(a);
     }
-    function Et(a) {
+    function At(a) {
       var h = Object.getPrototypeOf(a);
       if (typeof a != "function" || a === _ || h !== _)
         return h;
@@ -2952,8 +2952,8 @@ var fe;
       var a = {}, h = [], c = (
         /** @class */
         function() {
-          function y(m, v, E) {
-            this._index = 0, this._keys = m, this._values = v, this._selector = E;
+          function y(m, v, A) {
+            this._index = 0, this._keys = m, this._values = v, this._selector = A;
           }
           return y.prototype["@@iterator"] = function() {
             return this;
@@ -2999,12 +2999,12 @@ var fe;
             );
             return v >= 0 ? this._values[v] : void 0;
           }, y.prototype.set = function(m, v) {
-            var E = this._find(
+            var A = this._find(
               m,
               /*insert*/
               !0
             );
-            return this._values[E] = v, this;
+            return this._values[A] = v, this;
           }, y.prototype.delete = function(m) {
             var v = this._find(
               m,
@@ -3012,8 +3012,8 @@ var fe;
               !1
             );
             if (v >= 0) {
-              for (var E = this._keys.length, b = v + 1; b < E; b++)
-                this._keys[b - 1] = this._keys[b], this._values[b - 1] = this._values[b];
+              for (var A = this._keys.length, E = v + 1; E < A; E++)
+                this._keys[E - 1] = this._keys[E], this._values[E - 1] = this._values[E];
               return this._keys.length--, this._values.length--, m === this._cacheKey && (this._cacheKey = a, this._cacheIndex = -2), !0;
             }
             return !1;
@@ -3087,34 +3087,34 @@ var fe;
           function v() {
             this._key = p();
           }
-          return v.prototype.has = function(E) {
-            var b = f(
-              E,
+          return v.prototype.has = function(A) {
+            var E = f(
+              A,
               /*create*/
               !1
             );
-            return b !== void 0 ? d.has(b, this._key) : !1;
-          }, v.prototype.get = function(E) {
-            var b = f(
-              E,
+            return E !== void 0 ? d.has(E, this._key) : !1;
+          }, v.prototype.get = function(A) {
+            var E = f(
+              A,
               /*create*/
               !1
             );
-            return b !== void 0 ? d.get(b, this._key) : void 0;
-          }, v.prototype.set = function(E, b) {
+            return E !== void 0 ? d.get(E, this._key) : void 0;
+          }, v.prototype.set = function(A, E) {
             var D = f(
-              E,
+              A,
               /*create*/
               !0
             );
-            return D[this._key] = b, this;
-          }, v.prototype.delete = function(E) {
-            var b = f(
-              E,
+            return D[this._key] = E, this;
+          }, v.prototype.delete = function(A) {
+            var E = f(
+              A,
               /*create*/
               !1
             );
-            return b !== void 0 ? delete b[this._key] : !1;
+            return E !== void 0 ? delete E[this._key] : !1;
           }, v.prototype.clear = function() {
             this._key = p();
           }, v;
@@ -3127,17 +3127,17 @@ var fe;
         while (d.has(h, v));
         return h[v] = !0, v;
       }
-      function f(v, E) {
+      function f(v, A) {
         if (!t.call(v, c)) {
-          if (!E)
+          if (!A)
             return;
           Object.defineProperty(v, c, { value: d.create() });
         }
         return v[c];
       }
-      function j(v, E) {
-        for (var b = 0; b < E; ++b)
-          v[b] = Math.random() * 255 | 0;
+      function j(v, A) {
+        for (var E = 0; E < A; ++E)
+          v[E] = Math.random() * 255 | 0;
         return v;
       }
       function y(v) {
@@ -3146,22 +3146,22 @@ var fe;
       function m() {
         var v = y(a);
         v[6] = v[6] & 79 | 64, v[8] = v[8] & 191 | 128;
-        for (var E = "", b = 0; b < a; ++b) {
-          var D = v[b];
-          (b === 4 || b === 6 || b === 8) && (E += "-"), D < 16 && (E += "0"), E += D.toString(16).toLowerCase();
+        for (var A = "", E = 0; E < a; ++E) {
+          var D = v[E];
+          (E === 4 || E === 6 || E === 8) && (A += "-"), D < 16 && (A += "0"), A += D.toString(16).toLowerCase();
         }
-        return E;
+        return A;
       }
     }
-    function bt(a) {
+    function Et(a) {
       return a.__ = void 0, delete a.__, a;
     }
   });
 })(fe || (fe = {}));
-var bn = Object.defineProperty, $n = Object.getOwnPropertyDescriptor, lt = (n, s, t, e) => {
+var En = Object.defineProperty, $n = Object.getOwnPropertyDescriptor, lt = (n, s, t, e) => {
   for (var i = e > 1 ? void 0 : e ? $n(s, t) : s, r = n.length - 1, o; r >= 0; r--)
     (o = n[r]) && (i = (e ? o(s, t, i) : o(i)) || i);
-  return e && i && bn(s, t, i), i;
+  return e && i && En(s, t, i), i;
 };
 let B = class extends tt {
   constructor() {
@@ -3330,6 +3330,13 @@ let B = class extends tt {
   }
 };
 B.styles = ts`
+    #users-container {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
     .user {
       z-index: 1000;
       position: absolute;
@@ -3409,6 +3416,9 @@ B.styles = ts`
       padding: 3px 8px;
       background-color: white;
       border-radius: 9999px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
     }
 
     .banner .pills .current_user {
@@ -3454,10 +3464,10 @@ lt([
   It({ attribute: "room_id" })
 ], B.prototype, "room_id", 2);
 lt([
-  Ee()
+  Ae()
 ], B.prototype, "me", 2);
 lt([
-  Ee()
+  Ae()
 ], B.prototype, "users", 2);
 B = lt([
   fs("liveroom-client-element")
