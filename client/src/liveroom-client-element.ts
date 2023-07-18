@@ -215,6 +215,13 @@ export class LiveroomClientElement extends LitElement {
   }
 
   static styles = css`
+    #users-container {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
     .user {
       z-index: 1000;
       position: absolute;
