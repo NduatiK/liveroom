@@ -294,6 +294,9 @@ export class LiveroomClientElement extends LitElement {
       padding: 3px 8px;
       background-color: white;
       border-radius: 9999px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
     }
 
     .banner .pills .current_user {
