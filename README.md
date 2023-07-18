@@ -125,7 +125,13 @@ The HTML Custom Element allows Liveroom to be plug-and-play on any SaaS product 
 
 ## Setup
 
-1. install dependencies: `mix setup`
-2. start app: `iex -S mix phx.server`
+1. install dependencies: `mix deps.get && npm install --prefix client`
+2. start the database: `docker-compose up -d db`
+3. setup the database: `mix setup`
+4. start the main app: `iex -S mix phx.server`
+5. start the client app: `npm run dev --prefix client`
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Now you can visit from your browser:
+
+- the admin interface on [`localhost:4000/room/public/admin`](http://localhost:4000/room/public/admin)
+- the client interface on [`localhost:5173`](http://localhost:5173)
