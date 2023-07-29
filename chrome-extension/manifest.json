@@ -1,0 +1,41 @@
+{
+    "name": "Liveroom",
+    "description": "Real-time collaboration with live cursors over Google Meet screensharing",
+    "version": "0.0.1",
+    "manifest_version": 3,
+    "icons": {
+        "16": "src/assets/icons/get_started16.png",
+        "32": "src/assets/icons/get_started32.png",
+        "48": "src/assets/icons/get_started48.png",
+        "128": "src/assets/icons/get_started128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://meet.google.com/*"
+            ],
+            "js": [
+                "src/content/index.ts"
+            ]
+        }
+    ],
+    "background": {
+        "service_worker": "src/background/index.ts"
+    },
+    "options_ui": {
+        "page": "src/options/options.html",
+        "open_in_tab": false
+    },
+    "action": {
+        "default_popup": "src/popup/popup.html",
+        "default_icon": {
+            "16": "src/assets/icons/get_started16.png",
+            "32": "src/assets/icons/get_started32.png",
+            "48": "src/assets/icons/get_started48.png",
+            "128": "src/assets/icons/get_started128.png"
+        }
+    },
+    "permissions": [
+        "storage"
+    ]
+}
