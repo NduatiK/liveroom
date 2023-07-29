@@ -108,8 +108,11 @@
   // HELPERS
 
   function handleMouseMove(e) {
+    // TODO: To try once we have the live cursors, to see if it is more usable to HAVE TO maintain shift key to move the mouse
+    // if (e.shiftKey) {
     mouseX = e.layerX;
     mouseY = e.layerY;
+    // }
   }
 </script>
 
