@@ -5,7 +5,7 @@
 
   let selectVideoElStyle = document.createElement("style");
   selectVideoElStyle.textContent = `
-          .overlay, .overlay * {
+          #overlay, #overlay * {
             visibility: visible !important;
           }
           video {
@@ -47,12 +47,12 @@
         `;
 
   let resizeObserver;
-  let selectVideoElListener;
 
   let screensharingVideoEl;
   let screensharingVideoElWidth;
   let screensharingVideoElHeight;
 
+  // Observe the screensharing video element dimensions
   $: if (screensharingVideoEl) {
     resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
@@ -71,7 +71,7 @@
   });
 </script>
 
-<div class="overlay">
+<div id="overlay">
   {#if !started}
     <button
       on:click={() => {
@@ -104,21 +104,28 @@
     <p>Click on the screensharing video</p>
   {/if}
 
-  {#if screensharingVideoElWidth && screensharingVideoElHeight}
+  {#if screensharingVideoEl && screensharingVideoElWidth && screensharingVideoElHeight}
     <p>
-      Screensharing dimensions: {screensharingVideoElWidth}x{screensharingVideoElHeight}
+      Screensharing dimensions:
+      <b>{screensharingVideoElWidth}x{screensharingVideoElHeight}</b>
     </p>
   {/if}
 </div>
 
 <style>
-  .overlay {
+  #overlay {
     z-index: 9999;
     position: fixed;
-    top: 16px;
+    top: 80px;
     left: 16px;
-    background-color: white;
-    border: 1px solid black;
-    padding: 4px;
+    /* min-height: 200px;
+    max-height: 800px;
+    min-width: 150px;
+    max-width: 600px; */
+    background-color: lightgray;
+    border-radius: 4px;
+    padding: 12px;
+    /* overflow: auto; */
+    /* resize: both; */
   }
 </style>
