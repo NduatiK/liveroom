@@ -37,8 +37,9 @@
       content: "";
       position: absolute;
       inset: 0;
-      outline: 2px solid white;
-      background-color: white;
+      /* NOTE: Liveroom brand color */
+      outline: 2px solid #4f46e5;
+      background-color: #4f46e5;
       transition: opacity 0.1s ease-out;
     }
     *:has(> video:hover)::before {
@@ -161,7 +162,7 @@
   #overlay {
     z-index: 9999;
     position: fixed;
-    top: 80px;
+    bottom: 16px;
     left: 16px;
     /* min-height: 200px;
     max-height: 800px;
