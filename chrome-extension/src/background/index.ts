@@ -1,5 +1,3 @@
-import { storage } from "../storage";
-
 chrome.runtime.onInstalled.addListener(() => {
-    storage.get().then(console.log);
+  console.log("[background] onInstalled");
 });
