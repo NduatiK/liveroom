@@ -286,6 +286,17 @@
         {/each}
       </div>
     {/if}
+
+    <button
+      style="margin-top: 24px;"
+      on:click={() => {
+        started = false;
+        screensharingVideoEl = undefined;
+        // TODO: reload the whole component properly?
+      }}
+    >
+      Stop
+    </button>
   {/if}
 </div>
 
