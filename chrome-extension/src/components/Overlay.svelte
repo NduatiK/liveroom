@@ -9,11 +9,11 @@
 
   let pointerEventsOnVideoElStyle = document.createElement("style");
   pointerEventsOnVideoElStyle.textContent = `
-    video {
+    *[data-isliveroomscreensharing="true"] video {
       /* NOTE: Make sure the video element is hoverable & clickable (it is set to pointer-events: none on Google Meet) */
       pointer-events: auto !important;
     }
-    [jsaction^="mousedown:"] {
+    *[data-isliveroomscreensharing="true"] *[jsaction^="mousedown:"]  {
       /* NOTE: Deactivate the menu displayed when hovering, else it clashes with our mouse move listener on the video element */
       pointer-events: none !important;
     }
@@ -116,7 +116,13 @@
 
   // Set up listeners on the screensharing video element
   $: if (screensharingVideoEl) {
+    // NOTE: We set a special data attribute on the 'top' parent container element,
+    //       so we can better target it in the stylesheet overload 'pointerEventsOnVideoElStyle'.
+    screensharingVideoEl
+      .closest("[data-participant-id]")
+      .setAttribute("data-isliveroomscreensharing", "true");
     document.head.appendChild(pointerEventsOnVideoElStyle);
+
     screensharingVideoEl.addEventListener("mousemove", handleMouseMove);
     screensharingVideoEl.addEventListener("mousedown", handleMouseDown);
     screensharingVideoEl.addEventListener("mouseup", handleMouseUp);
