@@ -44,7 +44,7 @@
       /* Tailwind indigo-600 */
       outline: 2px solid #4f46e5;
       background-color: #4f46e5;
-      transition: opacity 0.1s ease-out;
+      transition: opacity 0.15s ease-out;
     }
     *:has(> video:hover)::before {
       opacity: 0.8;
@@ -308,7 +308,7 @@
       {/if}
 
       <button
-        style:margin-top="2rem"
+        class="end-session-button"
         on:click={() => {
           started = false;
           screensharingVideoEl = undefined;
@@ -393,16 +393,18 @@
   }
 
   #liveroom-overlay button {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 2rem;
     border-radius: 4px;
-    border: 1px solid #262626; /* Tailwind neutral-800 */
-    background-color: #171717; /* Tailwind neutral-900 */
+    border: 1px solid rgb(82, 82, 82); /* Tailwind neutral-600 */
+    background-color: #262626; /* Tailwind neutral-800 */
     color: #ffffff;
     font-weight: 700;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Tailwind shadow-md */
     cursor: pointer;
-    transition: background-color 0.2s ease-out;
+    transition: border-color 0.15s ease-out, background-color 0.15s ease-out;
   }
   #liveroom-overlay button:hover {
+    border-color: black;
     background-color: black;
   }
 
@@ -435,7 +437,10 @@
   }
 
   .start-session-button {
-    margin: auto 0;
+    margin: auto;
+  }
+  .end-session-button {
+    margin: auto;
   }
 
   .instructions {
@@ -449,7 +454,8 @@
   .users-names-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 1rem;
+    margin: 2rem 0;
   }
 
   #users-container {
