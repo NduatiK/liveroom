@@ -282,15 +282,22 @@
     {:else if !screensharingVideoEl}
       <p class="instructions">Click on the screensharing video</p>
     {:else}
-      <p>Name: <b>{me?.name}</b></p>
-      <p>Color: <b>{me?.color}</b></p>
-      <p>
-        Screensharing dimensions:
-        <b>{screensharingVideoElWidth}x{screensharingVideoElHeight}</b>
-      </p>
-      <p>
-        Mouse coordinates:
-        <b>{mouseX}, {mouseY}</b>
+      <p class="info-line">
+        <svg
+          height="16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M2.25 5.25a3 3 0 013-3h13.5a3 3 0 013 3V15a3 3 0 01-3 3h-3v.257c0 .597.237 1.17.659 1.591l.621.622a.75.75 0 01-.53 1.28h-9a.75.75 0 01-.53-1.28l.621-.622a2.25 2.25 0 00.659-1.59V18h-3a3 3 0 01-3-3V5.25zm1.5 0v7.5a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5v-7.5a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        <span>{screensharingVideoElWidth}x{screensharingVideoElHeight}</span>
       </p>
 
       {#if users}
@@ -298,7 +305,9 @@
           {#each Object.values(users) as user (user.id)}
             <div>
               <b
-                style="background-color: {user.color}; padding: 4px 8px; border-radius: 9999px;"
+                style:padding="4px 8px"
+                style:border-radius="9999px"
+                style:background-color={user.color}
               >
                 {user.name}
               </b>
@@ -451,10 +460,23 @@
     text-align: center;
   }
 
+  .info-line {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    color: #525252; /* Tailwind neutral-600 */
+    font-weight: 500;
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .info-line svg {
+    color: #737373; /* Tailwind neutral-500 */
+  }
+
   .users-names-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.5rem;
     margin: 2rem 0;
   }
 
