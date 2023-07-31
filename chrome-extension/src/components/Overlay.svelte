@@ -2,7 +2,7 @@
   import { onDestroy } from "svelte";
   import { LiveState } from "phx-live-state";
   import LiveroomLogoSvg from "./LiveroomLogoSvg.svelte";
-  import type { User, UserType } from "src/types/User";
+  import type { User } from "src/types/User";
 
   export let open = true;
 
