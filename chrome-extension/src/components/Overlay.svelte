@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onDestroy } from "svelte";
   import { LiveState } from "phx-live-state";
+  import LiveroomLogoSvg from "./LiveroomLogoSvg.svelte";
 
   export let open = true;
 
@@ -20,7 +21,7 @@
 
   let selectVideoElStyle = document.createElement("style");
   selectVideoElStyle.textContent = `
-    #overlay, #overlay * {
+    #liveroom-overlay, #liveroom-overlay * {
       visibility: visible !important;
     }
     video {
@@ -234,72 +235,83 @@
   }
 </script>
 
-<div id="overlay" data-open={open}>
-  {#if !started}
-    <button
-      on:click={() => {
-        started = true;
+<div id="liveroom-overlay" data-open={open}>
+  <div class="body">
+    {#if !started}
+      <button
+        on:click={() => {
+          started = true;
 
-        const videoEls = Array.from(document.querySelectorAll("video"));
-        console.log("videoEls", videoEls);
+          const videoEls = Array.from(document.querySelectorAll("video"));
+          console.log("videoEls", videoEls);
 
-        function handleVideoClick(e) {
-          screensharingVideoEl = e.target;
-          document.head.removeChild(selectVideoElStyle);
-          // clean all click event listeners
+          function handleVideoClick(e) {
+            screensharingVideoEl = e.target;
+            document.head.removeChild(selectVideoElStyle);
+            // clean all click event listeners
+            videoEls.forEach((videoEl) => {
+              videoEl.removeEventListener("click", handleVideoClick);
+            });
+          }
+
           videoEls.forEach((videoEl) => {
-            videoEl.removeEventListener("click", handleVideoClick);
+            videoEl.addEventListener("click", handleVideoClick);
           });
-        }
 
-        videoEls.forEach((videoEl) => {
-          videoEl.addEventListener("click", handleVideoClick);
-        });
+          document.head.appendChild(selectVideoElStyle);
+        }}
+      >
+        Select screensharing video
+      </button>
+    {:else if !screensharingVideoEl}
+      <p>Click on the screensharing video</p>
+    {:else}
+      <p>Name: <b>{me?.name}</b></p>
+      <p>Color: <b>{me?.color}</b></p>
+      <p>
+        Screensharing dimensions:
+        <b>{screensharingVideoElWidth}x{screensharingVideoElHeight}</b>
+      </p>
+      <p>
+        Mouse coordinates:
+        <b>{mouseX}, {mouseY}</b>
+      </p>
 
-        document.head.appendChild(selectVideoElStyle);
-      }}
-    >
-      Select screensharing video
-    </button>
-  {:else if !screensharingVideoEl}
-    <p>Click on the screensharing video</p>
-  {:else}
-    <p>Name: <b>{me?.name}</b></p>
-    <p>Color: <b>{me?.color}</b></p>
-    <p>
-      Screensharing dimensions:
-      <b>{screensharingVideoElWidth}x{screensharingVideoElHeight}</b>
-    </p>
-    <p>
-      Mouse coordinates:
-      <b>{mouseX}, {mouseY}</b>
-    </p>
+      {#if users}
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          {#each Object.values(users) as user (user.id)}
+            <div>
+              <b
+                style="background-color: {user.color}; padding: 4px 8px; border-radius: 9999px;"
+              >
+                {user.name}
+              </b>
+            </div>
+          {/each}
+        </div>
+      {/if}
 
-    {#if users}
-      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-        {#each Object.values(users) as user (user.id)}
-          <div>
-            <b
-              style="background-color: {user.color}; padding: 4px 8px; border-radius: 9999px;"
-            >
-              {user.name}
-            </b>
-          </div>
-        {/each}
-      </div>
+      <button
+        style="margin-top: 24px;"
+        on:click={() => {
+          started = false;
+          screensharingVideoEl = undefined;
+          // TODO: reload the whole component properly?
+        }}
+      >
+        Stop
+      </button>
     {/if}
+  </div>
 
-    <button
-      style="margin-top: 24px;"
-      on:click={() => {
-        started = false;
-        screensharingVideoEl = undefined;
-        // TODO: reload the whole component properly?
-      }}
-    >
-      Stop
-    </button>
-  {/if}
+  <div class="footer">
+    <p class="powered-by">
+      powered by <a href="https://liveroom.app">
+        <LiveroomLogoSvg height="10" width="10" color="#a3a3a3" />
+        <span>Liveroom</span>
+      </a>
+    </p>
+  </div>
 </div>
 
 {#if screensharingVideoEl && me && users}
@@ -338,24 +350,48 @@
 {/if}
 
 <style>
-  #overlay {
-    /* min-height: 200px;
-    max-height: 800px;
-    min-width: 150px;
-    max-width: 600px; */
+  #liveroom-overlay {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
     background-color: white;
     border: 1px solid rgb(82, 82, 82, 0.2); /* Tailwind neutral-600 */
     border-radius: 4px;
-    padding: 1rem;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Tailwind shadow-md */
-    /* overflow: auto; */
-    /* resize: both; */
   }
-  #overlay[data-open="false"] {
+  #liveroom-overlay[data-open="false"] {
     display: none;
   }
-  #overlay[data-open="true"] {
-    display: block;
+  #liveroom-overlay[data-open="true"] {
+    display: flex;
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: center;
+    padding: 0.3rem;
+  }
+  .footer .powered-by {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    font-size: 0.6rem;
+    color: #a3a3a3; /* Tailwind neutral-400 */
+  }
+  .footer .powered-by a {
+    display: flex;
+    align-items: center;
+    gap: 0.1em;
+    margin-left: 0.4em;
+    color: #a3a3a3; /* Tailwind neutral-400 */
+    font-weight: 500;
   }
 
   #users-container {
