@@ -81,12 +81,21 @@
 
   // Observe the screensharing video element dimensions
   $: if (screensharingVideoEl) {
+    // Set up screensharing video element dimensions
+    screensharingVideoElHeight = Math.round(
+      screensharingVideoEl.getBoundingClientRect().height
+    );
+    screensharingVideoElWidth = Math.round(
+      screensharingVideoEl.getBoundingClientRect().width
+    );
+
+    // Set up resize observer
     if (!resizeObserver) {
       resizeObserver = new ResizeObserver((entries) => {
         for (const entry of entries) {
           const { width, height } = entry.contentRect;
-          screensharingVideoElWidth = width;
-          screensharingVideoElHeight = height;
+          screensharingVideoElWidth = Math.round(width);
+          screensharingVideoElHeight = Math.round(height);
         }
       });
       resizeObserver.observe(screensharingVideoEl);
