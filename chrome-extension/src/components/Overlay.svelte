@@ -2,6 +2,8 @@
   import { onDestroy } from "svelte";
   import { LiveState } from "phx-live-state";
 
+  export let open = true;
+
   let started = false;
 
   let pointerEventsOnVideoElStyle = document.createElement("style");
@@ -232,7 +234,7 @@
   }
 </script>
 
-<div id="overlay">
+<div id="overlay" data-open={open}>
   {#if !started}
     <button
       on:click={() => {
@@ -337,20 +339,23 @@
 
 <style>
   #overlay {
-    z-index: 9999;
-    position: fixed;
-    bottom: 16px;
-    left: 16px;
     /* min-height: 200px;
     max-height: 800px;
     min-width: 150px;
     max-width: 600px; */
     background-color: white;
+    border: 1px solid rgb(82, 82, 82, 0.2); /* Tailwind neutral-600 */
     border-radius: 4px;
-    padding: 12px;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Tailwind shadow-md */
     /* overflow: auto; */
     /* resize: both; */
+  }
+  #overlay[data-open="false"] {
+    display: none;
+  }
+  #overlay[data-open="true"] {
+    display: block;
   }
 
   #users-container {

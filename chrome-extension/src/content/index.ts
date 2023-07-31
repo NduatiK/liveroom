@@ -1,4 +1,4 @@
-import Overlay from "../components/Overlay.svelte";
+import Main from "../components/Main.svelte";
 
 // Some global styles on the page
 // import "./styles.css";
@@ -7,4 +7,4 @@ import Overlay from "../components/Overlay.svelte";
 console.log("[content] Hello from content script!");
 
 // Some svelte component on the page
-new Overlay({ target: document.body });
+new Main({ target: document.body });
