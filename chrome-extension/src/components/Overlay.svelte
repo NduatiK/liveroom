@@ -2,6 +2,7 @@
   import { onDestroy } from "svelte";
   import { LiveState } from "phx-live-state";
   import LiveroomLogoSvg from "./LiveroomLogoSvg.svelte";
+  import type { User, UserType } from "src/types/User";
 
   export let open = true;
 
@@ -73,10 +74,8 @@
   let mouseY: string; // string because we round it to 2 decimals using `toFixed(2)`
 
   let roomId: string;
-  // TODO: Type me
-  let me;
-  // TODO: Type me
-  let users: { [key: string]: any };
+  let me: User<"admin">;
+  let users: { [key: User["id"]]: User };
   let liveState: LiveState;
 
   // Observe the screensharing video element dimensions
@@ -348,8 +347,8 @@
         data-isself={user.id == me.id}
         style="
           --color: {user.color};
-          --x: {(user.x / 100) * screensharingVideoElWidth}px;
-          --y: {(user.y / 100) * screensharingVideoElHeight}px;
+          --x: {(parseFloat(user.x) / 100) * screensharingVideoElWidth}px;
+          --y: {(parseFloat(user.y) / 100) * screensharingVideoElHeight}px;
         "
       >
         <svg
