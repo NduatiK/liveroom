@@ -41,13 +41,13 @@
       content: "";
       position: absolute;
       inset: 0;
-      /* NOTE: Liveroom brand color */
+      /* Tailwind indigo-600 */
       outline: 2px solid #4f46e5;
       background-color: #4f46e5;
       transition: opacity 0.1s ease-out;
     }
     *:has(> video:hover)::before {
-      opacity: 0.5;
+      opacity: 0.8;
     }
     /* NOTE: Deactivate the menu displayed when hovering, else it clashes with our video element hover */
     [jsaction] {
@@ -248,6 +248,7 @@
   <div class="body">
     {#if !started}
       <button
+        class="start-session-button"
         on:click={() => {
           started = true;
 
@@ -270,10 +271,10 @@
           document.head.appendChild(selectVideoElStyle);
         }}
       >
-        Select screensharing video
+        Start session
       </button>
     {:else if !screensharingVideoEl}
-      <p>Click on the screensharing video</p>
+      <p class="instructions">Click on the screensharing video</p>
     {:else}
       <p>Name: <b>{me?.name}</b></p>
       <p>Color: <b>{me?.color}</b></p>
@@ -287,7 +288,7 @@
       </p>
 
       {#if users}
-        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <div class="users-names-list">
           {#each Object.values(users) as user (user.id)}
             <div>
               <b
@@ -301,14 +302,14 @@
       {/if}
 
       <button
-        style="margin-top: 24px;"
+        style:margin-top="2rem"
         on:click={() => {
           started = false;
           screensharingVideoEl = undefined;
           // TODO: reload the whole component properly?
         }}
       >
-        Stop
+        End session
       </button>
     {/if}
   </div>
@@ -359,14 +360,24 @@
 {/if}
 
 <style>
+  /* reset */
+  p {
+    margin: 0;
+  }
+
   #liveroom-overlay {
+    min-height: 100px;
+    max-height: 600px;
+    min-width: 300px;
+    max-width: 600px;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
     background-color: white;
     border: 1px solid rgb(82, 82, 82, 0.2); /* Tailwind neutral-600 */
     border-radius: 4px;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Tailwind shadow-md */
+    resize: auto;
+    overflow: auto;
   }
   #liveroom-overlay[data-open="false"] {
     display: none;
@@ -375,7 +386,22 @@
     display: flex;
   }
 
+  #liveroom-overlay button {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    border: 1px solid #262626; /* Tailwind neutral-800 */
+    background-color: #171717; /* Tailwind neutral-900 */
+    color: #ffffff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease-out;
+  }
+  #liveroom-overlay button:hover {
+    background-color: black;
+  }
+
   .body {
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -388,7 +414,6 @@
     padding: 0.3rem;
   }
   .footer .powered-by {
-    margin: 0;
     display: flex;
     align-items: center;
     font-size: 0.6rem;
@@ -401,6 +426,24 @@
     margin-left: 0.4em;
     color: #a3a3a3; /* Tailwind neutral-400 */
     font-weight: 500;
+  }
+
+  .start-session-button {
+    margin: auto 0;
+  }
+
+  .instructions {
+    margin: auto 0;
+    padding: 0 1rem;
+    color: #525252; /* Tailwind neutral-600 */
+    font-weight: 500;
+    text-align: center;
+  }
+
+  .users-names-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
   }
 
   #users-container {
