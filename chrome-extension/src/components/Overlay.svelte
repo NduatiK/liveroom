@@ -382,7 +382,7 @@
   #liveroom-overlay {
     min-height: 100px;
     max-height: 600px;
-    min-width: 300px;
+    min-width: 250px;
     max-width: 600px;
     display: flex;
     flex-direction: column;
@@ -428,6 +428,11 @@
     display: flex;
     justify-content: center;
     padding: 0.3rem;
+    opacity: 0.6;
+    transition: opacity 0.15s ease-out;
+  }
+  .footer:hover {
+    opacity: 1;
   }
   .footer .powered-by {
     display: flex;
