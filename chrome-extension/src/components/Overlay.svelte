@@ -302,15 +302,9 @@
       {#if users}
         <div class="users-names-list">
           {#each Object.values(users) as user (user.id)}
-            <div>
-              <b
-                style:padding="4px 8px"
-                style:border-radius="9999px"
-                style:background-color={user.color}
-              >
-                {user.name}
-              </b>
-            </div>
+            <span class="user-name" style:--color={user.color}>
+              {user.name}
+            </span>
           {/each}
         </div>
       {/if}
@@ -363,7 +357,7 @@
             d="M2.2706 0.0593359L25.4277 8.05957H25.45926C25.65896 8.13153 25.83096 8.25952 25.95221 8.42653C26.07357 8.59354 26.13851 8.79166 26.13851 8.99459C26.13851 9.19751 26.07357 9.39564 25.95221 9.56265C25.83096 9.72966 25.65896 9.85765 25.45926 9.92962L15.3543 13.7698L11.3124 23.37C11.2344 23.5561 11.0994 23.7156 10.9248 23.828C10.7503 23.9402 10.5443 24.0002 10.3335 24C10.1172 24 9.9061 23.9365 9.7291 23.8184C9.552 23.7004 9.4176 23.5332 9.344 23.34L0.9233 1.33937C0.8555 1.16076 0.8426 0.967504 0.8861 0.782189C0.9297 0.596873 1.0278 0.427163 1.1691 0.292901C1.3105 0.158639 1.4891 0.0653762 1.6841 0.0240151C1.8792 -0.0173461 2.0826 -0.00509504 2.2706 0.0593359Z"
           />
         </svg>
-        <span class="name">{user.name}</span>
+        <span class="user-name">{user.name}</span>
         <!-- <div
           class="halo"
           data-show={user.is_mouse_down || user.is_escape_key_down}
@@ -376,24 +370,22 @@
 <style>
   /* reset */
   p {
-    margin: 0;
+    margin: unset;
   }
 
   #liveroom-overlay {
     position: absolute;
-    bottom: 3.5rem;
-    right: 0.3rem;
-    min-height: 100px;
-    max-height: 600px;
-    min-width: 150px;
-    max-width: 600px;
+    bottom: 3.4rem;
+    left: 0;
+    min-width: 17rem;
+    max-width: 50rem;
     display: flex;
     flex-direction: column;
     background-color: white;
     border: 1px solid rgb(82, 82, 82, 0.2); /* Tailwind neutral-600 */
     border-radius: 4px;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Tailwind shadow-md */
-    resize: auto;
+    resize: horizontal;
     overflow: auto;
   }
   #liveroom-overlay[data-open="false"] {
@@ -424,7 +416,7 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: 1rem;
+    padding: 1.5rem 1rem 1rem 1rem;
   }
 
   .footer {
@@ -460,11 +452,11 @@
   }
 
   .instructions {
-    max-width: 20ch;
     margin: auto;
-    padding: 0 1rem;
+    padding: 0.6rem 1rem;
     color: #525252; /* Tailwind neutral-600 */
-    font-weight: 500;
+    font-size: 1.1em;
+    font-weight: 600;
     text-align: center;
   }
 
@@ -485,7 +477,22 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin: 2rem 0;
+    margin: 1rem 0;
+  }
+
+  .user-name {
+    padding: 4px 10px;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
+    color: black;
+    background-color: var(--color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-radius: 9999px;
+    /* Tailwind 'shadow-sm' */
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   }
 
   #users-container {
@@ -516,24 +523,12 @@
     display: none;
   }
 
-  .user .name {
+  .user .user-name {
     position: absolute;
     top: 20px;
     left: 16px;
-    padding: 4px 10px;
-    font-size: 14px;
-    line-height: 20px;
-    font-weight: 600;
-    color: black;
-    background-color: var(--color);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    border-radius: 9999px;
-    /* Tailwind 'shadow-sm' */
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   }
-  .user[data-isself="true"] .name {
+  .user[data-isself="true"] .user-name {
     display: none;
   }
 

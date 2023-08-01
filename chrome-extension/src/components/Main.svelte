@@ -105,10 +105,6 @@
 <style>
   #liveroom-main {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.5rem;
   }
 
   .toggle-btn {
