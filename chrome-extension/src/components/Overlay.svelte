@@ -2,6 +2,7 @@
   import { createEventDispatcher, onDestroy } from "svelte";
   import { LiveState } from "phx-live-state";
   import LiveroomLogoSvg from "./LiveroomLogoSvg.svelte";
+  import CopyInstallationCodeButton from "./CopyInstallationCodeButton.svelte";
   import type { User } from "src/types/User";
 
   export let open = true;
@@ -136,14 +137,15 @@
 
   // Connect LiveState socket
   $: if (screensharingVideoEl && !liveState) {
-    // FIXME: using hard coded public for dev purposes
-    // const parts = window.location.pathname.split("/");
-    // roomId = parts.pop() || parts.pop(); // handle potential trailing slash
-    roomId = "public";
-    console.log("roomId", roomId);
+    const parts = window.location.pathname.split("/");
+    roomId = parts.pop() || parts.pop(); // handle potential trailing slash
+    console.log(`[Liveroom] Connecting to room '${roomId}'...`);
 
     liveState = new LiveState({
-      url: "ws://localhost:4000/client_socket",
+      url:
+        process.env.NODE_ENV === "production"
+          ? "wss://liveroom.app/client_socket"
+          : "ws://localhost:4000/client_socket",
       topic: `liveroom-livestate:${roomId}`,
       params: {
         room_id: roomId,
@@ -259,7 +261,6 @@
   <div class="body">
     {#if !started}
       <button
-        class="start-session-button"
         on:click={() => {
           started = true;
 
@@ -286,24 +287,6 @@
     {:else if !screensharingVideoEl}
       <p class="instructions">Click on the screensharing video</p>
     {:else}
-      <p class="info-line">
-        <svg
-          height="16"
-          width="16"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M2.25 5.25a3 3 0 013-3h13.5a3 3 0 013 3V15a3 3 0 01-3 3h-3v.257c0 .597.237 1.17.659 1.591l.621.622a.75.75 0 01-.53 1.28h-9a.75.75 0 01-.53-1.28l.621-.622a2.25 2.25 0 00.659-1.59V18h-3a3 3 0 01-3-3V5.25zm1.5 0v7.5a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5v-7.5a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5z"
-            clip-rule="evenodd"
-          />
-        </svg>
-        <span>{screensharingVideoElWidth}x{screensharingVideoElHeight}</span>
-      </p>
-
       {#if users}
         <div class="users-names-list">
           {#each Object.values(users) as user (user.id)}
@@ -314,16 +297,19 @@
         </div>
       {/if}
 
-      <button
-        class="end-session-button"
-        on:click={() => {
-          started = false;
-          screensharingVideoEl = undefined;
-          // TODO: reload the whole component properly?
-        }}
-      >
-        End session
-      </button>
+      <div class="buttons-container">
+        <CopyInstallationCodeButton url={liveState.config.url} {roomId} />
+
+        <button
+          class="end-session-button"
+          on:click={() => {
+            started = false;
+            screensharingVideoEl = undefined;
+          }}
+        >
+          End session
+        </button>
+      </div>
     {/if}
   </div>
 
@@ -420,8 +406,8 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding: 1.5rem 1rem 1rem 1rem;
+    gap: 1.5rem;
+    padding: 1.5rem;
   }
 
   .footer {
@@ -448,13 +434,6 @@
     color: rgb(163, 163, 163); /* Tailwind neutral-400 */
   }
 
-  .start-session-button {
-    margin: auto;
-  }
-  .end-session-button {
-    margin: auto;
-  }
-
   .instructions {
     margin: auto;
     padding: 0.6rem 1rem;
@@ -464,24 +443,10 @@
     text-align: center;
   }
 
-  .info-line {
-    display: flex;
-    align-items: center;
-    gap: 0.4em;
-    color: #525252; /* Tailwind neutral-600 */
-    font-weight: 500;
-    font-size: 0.8rem;
-    font-variant-numeric: tabular-nums;
-  }
-  .info-line svg {
-    color: #737373; /* Tailwind neutral-500 */
-  }
-
   .users-names-list {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin: 1rem 0;
   }
 
   .user-name {
@@ -495,8 +460,16 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     border-radius: 9999px;
-    /* Tailwind 'shadow-sm' */
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); /* Tailwind 'shadow-sm' */
+  }
+
+  .buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1.5rem 1rem 0 1rem;
+    border-top: 1px solid rgb(229, 229, 229); /* Tailwind neutral-200 */
   }
 
   #users-container {
