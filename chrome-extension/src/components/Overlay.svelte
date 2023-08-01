@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { onDestroy } from "svelte";
+  import { createEventDispatcher, onDestroy } from "svelte";
   import { LiveState } from "phx-live-state";
   import LiveroomLogoSvg from "./LiveroomLogoSvg.svelte";
   import type { User } from "src/types/User";
 
   export let open = true;
+  const dispatch = createEventDispatcher();
 
   let started = false;
 
@@ -158,6 +159,11 @@
       me = state.me;
       users = state.users;
     });
+    dispatch("session_started");
+  } else if (!screensharingVideoEl && liveState) {
+    liveState.disconnect();
+    liveState = undefined;
+    dispatch("session_ended");
   }
 
   // LIFECYCLE
@@ -258,7 +264,6 @@
           started = true;
 
           const videoEls = Array.from(document.querySelectorAll("video"));
-          console.log("videoEls", videoEls);
 
           function handleVideoClick(e) {
             screensharingVideoEl = e.target;
@@ -375,7 +380,7 @@
 
   #liveroom-overlay {
     position: absolute;
-    bottom: 3.4rem;
+    bottom: 3.2rem;
     left: 0;
     min-width: 17rem;
     max-width: 50rem;
@@ -400,7 +405,7 @@
     border-radius: 4px;
     border: 1px solid rgb(82, 82, 82); /* Tailwind neutral-600 */
     background-color: #262626; /* Tailwind neutral-800 */
-    color: #ffffff;
+    color: white;
     font-weight: 700;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Tailwind shadow-md */
     cursor: pointer;

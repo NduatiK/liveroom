@@ -7,6 +7,7 @@
   let thisElObserver: IntersectionObserver;
   let injectionInterval: number;
   let open = false;
+  let isSessionActive = false;
 
   onMount(() => {
     // periodically check if the toolbar is ready for injection
@@ -82,9 +83,17 @@
 
 <!-- NOTE: Component will be displayed once injected in the Google Meet toolbar -->
 <div id="liveroom-main" bind:this={thisEl} style:display="none">
-  <Overlay bind:open />
+  <Overlay
+    bind:open
+    on:session_started={() => (isSessionActive = true)}
+    on:session_ended={() => (isSessionActive = false)}
+  />
 
-  <button class="toggle-btn" on:click={() => (open = !open)}>
+  <button
+    class="toggle-btn"
+    data-issessionactive={isSessionActive}
+    on:click={() => (open = !open)}
+  >
     {#if open}
       <svg
         class="svg-close"
@@ -97,7 +106,7 @@
         />
       </svg>
     {:else}
-      <LiveroomLogoSvg height="1.5rem" width="1.5rem" />
+      <LiveroomLogoSvg height="1.25rem" width="1.25rem" color="currentColor" />
     {/if}
   </button>
 </div>
@@ -108,29 +117,36 @@
   }
 
   .toggle-btn {
-    background-color: #ffffff;
+    color: rgb(38, 38, 38, 0.9); /* Tailwind neutral-800 */
+    background-color: white;
     border: 1px solid rgb(82, 82, 82, 0.2); /* Tailwind neutral-600 */
     border-radius: 100%;
-    height: 2.5rem;
-    width: 2.5rem;
+    height: 39px; /* same as Google Meet toolbar buttons */
+    width: 39px; /* same as Google Meet toolbar buttons */
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Tailwind shadow-md */
     cursor: pointer;
-    transition: border-color 0.1s ease-out;
+    transition: color 0.1s ease-out;
   }
   .toggle-btn:hover {
-    border-color: rgb(82, 82, 82, 0.5); /* Tailwind neutral-600 */
+    color: black;
+  }
+  .toggle-btn[data-issessionactive="true"] {
+    color: rgb(79, 70, 229, 0.9); /* Tailwind indigo-600 */
+  }
+  .toggle-btn[data-issessionactive="true"]:hover {
+    color: rgb(79, 70, 229); /* Tailwind indigo-600 */
   }
 
   .toggle-btn .svg-close {
-    height: 2rem;
-    width: 2rem;
-    color: #a3a3a3; /* Tailwind neutral-400 */
+    height: 1.5rem;
+    width: 1.5rem;
+    color: rgb(38, 38, 38, 0.7); /* Tailwind neutral-800 */
     transition: color 0.1s ease-out;
   }
   .toggle-btn:hover .svg-close {
-    color: rgb(82, 82, 82); /* Tailwind neutral-600 */
+    color: black;
   }
 </style>
