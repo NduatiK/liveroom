@@ -8,25 +8,26 @@
 
   // periodically check if the toolbar is ready for injection
   const interval = setInterval(() => {
-    const toolbarEl = document.querySelector(
-      "[data-is-auto-rejoin]:first-of-type"
+    const micButtonEl = document.querySelector(
+      "button[data-is-muted]:first-of-type"
     );
+    const toolbarButtonsContainer = findFirstGridParent(micButtonEl);
 
-    if (
-      toolbarEl &&
-      window.getComputedStyle(toolbarEl).display !== "none" &&
-      // NOTE: Toolbar is first inserted in the DOM with only 1 child, then it is updated with the rest of the children.
-      //       So we need to wait for the 2nd child to be ready.
-      toolbarEl.firstElementChild?.nextSibling
-    ) {
+    if (micButtonEl && toolbarButtonsContainer) {
       // stop periodic check
       clearInterval(interval);
 
       console.log("[Liveroom] Injecting Liveroom in the toolbar...");
-      // inject Liveroom in the toolbar as the 2nd child
-      toolbarEl.insertBefore(thisEl, toolbarEl.firstElementChild.nextSibling);
+
+      // inject the liveroom main component in the toolbar as the 1st child
+      toolbarButtonsContainer.insertBefore(
+        thisEl,
+        toolbarButtonsContainer.firstElementChild
+      );
+
       // show the liveroom main component
       thisEl.style.display = "flex";
+
       console.log("[Liveroom] Injected Liveroom in the toolbar.");
     } else {
       console.log("[Liveroom] Waiting for the toolbar to be ready...");
@@ -36,6 +37,25 @@
   onDestroy(() => {
     clearInterval(interval);
   });
+
+  // HELPERS
+
+  function findFirstGridParent(elem: Element | null): Element | null {
+    if (!elem) return null;
+
+    while (elem.parentElement) {
+      elem = elem.parentElement;
+
+      const displayStyle = window.getComputedStyle(elem).display;
+
+      if (displayStyle === "grid" || displayStyle === "inline-grid") {
+        return elem;
+      }
+    }
+
+    // Returns null if no grid parent found
+    return null;
+  }
 </script>
 
 <!-- NOTE: Component will be displayed once injected in the Google Meet toolbar -->
