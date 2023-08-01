@@ -134,7 +134,7 @@
     align-items: center;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Tailwind shadow-md */
     cursor: pointer;
-    transition: color 0.1s ease-out;
+    transition: color 0.15s ease-out;
   }
   .toggle-btn:hover {
     color: black;
@@ -150,7 +150,7 @@
     height: 1.5rem;
     width: 1.5rem;
     color: rgb(38, 38, 38, 0.7); /* Tailwind neutral-800 */
-    transition: color 0.1s ease-out;
+    transition: color 0.15s ease-out;
   }
   .toggle-btn:hover .svg-close {
     color: black;

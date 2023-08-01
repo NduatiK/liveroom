@@ -330,7 +330,7 @@
   <div class="footer">
     <p class="powered-by">
       powered by <a href="https://liveroom.app">
-        <LiveroomLogoSvg height="10" width="10" color="#a3a3a3" />
+        <LiveroomLogoSvg height="10" width="10" color="currentColor" />
         <span>Liveroom</span>
       </a>
     </p>
@@ -428,25 +428,24 @@
     display: flex;
     justify-content: center;
     padding: 0.3rem;
-    opacity: 0.6;
-    transition: opacity 0.15s ease-out;
-  }
-  .footer:hover {
-    opacity: 1;
   }
   .footer .powered-by {
     display: flex;
     align-items: center;
     font-size: 0.6rem;
-    color: #a3a3a3; /* Tailwind neutral-400 */
+    color: rgb(163, 163, 163, 0.7); /* Tailwind neutral-400 */
   }
   .footer .powered-by a {
     display: flex;
     align-items: center;
     gap: 0.1em;
     margin-left: 0.4em;
-    color: #a3a3a3; /* Tailwind neutral-400 */
+    color: rgb(163, 163, 163, 0.7); /* Tailwind neutral-400 */
     font-weight: 500;
+    transition: color 0.15s ease-out;
+  }
+  .footer .powered-by a:hover {
+    color: rgb(163, 163, 163); /* Tailwind neutral-400 */
   }
 
   .start-session-button {
