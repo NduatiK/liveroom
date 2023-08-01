@@ -1,13 +1,41 @@
 <script lang="ts">
-  import { onDestroy } from "svelte";
+  import { onMount } from "svelte";
   import LiveroomLogoSvg from "./LiveroomLogoSvg.svelte";
   import Overlay from "./Overlay.svelte";
 
   let thisEl: HTMLElement;
+  let thisElObserver: IntersectionObserver;
+  let injectionInterval: number;
   let open = false;
 
-  // periodically check if the toolbar is ready for injection
-  const interval = setInterval(() => {
+  onMount(() => {
+    // periodically check if the toolbar is ready for injection
+    injectionInterval = setInterval(maybeInjectInToolbar, 1000);
+
+    // NOTE: Place an observer to re-run the periodic check if the button is removed.
+    //       This happens when the window is resized and the toolbar is re-rendered.
+    thisElObserver = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+
+      if (
+        window.getComputedStyle(entry.target).display != "none" &&
+        !entry.isIntersecting
+      ) {
+        console.log("[Liveroom] Toolbar removed, trying re-injection...");
+        injectionInterval = setInterval(maybeInjectInToolbar, 1000);
+      }
+    });
+    thisElObserver.observe(thisEl);
+
+    return () => {
+      thisElObserver?.disconnect();
+      clearInterval(injectionInterval);
+    };
+  });
+
+  // HELPERS
+
+  function maybeInjectInToolbar() {
     const micButtonEl = document.querySelector(
       "button[data-is-muted]:first-of-type"
     );
@@ -15,9 +43,9 @@
 
     if (micButtonEl && toolbarButtonsContainer) {
       // stop periodic check
-      clearInterval(interval);
+      clearInterval(injectionInterval);
 
-      console.log("[Liveroom] Injecting Liveroom in the toolbar...");
+      console.log("[Liveroom] Injecting in the toolbar...");
 
       // inject the liveroom main component in the toolbar as the 1st child
       toolbarButtonsContainer.insertBefore(
@@ -28,17 +56,11 @@
       // show the liveroom main component
       thisEl.style.display = "flex";
 
-      console.log("[Liveroom] Injected Liveroom in the toolbar.");
+      console.log("[Liveroom] Injected in the toolbar.");
     } else {
       console.log("[Liveroom] Waiting for the toolbar to be ready...");
     }
-  }, 1000);
-
-  onDestroy(() => {
-    clearInterval(interval);
-  });
-
-  // HELPERS
+  }
 
   function findFirstGridParent(elem: Element | null): Element | null {
     if (!elem) return null;
