@@ -30,19 +30,20 @@
   #liveroom-main {
     z-index: 10; /* else is below */
     position: fixed;
-    top: 16px;
+    top: 70px;
     left: 16px;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
 
   .toggle-btn {
     background-color: #ffffff;
     border: 1px solid rgb(82, 82, 82, 0.2); /* Tailwind neutral-600 */
     border-radius: 100%;
-    height: 3rem;
-    width: 3rem;
+    height: 2rem;
+    width: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;

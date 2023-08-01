@@ -382,7 +382,7 @@
   #liveroom-overlay {
     min-height: 100px;
     max-height: 600px;
-    min-width: 250px;
+    min-width: 150px;
     max-width: 600px;
     display: flex;
     flex-direction: column;
@@ -457,7 +457,8 @@
   }
 
   .instructions {
-    margin: auto 0;
+    max-width: 20ch;
+    margin: auto;
     padding: 0 1rem;
     color: #525252; /* Tailwind neutral-600 */
     font-weight: 500;
