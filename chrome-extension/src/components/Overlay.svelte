@@ -380,6 +380,9 @@
   }
 
   #liveroom-overlay {
+    position: absolute;
+    bottom: 3.5rem;
+    right: 0.3rem;
     min-height: 100px;
     max-height: 600px;
     min-width: 150px;

@@ -1,11 +1,47 @@
 <script lang="ts">
+  import { onDestroy } from "svelte";
   import LiveroomLogoSvg from "./LiveroomLogoSvg.svelte";
   import Overlay from "./Overlay.svelte";
 
+  let thisEl: HTMLElement;
   let open = false;
+
+  // periodically check if the toolbar is ready for injection
+  const interval = setInterval(() => {
+    const toolbarEl = document.querySelector(
+      "[data-is-auto-rejoin]:first-of-type"
+    );
+
+    if (
+      toolbarEl &&
+      window.getComputedStyle(toolbarEl).display !== "none" &&
+      // NOTE: Toolbar is first inserted in the DOM with only 1 child, then it is updated with the rest of the children.
+      //       So we need to wait for the 2nd child to be ready.
+      toolbarEl.firstElementChild?.nextSibling
+    ) {
+      // stop periodic check
+      clearInterval(interval);
+
+      console.log("[Liveroom] Injecting Liveroom in the toolbar...");
+      // inject Liveroom in the toolbar as the 2nd child
+      toolbarEl.insertBefore(thisEl, toolbarEl.firstElementChild.nextSibling);
+      // show the liveroom main component
+      thisEl.style.display = "flex";
+      console.log("[Liveroom] Injected Liveroom in the toolbar.");
+    } else {
+      console.log("[Liveroom] Waiting for the toolbar to be ready...");
+    }
+  }, 1000);
+
+  onDestroy(() => {
+    clearInterval(interval);
+  });
 </script>
 
-<div id="liveroom-main">
+<!-- NOTE: Component will be displayed once injected in the Google Meet toolbar -->
+<div id="liveroom-main" bind:this={thisEl} style:display="none">
+  <Overlay bind:open />
+
   <button class="toggle-btn" on:click={() => (open = !open)}>
     {#if open}
       <svg
@@ -22,19 +58,14 @@
       <LiveroomLogoSvg height="1.5rem" width="1.5rem" />
     {/if}
   </button>
-
-  <Overlay bind:open />
 </div>
 
 <style>
   #liveroom-main {
-    z-index: 10; /* else is below */
-    position: fixed;
-    top: 70px;
-    left: 16px;
+    position: relative;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-end;
     gap: 0.5rem;
   }
 
@@ -42,8 +73,8 @@
     background-color: #ffffff;
     border: 1px solid rgb(82, 82, 82, 0.2); /* Tailwind neutral-600 */
     border-radius: 100%;
-    height: 2rem;
-    width: 2rem;
+    height: 2.5rem;
+    width: 2.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
