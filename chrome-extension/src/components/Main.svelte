@@ -85,8 +85,14 @@
 <div id="liveroom-main" bind:this={thisEl} style:display="none">
   <Overlay
     bind:open
-    on:session_started={() => (isSessionActive = true)}
-    on:session_ended={() => (isSessionActive = false)}
+    on:session_started={() => {
+      isSessionActive = true;
+      open = false;
+    }}
+    on:session_ended={() => {
+      isSessionActive = false;
+      open = false;
+    }}
   />
 
   <button
