@@ -87,7 +87,8 @@
     bind:open
     on:session_started={() => {
       isSessionActive = true;
-      open = false;
+      // NOTE: Keep the overlay open to copy the installation code easily.
+      open = true;
     }}
     on:session_ended={() => {
       isSessionActive = false;
