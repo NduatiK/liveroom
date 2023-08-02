@@ -302,6 +302,8 @@
         </div>
       {/if}
 
+      <div class="separator" />
+
       <div class="buttons-container">
         <CopyInstallationCodeButton url={liveState.config.url} {roomId} />
 
@@ -411,7 +413,6 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
     padding: 1.5rem;
   }
 
@@ -468,13 +469,20 @@
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); /* Tailwind 'shadow-sm' */
   }
 
+  .separator {
+    height: 1px;
+    width: 50%;
+    margin: 1.5rem auto;
+    border-radius: 100%;
+    background-color: rgb(229, 229, 229, 0.6); /* Tailwind neutral-200 */
+  }
+
   .buttons-container {
     display: flex;
     flex-direction: column;
     align-items: stretch;
     gap: 1rem;
-    padding: 1.5rem 1rem 0 1rem;
-    border-top: 1px solid rgb(229, 229, 229); /* Tailwind neutral-200 */
+    padding: 0 1rem;
   }
 
   #users-container {
