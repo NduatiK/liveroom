@@ -207,14 +207,14 @@
   }
 
   function handleMouseDown(e: MouseEvent) {
-    if (me?.id) {
+    if (liveState && me?.id) {
       liveState.dispatchEvent(
         new CustomEvent("mouse_down", { detail: { user_id: me.id } })
       );
     }
   }
   function handleMouseUp(e: MouseEvent) {
-    if (me?.id) {
+    if (liveState && me?.id) {
       liveState.dispatchEvent(
         new CustomEvent("mouse_up", { detail: { user_id: me.id } })
       );
@@ -225,14 +225,19 @@
     // NOTE: To avoid sending multiple keydown events when a key is held down.
     const firstTimeKeyIsPressed = !e.repeat;
 
-    if (firstTimeKeyIsPressed && INTERESTING_KEYS.includes(e.key) && me?.id) {
+    if (
+      liveState &&
+      me?.id &&
+      firstTimeKeyIsPressed &&
+      INTERESTING_KEYS.includes(e.key)
+    ) {
       liveState.dispatchEvent(
         new CustomEvent("key_down", { detail: { user_id: me.id, key: e.key } })
       );
     }
   }
   function handleKeyUp(e: KeyboardEvent) {
-    if (INTERESTING_KEYS.includes(e.key) && me?.id) {
+    if (liveState && me?.id && INTERESTING_KEYS.includes(e.key)) {
       liveState.dispatchEvent(
         new CustomEvent("key_up", { detail: { user_id: me.id, key: e.key } })
       );
