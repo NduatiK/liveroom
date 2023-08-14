@@ -1,6 +1,6 @@
 # Liveroom Client Element
 
-This is the client library for [Liveroom](liveroom.app).
+This is the client library for [Liveroom](https://liveroom.app).
 
 It exports a HTML Custom Element `<liveroom-client-element>`, to be easily integrated into any website.
 
