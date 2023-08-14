@@ -9,8 +9,8 @@ services:
       - "${PORT:-4001}:4000"
     environment:
       PORT: 4000
-      # PHX_HOST: localhost
-      PHX_HOST: liveroom.eu.ngrok.io
+      PHX_HOST: localhost
+      # PHX_HOST: liveroom.eu.ngrok.io
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
       DATABASE_URL: postgres://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@db:5432/${DATABASE_NAME}
       # UMAMI_TRACKING_ENABLED: ${UMAMI_TRACKING_ENABLED}
@@ -44,7 +44,8 @@ services:
     ports:
       - "3000:3000"
     environment:
-      REMOVE_TRAILING_SLASH: 1
+      # NOTE: We send the full url to Umami and this breaks the root page url "/" since Umami v2
+      # REMOVE_TRAILING_SLASH: 1
       DATABASE_TYPE: postgresql
       DATABASE_URL: postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@db:5432/${DATABASE_NAME}_umami
       HASH_SALT: gsXU6goHkGClTgDdrot7p+gpV687P6U1/H6MLbewfNDY2n+PeUpqQvDExyFbu7lU
