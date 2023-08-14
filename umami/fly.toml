@@ -4,7 +4,7 @@ kill_timeout = 5
 processes = []
 
 [build]
-  image = "ghcr.io/umami-software/umami:postgresql-v2.3.0"
+  image = "ghcr.io/umami-software/umami:postgresql-v2.4.1"
 
 [env]
   # NOTE: We send the full url to Umami and this breaks the root page url "/" since Umami v2
