@@ -67,8 +67,8 @@
         new CustomEvent("mouse_move", {
           detail: {
             user_id: me.id,
-            x: Number((e.pageX / window.innerWidth) * 100).toFixed(2), // in %
-            y: Number((e.pageY / window.innerHeight) * 100).toFixed(2), // in %
+            x: Number((e.clientX / window.innerWidth) * 100).toFixed(2), // in %
+            y: Number((e.clientY / window.innerHeight) * 100).toFixed(2), // in %
           },
         })
       );
@@ -249,7 +249,7 @@
   }
 
   #users-container {
-    position: absolute;
+    position: fixed;
     inset: 0;
     overflow: hidden;
     pointer-events: none;
