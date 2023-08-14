@@ -127,16 +127,28 @@
     screensharingVideoEl.addEventListener("mousemove", handleMouseMove);
     screensharingVideoEl.addEventListener("mousedown", handleMouseDown);
     screensharingVideoEl.addEventListener("mouseup", handleMouseUp);
-    screensharingVideoEl.addEventListener("keydown", handleKeyDown);
-    screensharingVideoEl.addEventListener("keyup", handleKeyUp);
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
   } else {
-    if (pointerEventsOnVideoElStyle.parentNode === document.head) {
-      document.head.removeChild(pointerEventsOnVideoElStyle);
-    }
+    endSession();
+    cleanStyles();
   }
 
   // Connect LiveState socket
   $: if (screensharingVideoEl && !liveState) {
+    startSession();
+  }
+
+  // LIFECYCLE
+
+  onDestroy(() => {
+    endSession();
+    cleanStyles();
+  });
+
+  // HELPERS
+
+  function startSession() {
     const parts = window.location.pathname.split("/");
     roomId = parts.pop() || parts.pop(); // handle potential trailing slash
     console.log(`[Liveroom] Connecting to room '${roomId}'...`);
@@ -162,31 +174,33 @@
       users = state.users;
     });
     dispatch("session_started");
-  } else if (!screensharingVideoEl && liveState) {
-    liveState.disconnect();
-    liveState = undefined;
-    dispatch("session_ended");
   }
 
-  // LIFECYCLE
-
-  onDestroy(() => {
-    liveState?.disconnect();
-    resizeObserver?.disconnect();
+  function endSession() {
+    if (liveState) {
+      liveState.disconnect();
+      liveState = undefined;
+      dispatch("session_ended");
+    }
+    if (resizeObserver) {
+      resizeObserver.disconnect();
+      resizeObserver = undefined;
+    }
     screensharingVideoEl?.removeEventListener("mousemove", handleMouseMove);
     screensharingVideoEl?.removeEventListener("mousedown", handleMouseDown);
     screensharingVideoEl?.removeEventListener("mouseup", handleMouseUp);
-    screensharingVideoEl?.removeEventListener("keydown", handleKeyDown);
-    screensharingVideoEl?.removeEventListener("keyup", handleKeyUp);
+    window.removeEventListener("keydown", handleKeyDown);
+    window.removeEventListener("keyup", handleKeyUp);
+  }
+
+  function cleanStyles() {
     if (document.head.contains(selectVideoElStyle)) {
       document.head.removeChild(selectVideoElStyle);
     }
     if (document.head.contains(pointerEventsOnVideoElStyle)) {
       document.head.removeChild(pointerEventsOnVideoElStyle);
     }
-  });
-
-  // HELPERS
+  }
 
   function handleMouseMove(e) {
     // const xRatio = e.layerX / screensharingVideoEl.offsetWidth;
