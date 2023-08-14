@@ -4,10 +4,10 @@
   "version": "0.0.1",
   "manifest_version": 3,
   "icons": {
-    "16": "src/assets/icons/get_started16.png",
-    "32": "src/assets/icons/get_started32.png",
-    "48": "src/assets/icons/get_started48.png",
-    "128": "src/assets/icons/get_started128.png"
+    "16": "src/assets/liveroom_logo16.png",
+    "32": "src/assets/liveroom_logo32.png",
+    "48": "src/assets/liveroom_logo48.png",
+    "128": "src/assets/liveroom_logo128.png"
   },
   "content_scripts": [
     {
@@ -25,10 +25,10 @@
   "action": {
     "default_popup": "src/popup/popup.html",
     "default_icon": {
-      "16": "src/assets/icons/get_started16.png",
-      "32": "src/assets/icons/get_started32.png",
-      "48": "src/assets/icons/get_started48.png",
-      "128": "src/assets/icons/get_started128.png"
+      "16": "src/assets/liveroom_logo16.png",
+      "32": "src/assets/liveroom_logo32.png",
+      "48": "src/assets/liveroom_logo48.png",
+      "128": "src/assets/liveroom_logo128.png"
     }
   },
   "permissions": ["tabs"]
