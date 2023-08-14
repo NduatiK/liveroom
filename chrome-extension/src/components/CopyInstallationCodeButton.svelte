@@ -14,8 +14,8 @@
 
   const SCRIPT_SRC =
     process.env.NODE_ENV === "production"
-      ? "https://cdn.jsdelivr.net/npm/liveroom-client-element/dist/liveroom-client-element.es.min.js"
-      : "http://localhost:5173/src/liveroom-client-element.ts";
+      ? "https://cdn.jsdelivr.net/npm/liveroom-client-element/dist/liveroom-client-element.min.js"
+      : "http://localhost:5173/src/main.ts";
 
   const SCRIPT = `
 const script = document.createElement("script");
