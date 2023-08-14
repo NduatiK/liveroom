@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && ./zip.sh",
     "format": "prettier --write .",
     "lint": "prettier . --check",
     "check": "svelte-check --tsconfig ./tsconfig.json"
