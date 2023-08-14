@@ -11,7 +11,7 @@ defmodule LiveroomWeb.Components.CursorsPlayground do
     <div
       id="cursors_playground"
       phx-hook="TrackCursorsHook"
-      data-mode="fullscreen"
+      data-mode="page"
       data-mouseclick="true"
       data-keyboardpress="true"
     >

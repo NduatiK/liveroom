@@ -16,7 +16,7 @@ export const TrackCursorsHook = {
         });
         break;
       }
-      case "fullscreen": {
+      case "page": {
         window.addEventListener("mousemove", (e) => {
           const xRatio = e.pageX / window.innerWidth;
           const x = Number(xRatio * 100).toFixed(2); // in %
