@@ -220,7 +220,7 @@
       );
     }
   }
-  const INTERESTING_KEYS = ["Escape"];
+  const INTERESTING_KEYS = ["Shift"];
   function handleKeyDown(e: KeyboardEvent) {
     // NOTE: To avoid sending multiple keydown events when a key is held down.
     const firstTimeKeyIsPressed = !e.repeat;
@@ -358,7 +358,7 @@
         <span class="user-name">{user.name}</span>
         <!-- <div
           class="halo"
-          data-show={user.is_mouse_down || user.is_escape_key_down}
+          data-show={user.is_mouse_down || user.is_shift_key_down}
         /> -->
       </div>
     {/each}

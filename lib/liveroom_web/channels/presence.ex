@@ -32,7 +32,7 @@ defmodule LiveroomWeb.Presence do
       y: "50",
       msg: "",
       is_mouse_down: false,
-      is_escape_key_down: false,
+      is_shift_key_down: false,
       hovered_elements: %{},
       focused_elements: %{},
       inputs: %{}

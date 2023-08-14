@@ -72,14 +72,14 @@ defmodule LiveroomWeb.Hooks.Liveroom do
     {:halt, socket}
   end
 
-  defp handle_event_liveroom("liveroom-keydown" = _event, %{"key" => "Escape"} = _params, socket) do
-    update_user(socket, &put_in(&1.is_escape_key_down, true))
+  defp handle_event_liveroom("liveroom-keydown" = _event, %{"key" => "Shift"} = _params, socket) do
+    update_user(socket, &put_in(&1.is_shift_key_down, true))
 
     {:halt, socket}
   end
 
-  defp handle_event_liveroom("liveroom-keyup" = _event, %{"key" => "Escape"} = _params, socket) do
-    update_user(socket, &put_in(&1.is_escape_key_down, false))
+  defp handle_event_liveroom("liveroom-keyup" = _event, %{"key" => "Shift"} = _params, socket) do
+    update_user(socket, &put_in(&1.is_shift_key_down, false))
 
     {:halt, socket}
   end

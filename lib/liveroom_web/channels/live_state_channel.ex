@@ -46,13 +46,13 @@ defmodule LiveroomWeb.LiveStateChannel do
     {:noreply, state}
   end
 
-  def handle_event("key_down", %{"key" => "Escape"} = _params, state) do
-    update_user(state, &put_in(&1.is_escape_key_down, true))
+  def handle_event("key_down", %{"key" => "Shift"} = _params, state) do
+    update_user(state, &put_in(&1.is_shift_key_down, true))
     {:noreply, state}
   end
 
-  def handle_event("key_up", %{"key" => "Escape"} = _params, state) do
-    update_user(state, &put_in(&1.is_escape_key_down, false))
+  def handle_event("key_up", %{"key" => "Shift"} = _params, state) do
+    update_user(state, &put_in(&1.is_shift_key_down, false))
     {:noreply, state}
   end
 
@@ -134,12 +134,12 @@ defmodule LiveroomWeb.LiveStateChannel do
   #       %Phoenix.Socket.Broadcast{
   #         topic: _topic,
   #         event: event,
-  #         payload: %{"user_id" => user_id, "key" => "Escape"}
+  #         payload: %{"user_id" => user_id, "key" => "Shift"}
   #       },
   #       state
   #     )
   #     when event in ["key_down", "key_up"] do
-  #   is_escape_key_down? =
+  #   is_shift_key_down? =
   #     case event do
   #       "key_down" -> true
   #       "key_up" -> false
@@ -148,7 +148,7 @@ defmodule LiveroomWeb.LiveStateChannel do
   #   state =
   #     update_in(state, [:users, user_id], fn
   #       nil -> nil
-  #       user -> %{user | is_escape_key_down: is_escape_key_down?}
+  #       user -> %{user | is_shift_key_down: is_shift_key_down?}
   #     end)
 
   #   {:noreply, state}

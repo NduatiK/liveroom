@@ -25,7 +25,7 @@ defmodule LiveroomWeb.Components.CursorsPlayground do
         y={user.y}
         name={user.name}
         color={user.color}
-        is_escape_key_down={user.is_escape_key_down}
+        is_shift_key_down={user.is_shift_key_down}
         is_mouse_down={user.is_mouse_down}
         msg={user.msg}
         mode={:full_screen}

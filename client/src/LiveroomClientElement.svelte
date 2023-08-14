@@ -97,7 +97,7 @@
     }
   }
 
-  const INTERESTING_KEYS = ["Escape"];
+  const INTERESTING_KEYS = ["Shift"];
 
   function dispatchKeyDown(e: KeyboardEvent) {
     // NOTE: To avoid sending multiple keydown events when a key is held down.
@@ -186,7 +186,7 @@
     y: string;
     msg: string;
     is_mouse_down: boolean;
-    is_escape_key_down: boolean;
+    is_shift_key_down: boolean;
     hovered_elements: Record<string, boolean>;
     focused_elements: Record<string, boolean>;
     inputs: Record<string, { type: "text"; value: string }>;
@@ -228,7 +228,7 @@
           <span class="user-name">{user.name}</span>
           <div
             class="halo"
-            data-show={user.is_mouse_down || user.is_escape_key_down}
+            data-show={user.is_mouse_down || user.is_shift_key_down}
           />
         </div>
       {/each}

@@ -1,4 +1,4 @@
-const INTERESTING_KEYS = ["Escape"];
+const INTERESTING_KEYS = ["Shift"];
 
 export const TrackCursorsHook = {
   mounted() {
