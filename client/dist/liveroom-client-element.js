@@ -717,7 +717,7 @@ class P extends D {
     return { doc: n };
   }
 }
-const Et = (s, n) => {
+const $t = (s, n) => {
   if (s === n)
     return !0;
   if (s && n && typeof s == "object" && typeof n == "object") {
@@ -728,7 +728,7 @@ const Et = (s, n) => {
       if (t = s.length, t !== n.length)
         return !1;
       for (e = t; e-- !== 0; )
-        if (!Et(s[e], n[e]))
+        if (!$t(s[e], n[e]))
           return !1;
       return !0;
     }
@@ -736,7 +736,7 @@ const Et = (s, n) => {
       return !1;
     for (e = t; e-- !== 0; ) {
       const i = r[e];
-      if (!Et(s[i], n[i]))
+      if (!$t(s[i], n[i]))
         return !1;
     }
     return !0;
@@ -760,7 +760,7 @@ class vs extends P {
     const { val: e } = O(t, this.path);
     if (e === void 0)
       return !!this.not;
-    const r = Et(e, this.value);
+    const r = $t(e, this.value);
     return this.not ? !r : r;
   }
   toJson(t) {
@@ -921,11 +921,11 @@ class _s extends D {
     t.encodeArrayHeader(r ? 4 : 5), t.writer.u8(7), t.encodeArray(this.path), t.encodeNumber(this.pos), r ? t.encodeString(this.str) : (t.writer.u8(0), t.encodeNumber(this.len));
   }
 }
-const { isArray: bs } = Array, Rt = (s) => !!s && typeof s == "object" && typeof s.text == "string", Ht = (s) => !!s && typeof s == "object" && bs(s.children), Es = (s, n) => {
+const { isArray: bs } = Array, Rt = (s) => !!s && typeof s == "object" && typeof s.text == "string", Ht = (s) => !!s && typeof s == "object" && bs(s.children), $s = (s, n) => {
   const t = new RegExp(s, n ? "i" : void 0);
   return (e) => t.test(e);
 };
-class $s extends D {
+class Es extends D {
   constructor(t, e, r) {
     super(t);
     f(this, "pos");
@@ -1389,7 +1389,7 @@ class Hs extends P {
   test(t) {
     const { val: e } = O(t, this.path);
     for (const r of this.value)
-      if (Et(e, r))
+      if ($t(e, r))
         return !0;
     return !1;
   }
@@ -1682,7 +1682,7 @@ const Fs = (s, n) => {
     case "str_del":
       return new _s(w(s.path), s.pos, s.str, s.len);
     case "split":
-      return new $s(w(s.path), s.pos, s.props || null);
+      return new Es(w(s.path), s.pos, s.props || null);
     case "merge":
       return new Cs(w(s.path), s.pos, s.props || null);
     case "extend":
@@ -1713,7 +1713,7 @@ const Fs = (s, n) => {
     case "starts":
       return new Rs(w(s.path), s.value, !!s.ignore_case);
     case "matches":
-      return new Js(w(s.path), s.value, !!s.ignore_case, n.createMatcher || Es);
+      return new Js(w(s.path), s.value, !!s.ignore_case, n.createMatcher || $s);
     case "in":
       return new Hs(w(s.path), s.value);
     case "less":
@@ -1916,7 +1916,7 @@ var ot = (s) => typeof s == "function" ? s : function() {
   isLeaving() {
     return this.state === I.leaving;
   }
-}, $t = class {
+}, Et = class {
   static request(s, n, t, e, r, i, o) {
     if (at.XDomainRequest) {
       let h = new at.XDomainRequest();
@@ -1978,7 +1978,7 @@ var ot = (s) => typeof s == "function" ? s : function() {
     return s.replace("ws://", "http://").replace("wss://", "https://").replace(new RegExp("(.*)/" + Pt.websocket), "$1/" + Pt.longpoll);
   }
   endpointURL() {
-    return $t.appendParams(this.pollEndpoint, { token: this.token });
+    return Et.appendParams(this.pollEndpoint, { token: this.token });
   }
   closeAndRetry(s, n, t) {
     this.close(s, n, t), this.readyState = J.connecting;
@@ -2036,7 +2036,7 @@ var ot = (s) => typeof s == "function" ? s : function() {
     let r, i = () => {
       this.reqs.delete(r), t();
     };
-    r = $t.request(s, this.endpointURL(), "application/json", n, this.timeout, i, (o) => {
+    r = Et.request(s, this.endpointURL(), "application/json", n, this.timeout, i, (o) => {
       this.reqs.delete(r), this.isActive() && e(o);
     }), this.reqs.add(r);
   }
@@ -2129,7 +2129,7 @@ var ot = (s) => typeof s == "function" ? s : function() {
     return location.protocol.match(/^https/) ? "wss" : "ws";
   }
   endPointURL() {
-    let s = $t.appendParams($t.appendParams(this.endPoint, this.params()), { vsn: this.vsn });
+    let s = Et.appendParams(Et.appendParams(this.endPoint, this.params()), { vsn: this.vsn });
     return s.charAt(0) !== "/" ? s : s.charAt(1) === "/" ? `${this.protocol()}:${s}` : `${this.protocol()}://${location.host}${s}`;
   }
   disconnect(s, n, t) {
@@ -2599,12 +2599,12 @@ var se;
       if (l.length <= 0)
         return g;
       for (var H = new T(), y = [], m = 0, v = l; m < v.length; m++) {
-        var E = v[m], $ = H.has(E);
-        $ || (H.add(E), y.push(E));
+        var $ = v[m], E = H.has($);
+        E || (H.add($), y.push($));
       }
       for (var W = 0, Yt = g; W < Yt.length; W++) {
-        var E = Yt[W], $ = H.has(E);
-        $ || (H.add(E), y.push(E));
+        var $ = Yt[W], E = H.has($);
+        E || (H.add($), y.push($));
       }
       return y;
     }
@@ -2617,18 +2617,18 @@ var se;
       );
       if (M(u))
         return l;
-      for (var g = u.keys(), H = Ee(g), y = 0; ; ) {
+      for (var g = u.keys(), H = $e(g), y = 0; ; ) {
         var m = Ce(H);
         if (!m)
           return l.length = y, l;
-        var v = $e(m);
+        var v = Ee(m);
         try {
           l[y] = v;
-        } catch (E) {
+        } catch ($) {
           try {
             ke(H);
           } finally {
-            throw E;
+            throw $;
           }
         }
         y++;
@@ -2761,7 +2761,7 @@ var se;
         return l;
       }
     }
-    function Ee(a) {
+    function $e(a) {
       var c = qt(a, i);
       if (!Z(c))
         throw new TypeError();
@@ -2770,7 +2770,7 @@ var se;
         throw new TypeError();
       return l;
     }
-    function $e(a) {
+    function Ee(a) {
       return a.value;
     }
     function Ce(a) {
@@ -2795,8 +2795,8 @@ var se;
       var a = {}, c = [], l = (
         /** @class */
         function() {
-          function y(m, v, E) {
-            this._index = 0, this._keys = m, this._values = v, this._selector = E;
+          function y(m, v, $) {
+            this._index = 0, this._keys = m, this._values = v, this._selector = $;
           }
           return y.prototype["@@iterator"] = function() {
             return this;
@@ -2842,12 +2842,12 @@ var se;
             );
             return v >= 0 ? this._values[v] : void 0;
           }, y.prototype.set = function(m, v) {
-            var E = this._find(
+            var $ = this._find(
               m,
               /*insert*/
               !0
             );
-            return this._values[E] = v, this;
+            return this._values[$] = v, this;
           }, y.prototype.delete = function(m) {
             var v = this._find(
               m,
@@ -2855,8 +2855,8 @@ var se;
               !1
             );
             if (v >= 0) {
-              for (var E = this._keys.length, $ = v + 1; $ < E; $++)
-                this._keys[$ - 1] = this._keys[$], this._values[$ - 1] = this._values[$];
+              for (var $ = this._keys.length, E = v + 1; E < $; E++)
+                this._keys[E - 1] = this._keys[E], this._values[E - 1] = this._values[E];
               return this._keys.length--, this._values.length--, m === this._cacheKey && (this._cacheKey = a, this._cacheIndex = -2), !0;
             }
             return !1;
@@ -2930,34 +2930,34 @@ var se;
           function v() {
             this._key = u();
           }
-          return v.prototype.has = function(E) {
-            var $ = g(
-              E,
+          return v.prototype.has = function($) {
+            var E = g(
+              $,
               /*create*/
               !1
             );
-            return $ !== void 0 ? d.has($, this._key) : !1;
-          }, v.prototype.get = function(E) {
-            var $ = g(
-              E,
+            return E !== void 0 ? d.has(E, this._key) : !1;
+          }, v.prototype.get = function($) {
+            var E = g(
+              $,
               /*create*/
               !1
             );
-            return $ !== void 0 ? d.get($, this._key) : void 0;
-          }, v.prototype.set = function(E, $) {
+            return E !== void 0 ? d.get(E, this._key) : void 0;
+          }, v.prototype.set = function($, E) {
             var W = g(
-              E,
+              $,
               /*create*/
               !0
             );
-            return W[this._key] = $, this;
-          }, v.prototype.delete = function(E) {
-            var $ = g(
-              E,
+            return W[this._key] = E, this;
+          }, v.prototype.delete = function($) {
+            var E = g(
+              $,
               /*create*/
               !1
             );
-            return $ !== void 0 ? delete $[this._key] : !1;
+            return E !== void 0 ? delete E[this._key] : !1;
           }, v.prototype.clear = function() {
             this._key = u();
           }, v;
@@ -2970,17 +2970,17 @@ var se;
         while (d.has(c, v));
         return c[v] = !0, v;
       }
-      function g(v, E) {
+      function g(v, $) {
         if (!t.call(v, l)) {
-          if (!E)
+          if (!$)
             return;
           Object.defineProperty(v, l, { value: d.create() });
         }
         return v[l];
       }
-      function H(v, E) {
-        for (var $ = 0; $ < E; ++$)
-          v[$] = Math.random() * 255 | 0;
+      function H(v, $) {
+        for (var E = 0; E < $; ++E)
+          v[E] = Math.random() * 255 | 0;
         return v;
       }
       function y(v) {
@@ -2989,11 +2989,11 @@ var se;
       function m() {
         var v = y(a);
         v[6] = v[6] & 79 | 64, v[8] = v[8] & 191 | 128;
-        for (var E = "", $ = 0; $ < a; ++$) {
-          var W = v[$];
-          ($ === 4 || $ === 6 || $ === 8) && (E += "-"), W < 16 && (E += "0"), E += W.toString(16).toLowerCase();
+        for (var $ = "", E = 0; E < a; ++E) {
+          var W = v[E];
+          (E === 4 || E === 6 || E === 8) && ($ += "-"), W < 16 && ($ += "0"), $ += W.toString(16).toLowerCase();
         }
-        return E;
+        return $;
       }
     }
     function Ot(a) {
@@ -3058,7 +3058,7 @@ function ie(s, n) {
     c() {
       t = G("div"), e = Qt("svg"), r = Qt("path"), i = jt(), o = G("span"), p = he(h), d = jt(), b = G("div"), A = jt(), x(r, "d", "M2.2706 0.0593359L25.4277 8.05957H25.45926C25.65896 8.13153 25.83096 8.25952 25.95221 8.42653C26.07357 8.59354 26.13851 8.79166 26.13851 8.99459C26.13851 9.19751 26.07357 9.39564 25.95221 9.56265C25.83096 9.72966 25.65896 9.85765 25.45926 9.92962L15.3543 13.7698L11.3124 23.37C11.2344 23.5561 11.0994 23.7156 10.9248 23.828C10.7503 23.9402 10.5443 24.0002 10.3335 24C10.1172 24 9.9061 23.9365 9.7291 23.8184C9.552 23.7004 9.4176 23.5332 9.344 23.34L0.9233 1.33937C0.8555 1.16076 0.8426 0.967504 0.8861 0.782189C0.9297 0.596873 1.0278 0.427163 1.1691 0.292901C1.3105 0.158639 1.4891 0.0653762 1.6841 0.0240151C1.8792 -0.0173461 2.0826 -0.00509504 2.2706 0.0593359Z"), x(e, "width", "23"), x(e, "viewBox", "0 0 27 24"), x(e, "fill", "currentColor"), x(e, "aria-hidden", "true"), x(e, "xmlns", "http://www.w3.org/2000/svg"), x(e, "class", "cursor svelte-or6zbb"), x(o, "class", "user-name svelte-or6zbb"), x(b, "class", "halo svelte-or6zbb"), x(b, "data-show", _ = /*user*/
       n[14].is_mouse_down || /*user*/
-      n[14].is_escape_key_down), x(t, "id", T = "user-" + /*user*/
+      n[14].is_shift_key_down), x(t, "id", T = "user-" + /*user*/
       n[14].id), x(t, "class", "user svelte-or6zbb"), x(t, "data-isself", j = /*user*/
       n[14].id == /*me*/
       n[1].id), Q(
@@ -3083,7 +3083,7 @@ function ie(s, n) {
       n[14].name + "") && Pe(p, h), N & /*users*/
       4 && _ !== (_ = /*user*/
       n[14].is_mouse_down || /*user*/
-      n[14].is_escape_key_down) && x(b, "data-show", _), N & /*users*/
+      n[14].is_shift_key_down) && x(b, "data-show", _), N & /*users*/
       4 && T !== (T = "user-" + /*user*/
       n[14].id) && x(t, "id", T), N & /*users, me*/
       6 && j !== (j = /*user*/
@@ -3172,7 +3172,7 @@ function nn(s, n, t) {
   function _() {
     o && (h != null && h.id) && o.dispatchEvent(new CustomEvent("mouse_up", { detail: { user_id: h.id } }));
   }
-  const A = ["Escape"];
+  const A = ["Shift"];
   function T(k) {
     !k.repeat && A.includes(k.key) && o && (h != null && h.id) && o.dispatchEvent(new CustomEvent("key_down", { detail: { key: k.key, user_id: h.id } }));
   }
