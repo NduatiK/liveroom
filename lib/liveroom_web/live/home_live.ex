@@ -1,6 +1,7 @@
 defmodule LiveroomWeb.HomeLive do
   use LiveroomWeb, :live_view
 
+  alias LiveroomWeb.Hooks.Analytics
   alias LiveroomWeb.Components.CursorsPlayground
   alias LiveroomWeb.Components.InteractiveDashboard
 
@@ -103,7 +104,7 @@ defmodule LiveroomWeb.HomeLive do
         </h3>
       </div>
 
-      <.button_link>
+      <.button_link phx-click={JS.push("join_waitlist_clicked", value: %{location: "hero"})}>
         Join waitlist
       </.button_link>
 
@@ -204,6 +205,7 @@ defmodule LiveroomWeb.HomeLive do
     """
   end
 
+  attr :rest, :global
   slot :inner_block, required: true
 
   def button_link(assigns) do
@@ -212,6 +214,7 @@ defmodule LiveroomWeb.HomeLive do
       href="https://tally.so/r/wQ1EvX"
       tabindex="-1"
       class="rounded-[10px] bg-slate-900 md:hover:bg-slate-900/90 text-white text-lg font-semibold px-6 py-4"
+      {@rest}
     >
       <%= render_slot(@inner_block) %>
     </a>
@@ -332,7 +335,7 @@ defmodule LiveroomWeb.HomeLive do
       </ul>
     </div>
 
-    <.button_link>
+    <.button_link phx-click={JS.push("join_waitlist_clicked", value: %{location: "bottom"})}>
       Join waitlist
     </.button_link>
     """
@@ -382,5 +385,14 @@ defmodule LiveroomWeb.HomeLive do
   @impl true
   def mount(_params, _session, socket) do
     {:ok, socket}
+  end
+
+  @impl true
+  def handle_event("join_waitlist_clicked", %{"location" => location} = _params, socket) do
+    Task.start(fn ->
+      Analytics.send_event("join_waitlist_clicked", socket, props: %{location: location})
+    end)
+
+    {:noreply, socket}
   end
 end
