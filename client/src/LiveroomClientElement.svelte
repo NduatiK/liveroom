@@ -14,6 +14,32 @@
   let users: { [key: User["id"]]: User };
 
   onMount(async () => {
+    // NOTE: room_id is read from url query param '_liveroom' if present,
+    //       else from html custom element attribute 'room_id'
+    const params = new URLSearchParams(window.location.search);
+    const param = params.get("_liveroom");
+    // can be either the google meet id or the full url
+    const room_id_or_pathname = param?.split("https://meet.google.com/");
+    let room_id_from_url = room_id_or_pathname?.[0];
+    const is_pathname = !!room_id_or_pathname?.[1];
+    if (is_pathname) {
+      // just in case there are query params in the google meet url
+      room_id_from_url = room_id_or_pathname[1].split("?")[0];
+    }
+
+    room_id = room_id_from_url || room_id;
+
+    // start LiveState session
+    startSession();
+  });
+
+  onDestroy(() => {
+    endSession();
+  });
+
+  // HELPERS
+
+  function startSession() {
     // Setup LiveState
     liveState = new LiveState({
       url,
@@ -43,9 +69,9 @@
     window.addEventListener("keydown", dispatchKeyDown);
     window.addEventListener("keyup", dispatchKeyUp);
     window.addEventListener("resize", dispatchWindowResize);
-  });
+  }
 
-  onDestroy(() => {
+  function endSession() {
     // Remove event listeners
     window.removeEventListener("resize", dispatchWindowResize);
     window.removeEventListener("keyup", dispatchKeyUp);
@@ -57,9 +83,7 @@
 
     // Disconnect LiveState
     liveState?.disconnect();
-  });
-
-  // HELPERS
+  }
 
   function dispatchMouseMove(e: MouseEvent) {
     if (liveState && me?.id) {
