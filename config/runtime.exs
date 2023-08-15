@@ -43,7 +43,10 @@ if config_env() == :prod do
         fly6pn: [
           strategy: Cluster.Strategy.DNSPoll,
           config: [
-            polling_interval: 5_000,
+            # NOTE: Default is 5_000 ms. But during deployment, it is quite spammy.
+            #       Bumping it a little should not hurt that much.
+            # polling_interval: 5_000,
+            polling_interval: 10_000,
             query: "#{app_name}.internal",
             node_basename: app_name
           ]
