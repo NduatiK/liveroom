@@ -3002,7 +3002,7 @@ var se;
   });
 })(se || (se = {}));
 function en(s) {
-  Le(s, "svelte-or6zbb", '#liveroom-client-element.svelte-or6zbb.svelte-or6zbb{font-family:Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;line-height:1.5;font-weight:400;font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;-webkit-text-size-adjust:100%}#users-container.svelte-or6zbb.svelte-or6zbb{position:fixed;inset:0;overflow:hidden;pointer-events:none}.user.svelte-or6zbb.svelte-or6zbb{z-index:1000;position:absolute;top:0;left:0;user-select:none;transform:translate(var(--x), var(--y))}.user.svelte-or6zbb .cursor.svelte-or6zbb{position:absolute;top:0;left:0;color:var(--color);transform-origin:top left;transform:rotate(6deg)}.user[data-isself="true"].svelte-or6zbb .cursor.svelte-or6zbb{display:none}.user-name.svelte-or6zbb.svelte-or6zbb{padding:4px 10px;font-size:14px;line-height:20px;font-weight:600;color:black;background-color:var(--color);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-radius:9999px;box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05)}.user.svelte-or6zbb .user-name.svelte-or6zbb{position:absolute;top:20px;left:16px}.user[data-isself="true"].svelte-or6zbb .user-name.svelte-or6zbb{display:none}.user.svelte-or6zbb .halo.svelte-or6zbb{transform:scale(0);z-index:-1;position:absolute;top:-60px;left:-60px;width:120px;height:120px;border-radius:9999px;background-color:var(--color);opacity:0.25;transition:transform 0.15s ease-out;box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05)}.user.svelte-or6zbb .halo[data-show="true"].svelte-or6zbb{transform:scale(1)}');
+  Le(s, "svelte-3iboz2", '#liveroom-client-element.svelte-3iboz2.svelte-3iboz2{font-family:Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;line-height:1.5;font-weight:400;font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;-webkit-text-size-adjust:100%}#users-container.svelte-3iboz2.svelte-3iboz2{z-index:99999;position:fixed;inset:0;overflow:hidden;pointer-events:none}.user.svelte-3iboz2.svelte-3iboz2{z-index:10;position:absolute;top:0;left:0;user-select:none;transform:translate(var(--x), var(--y))}.user.svelte-3iboz2 .cursor.svelte-3iboz2{position:absolute;top:0;left:0;color:var(--color);transform-origin:top left;transform:rotate(6deg)}.user[data-isself="true"].svelte-3iboz2 .cursor.svelte-3iboz2{display:none}.user-name.svelte-3iboz2.svelte-3iboz2{padding:4px 10px;font-size:14px;line-height:20px;font-weight:600;color:black;background-color:var(--color);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-radius:9999px;box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05)}.user.svelte-3iboz2 .user-name.svelte-3iboz2{position:absolute;top:20px;left:16px}.user[data-isself="true"].svelte-3iboz2 .user-name.svelte-3iboz2{display:none}.user.svelte-3iboz2 .halo.svelte-3iboz2{transform:scale(0);z-index:-1;position:absolute;top:-60px;left:-60px;width:120px;height:120px;border-radius:9999px;background-color:var(--color);opacity:0.25;transition:transform 0.15s ease-out;box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05)}.user.svelte-3iboz2 .halo[data-show="true"].svelte-3iboz2{transform:scale(1)}');
 }
 function ne(s, n, t) {
   const e = s.slice();
@@ -3026,7 +3026,7 @@ function re(s) {
       n = Q("div");
       for (let o = 0; o < t.length; o += 1)
         t[o].c();
-      S(n, "id", "users-container"), S(n, "class", "svelte-or6zbb");
+      S(n, "id", "users-container"), S(n, "class", "svelte-3iboz2");
     },
     m(o, h) {
       Ct(o, n, h);
@@ -3056,10 +3056,10 @@ function ie(s, n) {
     key: s,
     first: null,
     c() {
-      t = Q("div"), e = Qt("svg"), r = Qt("path"), i = jt(), o = Q("span"), p = he(h), d = jt(), b = Q("div"), A = jt(), S(r, "d", "M2.2706 0.0593359L25.4277 8.05957H25.45926C25.65896 8.13153 25.83096 8.25952 25.95221 8.42653C26.07357 8.59354 26.13851 8.79166 26.13851 8.99459C26.13851 9.19751 26.07357 9.39564 25.95221 9.56265C25.83096 9.72966 25.65896 9.85765 25.45926 9.92962L15.3543 13.7698L11.3124 23.37C11.2344 23.5561 11.0994 23.7156 10.9248 23.828C10.7503 23.9402 10.5443 24.0002 10.3335 24C10.1172 24 9.9061 23.9365 9.7291 23.8184C9.552 23.7004 9.4176 23.5332 9.344 23.34L0.9233 1.33937C0.8555 1.16076 0.8426 0.967504 0.8861 0.782189C0.9297 0.596873 1.0278 0.427163 1.1691 0.292901C1.3105 0.158639 1.4891 0.0653762 1.6841 0.0240151C1.8792 -0.0173461 2.0826 -0.00509504 2.2706 0.0593359Z"), S(e, "width", "23"), S(e, "viewBox", "0 0 27 24"), S(e, "fill", "currentColor"), S(e, "aria-hidden", "true"), S(e, "xmlns", "http://www.w3.org/2000/svg"), S(e, "class", "cursor svelte-or6zbb"), S(o, "class", "user-name svelte-or6zbb"), S(b, "class", "halo svelte-or6zbb"), S(b, "data-show", _ = /*user*/
+      t = Q("div"), e = Qt("svg"), r = Qt("path"), i = jt(), o = Q("span"), p = he(h), d = jt(), b = Q("div"), A = jt(), S(r, "d", "M2.2706 0.0593359L25.4277 8.05957H25.45926C25.65896 8.13153 25.83096 8.25952 25.95221 8.42653C26.07357 8.59354 26.13851 8.79166 26.13851 8.99459C26.13851 9.19751 26.07357 9.39564 25.95221 9.56265C25.83096 9.72966 25.65896 9.85765 25.45926 9.92962L15.3543 13.7698L11.3124 23.37C11.2344 23.5561 11.0994 23.7156 10.9248 23.828C10.7503 23.9402 10.5443 24.0002 10.3335 24C10.1172 24 9.9061 23.9365 9.7291 23.8184C9.552 23.7004 9.4176 23.5332 9.344 23.34L0.9233 1.33937C0.8555 1.16076 0.8426 0.967504 0.8861 0.782189C0.9297 0.596873 1.0278 0.427163 1.1691 0.292901C1.3105 0.158639 1.4891 0.0653762 1.6841 0.0240151C1.8792 -0.0173461 2.0826 -0.00509504 2.2706 0.0593359Z"), S(e, "width", "23"), S(e, "viewBox", "0 0 27 24"), S(e, "fill", "currentColor"), S(e, "aria-hidden", "true"), S(e, "xmlns", "http://www.w3.org/2000/svg"), S(e, "class", "cursor svelte-3iboz2"), S(o, "class", "user-name svelte-3iboz2"), S(b, "class", "halo svelte-3iboz2"), S(b, "data-show", _ = /*user*/
       n[16].is_mouse_down || /*user*/
       n[16].is_shift_key_down), S(t, "id", T = "user-" + /*user*/
-      n[16].id), S(t, "class", "user svelte-or6zbb"), S(t, "data-isself", j = /*user*/
+      n[16].id), S(t, "class", "user svelte-3iboz2"), S(t, "data-isself", j = /*user*/
       n[16].id == /*me*/
       n[1].id), st(
         t,
@@ -3117,7 +3117,7 @@ function sn(s) {
   );
   return {
     c() {
-      n = Q("div"), t && t.c(), S(n, "id", "liveroom-client-element"), S(n, "class", "svelte-or6zbb");
+      n = Q("div"), t && t.c(), S(n, "id", "liveroom-client-element"), S(n, "class", "svelte-3iboz2");
     },
     m(e, r) {
       Ct(e, n, r), t && t.m(n, null), s[5](n);

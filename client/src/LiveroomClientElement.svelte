@@ -250,6 +250,7 @@
   }
 
   #users-container {
+    z-index: 99999;
     position: fixed;
     inset: 0;
     overflow: hidden;
@@ -257,7 +258,7 @@
   }
 
   .user {
-    z-index: 1000;
+    z-index: 10;
     position: absolute;
     top: 0;
     left: 0;
