@@ -101,6 +101,7 @@
 
   <button
     class="toggle-btn"
+    data-open={open}
     data-issessionactive={isSessionActive}
     on:click={() => {
       if (!started) {
@@ -136,7 +137,7 @@
   .toggle-btn {
     color: rgb(38, 38, 38, 0.9); /* Tailwind neutral-800 */
     background-color: white;
-    border: 1px solid rgb(82, 82, 82, 0.2); /* Tailwind neutral-600 */
+    border: 1px solid rgb(163, 163, 163, 0.2); /* Tailwind neutral-400 */
     border-radius: 100%;
     height: 39px; /* same as Google Meet toolbar buttons */
     width: 39px; /* same as Google Meet toolbar buttons */
@@ -145,16 +146,25 @@
     align-items: center;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Tailwind shadow-md */
     cursor: pointer;
-    transition: color 0.15s ease-out;
+    transition: color 0.15s ease-out, transform 0.15s ease-out;
   }
   .toggle-btn:hover {
     color: black;
   }
-  .toggle-btn[data-issessionactive="true"] {
-    color: rgb(79, 70, 229, 0.9); /* Tailwind indigo-600 */
+  .toggle-btn:focus-visible,
+  .toggle-btn:active {
+    transform: scale(0.8);
   }
-  .toggle-btn[data-issessionactive="true"]:hover {
-    color: rgb(79, 70, 229); /* Tailwind indigo-600 */
+  .toggle-btn[data-issessionactive="false"][data-open="false"] {
+    background-color: rgb(38, 38, 38); /* Tailwind neutral-800 */
+    color: white;
+  }
+  .toggle-btn[data-issessionactive="true"][data-open="false"] {
+    background-color: rgb(79, 70, 229, 0.9); /* Tailwind indigo-600 */
+    color: white;
+  }
+  .toggle-btn[data-issessionactive="true"][data-open="false"]:hover {
+    background-color: rgb(79, 70, 229); /* Tailwind indigo-600 */
   }
 
   .toggle-btn .svg-close {
