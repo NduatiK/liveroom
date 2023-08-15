@@ -6,20 +6,27 @@
 ```mermaid
 graph TD
     subgraph Front
-      subgraph Liveroom.app
-        Admin(<b>Admin</b> <br/> LiveView)
+      subgraph Google Meet
+        ChromeExtension(Chrome extension)
       end
-      subgraph MySaaS.com
-        Client(<b>Client</b> <br/> Custom HTML Element)
+
+      subgraph Liveroom.app
+        Admin(LiveView)
+      end
+
+      subgraph Any website
+        Client(Custom HTML Element)
       end
     end
 
     subgraph Liveroom Server
-      ClientProcess
+      ClientProcess_1
+      ClientProcess_2
       AdminProcess
     end
 
-    Client <-- LiveState --> ClientProcess
+    ChromeExtension <-- LiveState --> ClientProcess_1
+    Client <-- LiveState --> ClientProcess_2
     Admin <-- LiveView --> AdminProcess
 ```
 
