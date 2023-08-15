@@ -88,7 +88,8 @@
     on:session_started={() => {
       isSessionActive = true;
       // NOTE: Keep the overlay open to copy the installation code easily.
-      open = true;
+      // open = true;
+      open = false;
     }}
     on:session_ended={() => {
       isSessionActive = false;
