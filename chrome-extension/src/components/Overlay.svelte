@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher, onDestroy } from "svelte";
   import { LiveState } from "phx-live-state";
-  import LiveroomLogoSvg from "./LiveroomLogoSvg.svelte";
+  import PoweredByLiveroom from "./PoweredByLiveroom.svelte";
   import CopyInstallationCodeButton from "./CopyInstallationCodeButton.svelte";
   import type { User } from "src/types/User";
 
@@ -335,12 +335,7 @@
   </div>
 
   <div class="footer">
-    <p class="powered-by">
-      powered by <a href="https://liveroom.app">
-        <LiveroomLogoSvg height="10" width="10" color="currentColor" />
-        <span>Liveroom</span>
-      </a>
-    </p>
+    <PoweredByLiveroom />
   </div>
 </div>
 
@@ -434,24 +429,6 @@
     display: flex;
     justify-content: center;
     padding: 0.3rem;
-  }
-  .footer .powered-by {
-    display: flex;
-    align-items: center;
-    font-size: 0.6rem;
-    color: rgb(163, 163, 163, 0.7); /* Tailwind neutral-400 */
-  }
-  .footer .powered-by a {
-    display: flex;
-    align-items: center;
-    gap: 0.1em;
-    margin-left: 0.4em;
-    color: rgb(163, 163, 163, 0.7); /* Tailwind neutral-400 */
-    font-weight: 500;
-    transition: color 0.15s ease-out;
-  }
-  .footer .powered-by a:hover {
-    color: rgb(163, 163, 163); /* Tailwind neutral-400 */
   }
 
   .instructions {

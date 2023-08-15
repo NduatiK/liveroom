@@ -1,9 +1,9 @@
-import Options from "src/components/Options.svelte";
+import Settings from "src/components/Settings.svelte";
 
 const target = document.getElementById("app");
 
 function render() {
-  new Options({ target, props: {} });
+  new Settings({ target, props: {} });
 }
 
 document.addEventListener("DOMContentLoaded", render);
