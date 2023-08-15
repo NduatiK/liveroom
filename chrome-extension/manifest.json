@@ -31,5 +31,5 @@
       "128": "src/assets/liveroom_logo128.png"
     }
   },
-  "permissions": ["tabs"]
+  "permissions": []
 }
