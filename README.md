@@ -19,13 +19,21 @@
 
 Liveroom allows you to collaborate with your users, right inside your product.
 
-## Disclaimer
+> [!IMPORTANT]
+> Liveroom is currently very early stage.
+> We are exploring technical feasibility, and trying different ideas to find what could be a good first version of Liveroom.
 
-Liveroom is currently very early stage. We are exploring technical feasibility, and trying different ideas to find what could be a good first version of Liveroom.
-
-If you are interested in beta testing the product once it is ready, please [join the waitlist](https://tally.so/r/wQ1EvX).
+> If you are interested in **beta testing the product** once it is ready, please **[join the waitlist](https://tally.so/r/wQ1EvX)**.
 
 ## Demo
+
+### on Google Meet
+
+With the Liveroom Chrome Extension, collaborate with your user inside your product with real-time cursors over Google Meet screensharing.
+
+Simply screenshare your tab on the fake product https://mysaas.fly.dev using the `_liveroom` query param with your current Google Meet url:
+
+https://mysaas.fly.dev/?_liveroom=https://meet.google.com/aaa-bbb-ccc
 
 ### on [liveroom.app](https://liveroom.app)
 
@@ -33,9 +41,10 @@ The landing page has an interactive dashboard to play with. Open 2 browser windo
 
 ### on your own website
 
-> ⚠️ Liveroom is NOT production ready, please don't deploy it yet. This is only for tests purposes.
+> [!WARNING]
+> Liveroom is **NOT production ready**, please don't deploy it yet. This is only for tests purposes.
 
-1. load the **Liveroom Client** script in your HTML header:
+1. load the **Liveroom Client script** in your HTML header:
 
 ```html
 <script
@@ -44,7 +53,7 @@ The landing page has an interactive dashboard to play with. Open 2 browser windo
 ></script>
 ```
 
-2. add the **Liveroom Client** HTML element at the end of your `<body>`:
+2. add the **Liveroom Client HTML element** at the end of your `<body>`:
 
 ```html
 <liveroom-client-element
@@ -55,7 +64,7 @@ The landing page has an interactive dashboard to play with. Open 2 browser windo
 
 3. open https://liveroom.app/room/my_room/admin in a second browser window.
 
-See [examples/simple_html_document.html](examples/simple_html_document.html) as an example.
+> See [examples/simple_html_document.html](examples/simple_html_document.html) as an example.
 
 ### on any website
 
@@ -77,61 +86,12 @@ document.head.appendChild(script);
 
 2. open https://liveroom.app/room/my_room/admin in a second browser window.
 
-## Context
+> This is a quick and dirty solution to test Liveroom.
+> It only works on the current loaded web page.
+> It may fail if the current website is blocking external scripts.
 
-> this is a work in progress
+## Links
 
-For simplicity, let's consider that Liveroom is being used to showcase a B2B SaaS product called _MyB2BSaaS_.
-
-There are 2 main personas in Liveroom:
-
-- **admin**: this is the builder of the product, who wants to show a demo of his product to his client.
-
-- **client**: this is the potential customer of the product.
-
-Those 2 personas have access to 2 different experiences in Liveroom:
-
-- The admin has an interface showing all the connected clients in the room. They are displayed on different screens, to respect aspect ratio. He can interact with each of them. This interface is hosted on [Liveroom](https://liveroom.app).
-
-- The client has a minimal Liveroom interface, on top of the interface of _MyB2BSaaS_. The Liveroom interface is embedded as much as possible, for example just a little pill on the bottom of the screen.
-
-## Architecture
-
-> this is a work in progress
-
-```mermaid
-graph TD
-    subgraph Front
-      subgraph Liveroom.app
-        Admin(<b>Admin</b> <br/> LiveView)
-      end
-      subgraph MyB2BSaaS.com
-        Client(<b>Client</b> <br/> Custom HTML Element)
-      end
-    end
-
-    subgraph Liveroom Server
-      ClientProcess
-      AdminProcess
-    end
-
-    Client <-- LiveState --> ClientProcess
-    Admin <-- LiveView --> AdminProcess
-```
-
-**ClientProcess** & **AdminProcess** communicate with each other over PubSub (can't draw it properly on the Mermaid graph), on a particular **room** (topic).
-
-The HTML Custom Element allows Liveroom to be plug-and-play on any SaaS product easily.
-
-## Setup
-
-1. install dependencies: `mix deps.get && npm install --prefix client`
-2. start the database: `docker-compose up -d db`
-3. setup the database: `mix setup`
-4. start the main app: `iex -S mix phx.server`
-5. start the client app: `npm run dev --prefix client`
-
-Now you can visit from your browser:
-
-- the admin interface on [`localhost:4000/room/public/admin`](http://localhost:4000/room/public/admin)
-- the client interface on [`localhost:5173`](http://localhost:5173)
+- [Context](docs/CONTEXT.md)
+- [Contributing](docs/CONTRIBUTING.md)
+- [Architecture](docs/ARCHITECTURE.md)
