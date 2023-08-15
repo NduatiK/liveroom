@@ -1,3 +1,4 @@
+// This is the initial manifest.json, for reference.
 {
   "name": "Liveroom",
   "description": "Real-time collaboration with live cursors over Google Meet screensharing",
@@ -15,6 +16,9 @@
       "js": ["src/content/index.ts"]
     }
   ],
+  "background": {
+    "service_worker": "src/background/index.ts"
+  },
   "options_ui": {
     "page": "src/options/options.html",
     "open_in_tab": false

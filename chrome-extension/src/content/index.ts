@@ -4,7 +4,7 @@ import Main from "../components/Main.svelte";
 // import "./styles.css";
 
 // Some JS on the page
-console.log("[content] Hello from content script!");
+console.log("[Liveroom] Starting...");
 
 // Some svelte component on the page
 new Main({ target: document.body });
