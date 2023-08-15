@@ -7,6 +7,7 @@
   let thisElObserver: IntersectionObserver;
   let injectionInterval: number;
   let open = false;
+  let started = false;
   let isSessionActive = false;
 
   onMount(() => {
@@ -85,6 +86,7 @@
 <div id="liveroom-main" bind:this={thisEl} style:display="none">
   <Overlay
     bind:open
+    bind:started
     on:session_started={() => {
       isSessionActive = true;
       // NOTE: Keep the overlay open to copy the installation code easily.
@@ -100,7 +102,14 @@
   <button
     class="toggle-btn"
     data-issessionactive={isSessionActive}
-    on:click={() => (open = !open)}
+    on:click={() => {
+      if (!started) {
+        started = true;
+        open = true;
+      } else {
+        open = !open;
+      }
+    }}
   >
     {#if open}
       <svg

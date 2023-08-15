@@ -6,9 +6,9 @@
   import type { User } from "src/types/User";
 
   export let open = true;
-  const dispatch = createEventDispatcher();
+  export let started = false;
 
-  let started = false;
+  const dispatch = createEventDispatcher();
 
   let pointerEventsOnVideoElStyle = document.createElement("style");
   pointerEventsOnVideoElStyle.textContent = `
@@ -79,6 +79,26 @@
   let me: User<"admin">;
   let users: { [key: User["id"]]: User };
   let liveState: LiveState;
+
+  // Start selecting the screensharing video (screensharingVideoEl)
+  $: if (started && !screensharingVideoEl) {
+    const videoEls = Array.from(document.querySelectorAll("video"));
+
+    function handleVideoClick(e) {
+      screensharingVideoEl = e.target;
+      document.head.removeChild(selectVideoElStyle);
+      // clean all click event listeners
+      videoEls.forEach((videoEl) => {
+        videoEl.removeEventListener("click", handleVideoClick);
+      });
+    }
+
+    videoEls.forEach((videoEl) => {
+      videoEl.addEventListener("click", handleVideoClick);
+    });
+
+    document.head.appendChild(selectVideoElStyle);
+  }
 
   // Observe the screensharing video element dimensions
   $: if (screensharingVideoEl) {
@@ -276,33 +296,15 @@
   }
 </script>
 
-<div id="liveroom-overlay" data-open={open}>
+<div
+  id="liveroom-overlay"
+  data-open={open}
+  data-started={started}
+  data-hasvideoel={!!screensharingVideoEl}
+>
   <div class="body">
     {#if !started}
-      <button
-        on:click={() => {
-          started = true;
-
-          const videoEls = Array.from(document.querySelectorAll("video"));
-
-          function handleVideoClick(e) {
-            screensharingVideoEl = e.target;
-            document.head.removeChild(selectVideoElStyle);
-            // clean all click event listeners
-            videoEls.forEach((videoEl) => {
-              videoEl.removeEventListener("click", handleVideoClick);
-            });
-          }
-
-          videoEls.forEach((videoEl) => {
-            videoEl.addEventListener("click", handleVideoClick);
-          });
-
-          document.head.appendChild(selectVideoElStyle);
-        }}
-      >
-        Start session
-      </button>
+      <button on:click={() => (started = true)}> Start session </button>
     {:else if !screensharingVideoEl}
       <p class="instructions">Click on the screensharing video</p>
     {:else}
@@ -402,6 +404,10 @@
   #liveroom-overlay[data-open="true"] {
     display: flex;
   }
+  #liveroom-overlay[data-open="true"][data-started="true"][data-hasvideoel="false"] {
+    /* Move the popup down so that it doesn't get it the way of selecting the video element */
+    transform: translateY(4rem);
+  }
 
   #liveroom-overlay button {
     padding: 0.5rem 2rem;
@@ -434,7 +440,7 @@
 
   .instructions {
     margin: auto;
-    padding: 0.6rem 1rem;
+    padding: 0rem 1rem;
     color: #525252; /* Tailwind neutral-600 */
     font-size: 1.1em;
     font-weight: 600;
