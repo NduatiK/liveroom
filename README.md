@@ -49,7 +49,7 @@ The landing page has an interactive dashboard to play with. Open 2 browser windo
 ```html
 <script
   type="module"
-  src="https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.7/dist/liveroom-client-element.min.js"
+  src="https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.8/dist/liveroom-client-element.min.js"
 ></script>
 ```
 
@@ -74,7 +74,7 @@ The landing page has an interactive dashboard to play with. Open 2 browser windo
 const script = document.createElement("script");
 script.type = "module";
 script.src =
-  "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.7/dist/liveroom-client-element.min.js";
+  "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.8/dist/liveroom-client-element.min.js";
 script.onload = function () {
   const liveroomElement = document.createElement("liveroom-client-element");
   liveroomElement.setAttribute("url", "wss://liveroom.app/client_socket");
