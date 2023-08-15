@@ -381,6 +381,7 @@
   }
 
   #liveroom-overlay {
+    z-index: 100;
     position: absolute;
     bottom: 3.2rem;
     left: 0;
@@ -484,7 +485,7 @@
   }
 
   .user {
-    z-index: 1000;
+    z-index: 10;
     position: absolute;
     top: 0;
     left: 0;
