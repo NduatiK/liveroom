@@ -41,6 +41,7 @@ defmodule LiveroomWeb.Router do
         {Hooks.Liveroom, %{type: :client, room_id: "public"}}
       ] do
       live "/", HomeLive, :index
+      live "/privacy", PrivacyPolicyLive, :index
     end
 
     live_session :_liveroom_admin,
