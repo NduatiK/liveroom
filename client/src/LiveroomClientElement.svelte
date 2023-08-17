@@ -7,6 +7,7 @@
 
   export let url: string;
   export let room_id: string;
+  export let user_name: string;
 
   let thisEl: HTMLElement;
   let liveState: LiveState;
@@ -34,6 +35,9 @@
 
     room_id = room_id_from_url || room_id;
 
+    // set user name
+    user_name = params.get("_liveroom_user_name");
+
     // start LiveState session
     startSession();
   });
@@ -51,6 +55,7 @@
       topic: `liveroom-livestate:${room_id}`,
       params: {
         room_id,
+        user_name,
         current_url: window.origin,
         inner_width: window.innerWidth,
         inner_height: window.innerHeight,

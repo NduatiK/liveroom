@@ -9,15 +9,24 @@ defmodule LiveroomWeb.LiveStateChannel do
           "current_url" => current_url,
           "inner_width" => inner_width,
           "inner_height" => inner_height
-        } = _params,
+        } = params,
         _socket
       ) do
     me =
-      LiveroomWeb.Presence.create_user(room_id, :client, %{
-        url: current_url,
-        inner_width: inner_width,
-        inner_height: inner_height
-      })
+      LiveroomWeb.Presence.create_user(
+        room_id,
+        :client,
+        _analytics_data = %{
+          url: current_url,
+          inner_width: inner_width,
+          inner_height: inner_height
+        },
+        _user_name =
+          case params["user_name"] do
+            x when x in [nil, ""] -> nil
+            x when is_binary(x) -> String.trim(x)
+          end
+      )
 
     :ok = LiveroomWeb.Presence.join_room(room_id, me)
 

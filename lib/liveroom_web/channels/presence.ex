@@ -11,16 +11,17 @@ defmodule LiveroomWeb.Presence do
 
   ### API
 
-  def create_user(room_id, type, analytics_data \\ %{})
+  def create_user(room_id, type, analytics_data \\ %{}, user_name \\ nil)
       when is_binary(room_id) and room_id != "" and
-             type in [:client, :admin] do
+             type in [:client, :admin] and
+             (user_name == nil or (is_binary(user_name) and user_name != "")) do
     %{
       id: Ecto.UUID.generate(),
       room_id: room_id,
       # :phx_ref added by Presence
       # :phx_ref_prev added by Presence
       type: type,
-      name: Liveroom.Names.generate(),
+      name: user_name || Liveroom.Names.generate(),
       color: Liveroom.Colors.get_random_color(),
       joined_at: DateTime.utc_now(),
       current_url: analytics_data[:url],
