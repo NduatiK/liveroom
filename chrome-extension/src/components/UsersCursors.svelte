@@ -77,7 +77,7 @@
     top: 0;
     left: 0;
     user-select: none;
-    transform: translate(var(--x), var(--y));
+    transform: translate(var(--x), var(--y)) scale(0.9);
   }
 
   .user .cursor {
