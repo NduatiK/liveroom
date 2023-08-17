@@ -146,7 +146,7 @@
     align-items: center;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Tailwind shadow-md */
     cursor: pointer;
-    transition: color 150ms ease-out, border-color 150ms ease-out;
+    transition: color 100ms ease-out, border-color 100ms ease-out;
   }
   .toggle-btn[data-issessionactive="true"] {
     color: rgb(79, 70, 229, 0.9); /* Tailwind indigo-600 */

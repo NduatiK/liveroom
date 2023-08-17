@@ -326,7 +326,7 @@
     border-radius: 9999px;
     background-color: var(--color);
     opacity: 0.25;
-    transition: transform 0.15s ease-out;
+    transition: transform 100ms ease-out;
     /* Tailwind 'shadow-sm' */
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   }

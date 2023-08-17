@@ -25,7 +25,7 @@
     margin-left: 0.4em;
     color: rgb(163, 163, 163, 0.7); /* Tailwind neutral-400 */
     font-weight: 500;
-    transition: color 0.15s ease-out;
+    transition: color 100ms ease-out;
     text-decoration: none;
   }
   .powered-by a:hover {

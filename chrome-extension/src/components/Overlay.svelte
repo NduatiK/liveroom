@@ -49,7 +49,7 @@
       /* Tailwind indigo-600 */
       outline: 2px solid #4f46e5;
       background-color: #4f46e5;
-      transition: opacity 0.15s ease-out;
+      transition: opacity 100ms ease-out;
     }
     *:has(> video:hover)::before {
       opacity: 0.8;
@@ -341,7 +341,7 @@
   }
 
   #liveroom-overlay {
-    z-index: 100;
+    z-index: 9999;
     position: absolute;
     bottom: 3.2rem;
     left: 0;
@@ -349,11 +349,10 @@
     max-width: 50rem;
     display: flex;
     flex-direction: column;
-    background-color: white;
+    background-color: rgb(38, 38, 38); /* Tailwind neutral-800 */
     border: 1px solid rgb(82, 82, 82, 0.2); /* Tailwind neutral-600 */
     border-radius: 4px;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Tailwind shadow-md */
-    resize: horizontal;
     overflow: auto;
   }
   #liveroom-overlay[data-open="false"] {
@@ -371,16 +370,16 @@
     padding: 0.5rem 2rem;
     border-radius: 4px;
     border: 1px solid rgb(82, 82, 82); /* Tailwind neutral-600 */
-    background-color: #262626; /* Tailwind neutral-800 */
+    background-color: rgb(38, 38, 38); /* Tailwind neutral-800 */
     color: white;
     font-weight: 700;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Tailwind shadow-md */
     cursor: pointer;
-    transition: border-color 0.15s ease-out, background-color 0.15s ease-out;
+    transition: color 100ms ease-out, background-color 100ms ease-out,
+      border-color 100ms ease-out;
   }
   #liveroom-overlay button:hover {
-    border-color: black;
-    background-color: black;
+    border-color: white;
   }
 
   .body {
@@ -399,7 +398,7 @@
   .instructions {
     margin: auto;
     padding: 0rem 1rem;
-    color: #525252; /* Tailwind neutral-600 */
+    color: rgb(229, 229, 229); /* Tailwind neutral-200 */
     font-size: 1.1em;
     font-weight: 600;
     text-align: center;
@@ -425,5 +424,11 @@
     align-items: stretch;
     gap: 1rem;
     padding: 0 1rem;
+  }
+
+  .end-session-button:hover {
+    color: rgb(239, 68, 68) !important; /* Tailwind red-500 */
+    background-color: rgb(220, 38, 38, 0.1) !important; /* Tailwind red-600 */
+    border-color: rgb(220, 38, 38, 0.3) !important; /* Tailwind red-600 */
   }
 </style>

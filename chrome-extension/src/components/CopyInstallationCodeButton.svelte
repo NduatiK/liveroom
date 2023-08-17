@@ -93,18 +93,16 @@ document.head.appendChild(script);
     align-items: center;
     gap: 0.3rem;
     padding: 0.5rem;
-    color: rgb(38, 38, 38); /* Tailwind neutral-800 */
-    background-color: transparent;
+    color: white;
+    background-color: rgb(38, 38, 38); /* Tailwind neutral-800 */
     border: none;
     border-radius: 4px;
     font-weight: 600;
     cursor: pointer;
-    transition: color 0.15s ease-out, background-color 0.15s ease-out;
+    transition: color 100ms ease-out, background-color 100ms ease-out;
   }
   button:hover {
-    color: black;
-    /* background-color: rgb(245, 245, 245); Tailwind neutral-100 */
-    background-color: rgb(229, 229, 229, 0.7); /* Tailwind neutral-200 */
+    background-color: rgb(64, 64, 64); /* Tailwind neutral-700 */
   }
   button[data-copied="true"] {
     width: fit-content;
@@ -115,9 +113,6 @@ document.head.appendChild(script);
   }
 
   button svg {
-    color: rgb(38, 38, 38, 0.9); /* Tailwind neutral-800 */
-  }
-  button:hover svg {
-    color: rgb(0, 0, 0, 0.9);
+    color: rgb(245, 245, 245); /* Tailwind neutral-100 */
   }
 </style>
