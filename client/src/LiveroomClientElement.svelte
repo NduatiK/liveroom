@@ -14,6 +14,10 @@
   let me: User<"client">;
   let users: { [key: User["id"]]: User };
 
+  // computed
+  let users_count: number;
+  $: users_count = Object.keys(users || {}).length;
+
   onMount(async () => {
     // NOTE: room_id is read from url query param '_liveroom' if present,
     //       else from html custom element attribute 'room_id'
@@ -229,7 +233,10 @@
           <span class="user-name">{user.name}</span>
           <div
             class="halo"
-            data-show={user.is_mouse_down || user.is_shift_key_down}
+            data-show={/* user is activating the halo */
+            (user.is_mouse_down || user.is_shift_key_down) &&
+              /* user is not alone */
+              users_count > 1}
           />
         </div>
       {/each}
