@@ -231,11 +231,14 @@
             />
           </svg>
           <span class="user-name">{user.name}</span>
+          <!-- NOTE: Show halo if user not alone in room and:
+                       - user is self: shift key is down
+                       - user is not self: shift key is down or mouse is down -->
           <div
             class="halo"
-            data-show={/* user is activating the halo */
-            (user.is_mouse_down || user.is_shift_key_down) &&
-              /* user is not alone */
+            data-show={((user.id == me.id && user.is_shift_key_down) ||
+              (user.id != me.id &&
+                (user.is_shift_key_down || user.is_mouse_down))) &&
               users_count > 1}
           />
         </div>

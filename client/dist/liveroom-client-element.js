@@ -3056,11 +3056,14 @@ function ie(s, n) {
     key: s,
     first: null,
     c() {
-      t = Z("div"), e = Qt("svg"), r = Qt("path"), i = jt(), o = Z("span"), p = he(h), d = jt(), b = Z("div"), A = jt(), S(r, "d", "M2.2706 0.0593359L25.4277 8.05957H25.45926C25.65896 8.13153 25.83096 8.25952 25.95221 8.42653C26.07357 8.59354 26.13851 8.79166 26.13851 8.99459C26.13851 9.19751 26.07357 9.39564 25.95221 9.56265C25.83096 9.72966 25.65896 9.85765 25.45926 9.92962L15.3543 13.7698L11.3124 23.37C11.2344 23.5561 11.0994 23.7156 10.9248 23.828C10.7503 23.9402 10.5443 24.0002 10.3335 24C10.1172 24 9.9061 23.9365 9.7291 23.8184C9.552 23.7004 9.4176 23.5332 9.344 23.34L0.9233 1.33937C0.8555 1.16076 0.8426 0.967504 0.8861 0.782189C0.9297 0.596873 1.0278 0.427163 1.1691 0.292901C1.3105 0.158639 1.4891 0.0653762 1.6841 0.0240151C1.8792 -0.0173461 2.0826 -0.00509504 2.2706 0.0593359Z"), S(e, "width", "23"), S(e, "viewBox", "0 0 27 24"), S(e, "fill", "currentColor"), S(e, "aria-hidden", "true"), S(e, "xmlns", "http://www.w3.org/2000/svg"), S(e, "class", "cursor svelte-3iboz2"), S(o, "class", "user-name svelte-3iboz2"), S(b, "class", "halo svelte-3iboz2"), S(b, "data-show", _ = /* user is activating the halo */
-      /*user*/
-      (n[17].is_mouse_down || /*user*/
-      n[17].is_shift_key_down) && /* user is not alone */
-      /*users_count*/
+      t = Z("div"), e = Qt("svg"), r = Qt("path"), i = jt(), o = Z("span"), p = he(h), d = jt(), b = Z("div"), A = jt(), S(r, "d", "M2.2706 0.0593359L25.4277 8.05957H25.45926C25.65896 8.13153 25.83096 8.25952 25.95221 8.42653C26.07357 8.59354 26.13851 8.79166 26.13851 8.99459C26.13851 9.19751 26.07357 9.39564 25.95221 9.56265C25.83096 9.72966 25.65896 9.85765 25.45926 9.92962L15.3543 13.7698L11.3124 23.37C11.2344 23.5561 11.0994 23.7156 10.9248 23.828C10.7503 23.9402 10.5443 24.0002 10.3335 24C10.1172 24 9.9061 23.9365 9.7291 23.8184C9.552 23.7004 9.4176 23.5332 9.344 23.34L0.9233 1.33937C0.8555 1.16076 0.8426 0.967504 0.8861 0.782189C0.9297 0.596873 1.0278 0.427163 1.1691 0.292901C1.3105 0.158639 1.4891 0.0653762 1.6841 0.0240151C1.8792 -0.0173461 2.0826 -0.00509504 2.2706 0.0593359Z"), S(e, "width", "23"), S(e, "viewBox", "0 0 27 24"), S(e, "fill", "currentColor"), S(e, "aria-hidden", "true"), S(e, "xmlns", "http://www.w3.org/2000/svg"), S(e, "class", "cursor svelte-3iboz2"), S(o, "class", "user-name svelte-3iboz2"), S(b, "class", "halo svelte-3iboz2"), S(b, "data-show", _ = /*user*/
+      (n[17].id == /*me*/
+      n[2].id && /*user*/
+      n[17].is_shift_key_down || /*user*/
+      n[17].id != /*me*/
+      n[2].id && /*user*/
+      (n[17].is_shift_key_down || /*user*/
+      n[17].is_mouse_down)) && /*users_count*/
       n[3] > 1), S(t, "id", T = "user-" + /*user*/
       n[17].id), S(t, "class", "user svelte-3iboz2"), S(t, "data-isself", x = /*user*/
       n[17].id == /*me*/
@@ -3083,12 +3086,15 @@ function ie(s, n) {
     p(R, M) {
       n = R, M & /*users*/
       1 && h !== (h = /*user*/
-      n[17].name + "") && Pe(p, h), M & /*users, users_count*/
-      9 && _ !== (_ = /* user is activating the halo */
-      /*user*/
-      (n[17].is_mouse_down || /*user*/
-      n[17].is_shift_key_down) && /* user is not alone */
-      /*users_count*/
+      n[17].name + "") && Pe(p, h), M & /*users, me, users_count*/
+      13 && _ !== (_ = /*user*/
+      (n[17].id == /*me*/
+      n[2].id && /*user*/
+      n[17].is_shift_key_down || /*user*/
+      n[17].id != /*me*/
+      n[2].id && /*user*/
+      (n[17].is_shift_key_down || /*user*/
+      n[17].is_mouse_down)) && /*users_count*/
       n[3] > 1) && S(b, "data-show", _), M & /*users*/
       1 && T !== (T = "user-" + /*user*/
       n[17].id) && S(t, "id", T), M & /*users, me*/

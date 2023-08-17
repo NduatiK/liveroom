@@ -55,10 +55,10 @@
         hide={user.id == me_id}
         style="position: absolute; top: 20px; left: 16px"
       />
-      <!-- <div
-          class="halo"
-          data-show={user.is_mouse_down || user.is_shift_key_down}
-          /> -->
+      <div
+        class="halo-small"
+        data-show={user.id != me_id && user.is_mouse_down}
+      />
     </div>
   {/each}
 </div>
@@ -92,7 +92,7 @@
     display: none;
   }
 
-  /* .user .halo {
+  .user .halo-small {
     transform: scale(0);
     z-index: -1;
     position: absolute;
@@ -103,11 +103,11 @@
     border-radius: 9999px;
     background-color: var(--color);
     opacity: 0.25;
-    transition: transform 0.15s ease-out;
-    /* Tailwind 'shadow-sm'
+    transition: transform 500ms ease-out;
+    /* Tailwind 'shadow-sm' */
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   }
-  .user .halo[data-show="true"] {
+  .user .halo-small[data-show="true"] {
     transform: scale(1);
-  } */
+  }
 </style>
