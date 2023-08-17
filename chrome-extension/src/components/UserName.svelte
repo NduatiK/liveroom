@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
   import type { User } from "../types/User";
 
   // mandatory
@@ -6,9 +7,49 @@
   // optional
   export let hide: boolean = false;
   export let style: string = "";
+
+  let text = user_name;
+  let is_editing = false;
+
+  const dispatch = createEventDispatcher();
+
+  function handleInput(event) {
+    text = event.target.textContent;
+
+    if (text !== user_name && text != null && text != "") {
+      dispatch("_user_name_updated", { user_name: text });
+      user_name = text;
+    }
+  }
+  function preventNewLines(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  }
 </script>
 
-<span class="user-name" data-hide={hide} {style}> {user_name}</span>
+<p
+  class="user-name"
+  data-hide={hide}
+  {style}
+  contenteditable="true"
+  on:focus={() => {
+    is_editing = true;
+    text = user_name;
+  }}
+  on:blur={() => {
+    is_editing = false;
+    user_name = text;
+  }}
+  on:input={handleInput}
+  on:keydown={preventNewLines}
+>
+  {#if is_editing}
+    {text}
+  {:else}
+    {user_name}
+  {/if}
+</p>
 
 <style>
   .user-name {

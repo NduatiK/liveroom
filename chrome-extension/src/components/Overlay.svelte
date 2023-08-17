@@ -279,6 +279,21 @@
       );
     }
   }
+  function onUserNameUpdated(user_id) {
+    return function _onUserNameUpdated(e) {
+      if (liveState && me?.id) {
+        liveState.dispatchEvent(
+          new CustomEvent("user_name_updated", {
+            detail: {
+              user_name: e.detail.user_name,
+              user_id: user_id,
+              updated_by_id: me.id,
+            },
+          })
+        );
+      }
+    };
+  }
 </script>
 
 <div
@@ -296,7 +311,11 @@
       {#if users}
         <div class="users-names-list">
           {#each Object.values(users) as user (user.id)}
-            <UserName user_name={user.name} style="--color: {user.color}" />
+            <UserName
+              user_name={user.name}
+              style="--color: {user.color}"
+              on:_user_name_updated={onUserNameUpdated(user.id)}
+            />
           {/each}
         </div>
       {/if}

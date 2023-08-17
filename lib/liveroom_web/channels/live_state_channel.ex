@@ -1,6 +1,8 @@
 defmodule LiveroomWeb.LiveStateChannel do
   use LiveState.Channel, web_module: LiveroomWeb, json_patch: true
 
+  require Logger
+
   @impl true
   def init(
         _topic,
@@ -78,6 +80,28 @@ defmodule LiveroomWeb.LiveStateChannel do
     {:noreply, state}
   end
 
+  def handle_event(
+        "user_name_updated",
+        %{
+          "user_name" => user_name,
+          "user_id" => user_id,
+          "updated_by_id" => updated_by_id
+        } = _params,
+        state
+      ) do
+    Logger.info(
+      "User '#{updated_by_id}' updated user name of User '#{user_id}' to '#{user_name}'"
+    )
+
+    LiveroomWeb.Presence.broadcast(state.room_id, "update_user_name", %{
+      user_id: user_id,
+      user_name: user_name,
+      updated_by_id: updated_by_id
+    })
+
+    {:noreply, state}
+  end
+
   # TODO: Not handled yet by the HTML Client Element:
   #   - mouseover, mouseout (hovered elements)
   #   - focus, blur (focused elements)
@@ -92,9 +116,38 @@ defmodule LiveroomWeb.LiveStateChannel do
         },
         state
       ) do
-    state =
-      Map.update!(state, :users, &LiveroomWeb.Presence.merge_joins_and_leaves(&1, joins, leaves))
+    updated_users = LiveroomWeb.Presence.merge_joins_and_leaves(state.users, joins, leaves)
+    updated_me = Map.get(updated_users, state.me.id) || state.me
 
+    {:noreply, %{state | users: updated_users, me: updated_me}}
+  end
+
+  # NOTE: If current user is concerned, update his own name.
+  def handle_message(
+        %Phoenix.Socket.Broadcast{
+          topic: _topic,
+          event: "update_user_name",
+          payload: %{
+            user_id: user_id,
+            user_name: user_name,
+            updated_by_id: _updated_by_id
+          }
+        },
+        %{me: %{id: user_id}} = state
+      ) do
+    update_user(state, &put_in(&1.name, user_name))
+    {:noreply, state}
+  end
+
+  # NOTE: If current user is not concerned, it is a no-op.
+  def handle_message(
+        %Phoenix.Socket.Broadcast{
+          topic: _topic,
+          event: "update_user_name",
+          payload: _payload
+        },
+        state
+      ) do
     {:noreply, state}
   end
 
