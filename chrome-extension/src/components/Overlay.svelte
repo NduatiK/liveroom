@@ -296,7 +296,7 @@
       {#if users}
         <div class="users-names-list">
           {#each Object.values(users) as user (user.id)}
-            <UserName user_name={user.name} style="--color={user.color}" />
+            <UserName user_name={user.name} style="--color: {user.color}" />
           {/each}
         </div>
       {/if}
