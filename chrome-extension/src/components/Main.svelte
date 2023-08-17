@@ -153,7 +153,7 @@
   }
   .toggle-btn:focus-visible,
   .toggle-btn:active {
-    transform: scale(0.8);
+    transform: scale(0.88);
   }
   .toggle-btn[data-issessionactive="false"][data-open="false"] {
     background-color: rgb(38, 38, 38); /* Tailwind neutral-800 */
