@@ -10,7 +10,7 @@
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {
-    "phx-live-state": "^0.9.2"
+    "phx-live-state": "0.9.2"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^2.0.0-beta.18",
