@@ -1,47 +1,49 @@
+#
 # NOTE: Taken from https://jam.dev/blog/automating-chrome-extension-publishing.
+#
 
-name: Update Chrome Extension
+name: "workflow: update chrome extension"
 
 on:
-  push:
-    branches:
-      - master
+  workflow_call:
 
 jobs:
   build-chrome-extension:
-    name: Build extension artifact
+    name: build artifact
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Setup Node.js 18.x
+        working-directory: ./chrome-extension
         uses: actions/setup-node@v3
         with:
           node-version: "18.x"
           cache: "npm"
 
       - name: Install npm dependencies
-        run: npm ci --prefix chrome-extension
+        working-directory: ./chrome-extension
+        run: npm ci
 
       - name: Build chrome-extension
-        run: npm run build --prefix chrome-extension
+        working-directory: ./chrome-extension
+        run: npm run build
 
-      - name: Build
+      - name: Zip dist folder
+        working-directory: ./chrome-extension
         run: |-
-          zip -r chrome-extension-${{ github.event.pull_request.head.sha }}.zip chrome-extension/dist
+          zip -r liveroom-chrome-extension-${{ github.event.pull_request.head.sha }}.zip dist
 
       - name: Upload chrome-extension artifact
+        working-directory: ./chrome-extension
         uses: actions/upload-artifact@v2
         with:
           name: chrome-extension-${{ github.sha }}
-          path: chrome-extension-${{ github.event.pull_request.head.sha }}.zip
+          path: liveroom-chrome-extension-${{ github.event.pull_request.head.sha }}.zip
 
-  # # api usage reference:
-  # # * <https://developer.chrome.com/docs/webstore/using_webstore_api/>
-  # # * <https://github.com/fregante/chrome-webstore-upload/blob/main/How%20to%20generate%20Google%20API%20keys.md>
   # upload-extension:
-  #   name: Upload extension
+  #   name: upload to chrome webstore
   #   runs-on: ubuntu-latest
   #   needs: build-chrome-extension
   #   env:
@@ -52,24 +54,30 @@ jobs:
 
   #   steps:
   #     - name: Setup Node.js 18.x
+  #       working-directory: ./chrome-extension
   #       uses: actions/setup-node@v3
   #       with:
   #         node-version: "18.x"
-  #         cache: "npm"
 
   #     - name: Download bundle artifact
+  #       working-directory: ./chrome-extension
   #       uses: actions/download-artifact@v3
   #       with:
   #         name: chrome-extension-${{ github.sha }}
 
   #     - name: Install webstore cli
+  #       working-directory: ./chrome-extension
   #       run: |-
   #         npm install -g chrome-webstore-upload-cli
 
+  # # api usage reference:
+  # # * <https://developer.chrome.com/docs/webstore/using_webstore_api/>
+  # # * <https://github.com/fregante/chrome-webstore-upload/blob/main/How%20to%20generate%20Google%20API%20keys.md>
   #     - name: Upload step
+  #       working-directory: ./chrome-extension
   #       run: |-
   #         chrome-webstore-upload upload \\
-  #           --source chrome-extension-${{ github.event.pull_request.head.sha }}.zip \\
+  #           --source liveroom-chrome-extension-${{ github.event.pull_request.head.sha }}.zip \\
   #           --extension-id ${{ env.EXTENSION_ID }} \\
   #           --client-id ${{ secrets.CI_GOOGLE_CLIENT_ID }} \\
   #           --client-secret ${{ secrets.CI_GOOGLE_CLIENT_SECRET }} \\
