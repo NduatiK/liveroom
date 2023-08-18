@@ -9,7 +9,6 @@
   export let room_id: string;
   export let user_name: string;
 
-  let thisEl: HTMLElement;
   let liveState: LiveState;
 
   let me: User<"client">;
@@ -36,7 +35,8 @@
     room_id = room_id_from_url || room_id;
 
     // set user name
-    user_name = params.get("_liveroom_user_name");
+    const param_user_name = params.get("_liveroom_user_name");
+    if (param_user_name) user_name = param_user_name;
 
     // start LiveState session
     startSession();
@@ -209,7 +209,7 @@
   };
 </script>
 
-<div id="liveroom-client-element" bind:this={thisEl}>
+<div id="liveroom-client-element">
   {#if me && users}
     <div id="users-container">
       {#each Object.values(users) as user (user.id)}
