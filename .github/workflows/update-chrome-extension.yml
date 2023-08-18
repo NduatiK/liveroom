@@ -16,31 +16,30 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup Node.js 18.x
-        working-directory: ./chrome-extension
         uses: actions/setup-node@v3
         with:
           node-version: "18.x"
           cache: "npm"
+          cache-dependency-path: "chrome-extension/package-lock.json"
 
       - name: Install npm dependencies
-        working-directory: ./chrome-extension
+        working-directory: chrome-extension
         run: npm ci
 
       - name: Build chrome-extension
-        working-directory: ./chrome-extension
+        working-directory: chrome-extension
         run: npm run build
 
       - name: Zip dist folder
-        working-directory: ./chrome-extension
+        working-directory: chrome-extension
         run: |-
           zip -r liveroom-chrome-extension-${{ github.event.pull_request.head.sha }}.zip dist
 
       - name: Upload chrome-extension artifact
-        working-directory: ./chrome-extension
         uses: actions/upload-artifact@v2
         with:
           name: chrome-extension-${{ github.sha }}
-          path: liveroom-chrome-extension-${{ github.event.pull_request.head.sha }}.zip
+          path: chrome-extension/liveroom-chrome-extension-${{ github.event.pull_request.head.sha }}.zip
 
   # upload-extension:
   #   name: upload to chrome webstore
