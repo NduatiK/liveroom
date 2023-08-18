@@ -36,7 +36,7 @@ jobs:
           zip -r liveroom-chrome-extension-${{ github.event.pull_request.head.sha }}.zip dist
 
       - name: Upload chrome-extension artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: chrome-extension-${{ github.sha }}
           path: chrome-extension/liveroom-chrome-extension-${{ github.event.pull_request.head.sha }}.zip
@@ -53,19 +53,16 @@ jobs:
 
   #   steps:
   #     - name: Setup Node.js 18.x
-  #       working-directory: ./chrome-extension
   #       uses: actions/setup-node@v3
   #       with:
   #         node-version: "18.x"
 
   #     - name: Download bundle artifact
-  #       working-directory: ./chrome-extension
   #       uses: actions/download-artifact@v3
   #       with:
   #         name: chrome-extension-${{ github.sha }}
 
   #     - name: Install webstore cli
-  #       working-directory: ./chrome-extension
   #       run: |-
   #         npm install -g chrome-webstore-upload-cli
 
@@ -73,7 +70,6 @@ jobs:
   # # * <https://developer.chrome.com/docs/webstore/using_webstore_api/>
   # # * <https://github.com/fregante/chrome-webstore-upload/blob/main/How%20to%20generate%20Google%20API%20keys.md>
   #     - name: Upload step
-  #       working-directory: ./chrome-extension
   #       run: |-
   #         chrome-webstore-upload upload \\
   #           --source liveroom-chrome-extension-${{ github.event.pull_request.head.sha }}.zip \\
