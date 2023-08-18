@@ -31,7 +31,7 @@ jobs:
         run: |-
           zip -r chrome-extension-${{ github.event.pull_request.head.sha }}.zip chrome-extension/dist
 
-      - name: Archive chrome-extension artifact
+      - name: Upload chrome-extension artifact
         uses: actions/upload-artifact@v2
         with:
           name: chrome-extension-${{ github.sha }}
@@ -51,9 +51,11 @@ jobs:
   #     EXTENSION_ID: <extension id her>
 
   #   steps:
-  #     - uses: actions/setup-node@v2-beta
+  #     - name: Setup Node.js 18.x
+  #       uses: actions/setup-node@v3
   #       with:
-  #         node-version: "16.10"
+  #         node-version: "18.x"
+  #         cache: "npm"
 
   #     - name: Download bundle artifact
   #       uses: actions/download-artifact@v3
