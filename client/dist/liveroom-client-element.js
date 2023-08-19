@@ -3164,7 +3164,7 @@ function nn(s, n, t) {
       params: {
         room_id: r,
         user_name: i,
-        current_url: window.origin,
+        current_url: window.location.href,
         inner_width: window.innerWidth,
         inner_height: window.innerHeight
       }

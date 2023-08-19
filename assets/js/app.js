@@ -23,8 +23,6 @@ import { LiveSocket } from "phoenix_live_view";
 import { Hooks } from "./hooks";
 import topbar from "../vendor/topbar";
 
-let localStream;
-
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
@@ -35,6 +33,7 @@ let liveSocket = new LiveSocket("/live", Socket, {
     _csrf_token: csrfToken,
     // NOTE: Data needed for analytics.
     referrer: document.referrer,
+    current_url: window.location.href,
     inner_width: window.innerWidth,
     inner_height: window.innerHeight,
     screen_width: window.screen.width,

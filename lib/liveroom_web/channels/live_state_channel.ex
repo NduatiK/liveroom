@@ -14,15 +14,17 @@ defmodule LiveroomWeb.LiveStateChannel do
         } = params,
         _socket
       ) do
+    analytics_data = %{
+      url: current_url,
+      inner_width: inner_width,
+      inner_height: inner_height
+    }
+
     me =
       LiveroomWeb.Presence.create_user(
         room_id,
         :client,
-        _analytics_data = %{
-          url: current_url,
-          inner_width: inner_width,
-          inner_height: inner_height
-        },
+        analytics_data,
         _user_name =
           case params["user_name"] do
             x when x in [nil, ""] -> nil
@@ -35,7 +37,8 @@ defmodule LiveroomWeb.LiveStateChannel do
     state = %{
       room_id: room_id,
       me: me,
-      users: LiveroomWeb.Presence.list_users(room_id)
+      users: LiveroomWeb.Presence.list_users(room_id),
+      analytics_data: analytics_data
     }
 
     {:ok, state}
@@ -114,10 +117,10 @@ defmodule LiveroomWeb.LiveStateChannel do
           event: "presence_diff",
           payload: %{joins: joins, leaves: leaves}
         },
-        state
+        %{me: me, users: users} = state
       ) do
-    updated_users = LiveroomWeb.Presence.merge_joins_and_leaves(state.users, joins, leaves)
-    updated_me = Map.get(updated_users, state.me.id) || state.me
+    updated_users = LiveroomWeb.Presence.merge_joins_and_leaves(users, joins, leaves)
+    updated_me = Map.get(updated_users, me.id) || me
 
     {:noreply, %{state | users: updated_users, me: updated_me}}
   end

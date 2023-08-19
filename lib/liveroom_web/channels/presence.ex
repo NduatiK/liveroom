@@ -5,6 +5,8 @@ defmodule LiveroomWeb.Presence do
   See the [`Phoenix.Presence`](https://hexdocs.pm/phoenix/Phoenix.Presence.html)
   docs for more details.
   """
+  alias Liveroom.EventNotifier
+
   use Phoenix.Presence,
     otp_app: :liveroom,
     pubsub_server: Liveroom.PubSub
@@ -24,9 +26,9 @@ defmodule LiveroomWeb.Presence do
       name: user_name || Liveroom.Names.generate(),
       color: Liveroom.Colors.get_random_color(),
       joined_at: DateTime.utc_now(),
-      current_url: analytics_data[:url],
-      inner_width: analytics_data[:inner_width],
-      inner_height: analytics_data[:inner_height],
+      current_url: analytics_data.url,
+      inner_width: analytics_data.inner_width,
+      inner_height: analytics_data.inner_height,
       # NOTE: Sent as string through the websockets, and used in template strings in style or css,
       #       so let's not take the performance penalty of converting it to integer.
       x: "50",
@@ -61,6 +63,18 @@ defmodule LiveroomWeb.Presence do
     {:ok, _} = track(self(), topic, user.id, user)
     :ok = LiveroomWeb.Endpoint.subscribe(topic)
 
+    EventNotifier.emit(
+      :user_joined_room,
+      %{
+        inner_width: user.inner_width,
+        inner_height: user.inner_height,
+        url: user.current_url
+      },
+      room_id: room_id,
+      client_url: user.current_url,
+      n_of_users: map_size(list(topic(room_id)))
+    )
+
     :ok
   end
 
@@ -79,6 +93,38 @@ defmodule LiveroomWeb.Presence do
       when is_binary(room_id) and room_id != "" and
              is_binary(event) and event != "" do
     LiveroomWeb.Endpoint.broadcast(topic(room_id), event, payload)
+  end
+
+  ### Server
+
+  def init(_opts) do
+    {:ok, %{}}
+  end
+
+  def handle_metas(_topic, %{joins: joins, leaves: leaves}, presences, state) do
+    n_of_users = map_size(presences)
+
+    users_ids_joins = Map.keys(joins)
+    users_ids_leaves = Map.keys(leaves)
+    users_ids_left = users_ids_leaves -- users_ids_joins
+
+    for user_id <- users_ids_left do
+      user = hd(leaves[user_id].metas)
+
+      EventNotifier.emit(
+        :user_left_room,
+        %{
+          inner_width: user.inner_width,
+          inner_height: user.inner_height,
+          url: user.current_url
+        },
+        room_id: user.room_id,
+        client_url: user.current_url,
+        n_of_users: n_of_users
+      )
+    end
+
+    {:ok, state}
   end
 
   ### Helpers

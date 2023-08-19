@@ -3,7 +3,8 @@ defmodule LiveroomWeb.Hooks.Analytics do
   import Phoenix.Component
 
   alias Phoenix.LiveView.Socket
-  alias Liveroom.Analytics.Umami
+
+  alias Liveroom.Analytics
   alias LiveroomWeb.RemoteIp
 
   @analytics_send_event "analytics_send_event"
@@ -18,7 +19,7 @@ defmodule LiveroomWeb.Hooks.Analytics do
        fn _params, url, %Socket{} = socket ->
          if connected?(socket) do
            socket = update_analytics_url(socket, url)
-           Task.start(fn -> send_event("pageview", socket) end)
+           Task.start(fn -> Analytics.send_event("pageview", socket) end)
            {:cont, socket}
          else
            {:cont, socket}
@@ -31,7 +32,7 @@ defmodule LiveroomWeb.Hooks.Analytics do
        fn
          @analytics_send_event, %{"event" => event} = params, %Socket{} = socket ->
            Task.start(fn ->
-             send_event(event, socket, props: params["props"], url: params["url"])
+             Analytics.send_event(event, socket, props: params["props"], url: params["url"])
            end)
 
            {:halt, socket}
@@ -40,23 +41,6 @@ defmodule LiveroomWeb.Hooks.Analytics do
            {:cont, socket}
        end
      )}
-  end
-
-  @doc """
-  To use for any event (following an action of an user for example).
-  """
-  def send_event(event, %Socket{} = socket, opts \\ []) do
-    Umami.send_event(
-      event,
-      opts[:url] || socket.assigns.analytics_data[:url],
-      opts[:user_agent] || socket.assigns.analytics_data[:user_agent],
-      opts[:user_ip] || socket.assigns.analytics_data[:user_ip],
-      referrer: opts[:referrer] || socket.assigns.analytics_data[:referrer],
-      screen_width: opts[:screen_width] || socket.assigns.analytics_data[:screen_width],
-      screen_height: opts[:screen_height] || socket.assigns.analytics_data[:screen_height],
-      props: opts[:props] || %{},
-      language: opts[:language] || socket.assigns.analytics_data[:language]
-    )
   end
 
   # NOTE: Not sure we will need this one with the client-side phx-hook.
@@ -78,6 +62,7 @@ defmodule LiveroomWeb.Hooks.Analytics do
         user_agent: get_connect_info(socket, :user_agent),
         referrer:
           get_connect_params(socket)["_live_referer"] || get_connect_params(socket)["referrer"],
+        url: get_connect_params(socket)["current_url"],
         inner_width: get_connect_params(socket)["inner_width"],
         inner_height: get_connect_params(socket)["inner_height"],
         screen_width: get_connect_params(socket)["screen_width"],

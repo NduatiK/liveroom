@@ -183,9 +183,9 @@
       topic: `liveroom-livestate:${roomId}`,
       params: {
         room_id: roomId,
-        current_url: null,
-        inner_width: null,
-        inner_height: null,
+        current_url: window.location.href,
+        inner_width: window.innerWidth,
+        inner_height: window.innerHeight,
       },
     });
 

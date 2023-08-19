@@ -1,7 +1,7 @@
 defmodule LiveroomWeb.HomeLive do
   use LiveroomWeb, :live_view
 
-  alias LiveroomWeb.Hooks.Analytics
+  alias Liveroom.EventNotifier
   alias LiveroomWeb.Components.CursorsPlayground
   alias LiveroomWeb.Components.InteractiveDashboard
 
@@ -389,10 +389,7 @@ defmodule LiveroomWeb.HomeLive do
 
   @impl true
   def handle_event("join_waitlist_clicked", %{"location" => location} = _params, socket) do
-    Task.start(fn ->
-      Analytics.send_event("join_waitlist_clicked", socket, props: %{location: location})
-    end)
-
+    EventNotifier.emit(:join_waitlist_clicked, socket, location: location)
     {:noreply, socket}
   end
 end

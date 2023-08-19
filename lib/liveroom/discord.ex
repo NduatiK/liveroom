@@ -44,6 +44,91 @@ defmodule Liveroom.Discord do
     |> send_message(webhook_url_app_logs())
   end
 
+  def send_notification(name, opts \\ [])
+
+  def send_notification(:join_waitlist_clicked, opts) do
+    %{
+      embeds: [
+        %{
+          title: "💌 join waitlist cliked",
+          # description: "",
+          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+          color: color(:purple),
+          fields: [
+            %{
+              name: "location",
+              value: Keyword.fetch!(opts, :location),
+              inline: true
+            }
+          ]
+        }
+      ]
+    }
+    |> send_message(webhook_url_app_notifications())
+  end
+
+  def send_notification(:user_joined_room, opts) do
+    %{
+      embeds: [
+        %{
+          title: "👋 user joined room",
+          # description: "",
+          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+          color: color(:green),
+          fields: [
+            %{
+              name: "room",
+              value: Keyword.fetch!(opts, :room_id) || "",
+              inline: true
+            },
+            %{
+              name: "client url",
+              value: Keyword.fetch!(opts, :client_url) || "",
+              inline: true
+            },
+            %{
+              name: "# of users in the room",
+              value: Keyword.fetch!(opts, :n_of_users) || "",
+              inline: true
+            }
+          ]
+        }
+      ]
+    }
+    |> send_message(webhook_url_app_notifications())
+  end
+
+  def send_notification(:user_left_room, opts) do
+    %{
+      embeds: [
+        %{
+          title: "🤝 user left room",
+          # description: "",
+          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+          color: color(:dark_navy),
+          fields: [
+            %{
+              name: "room",
+              value: Keyword.fetch!(opts, :room_id) || "",
+              inline: true
+            },
+            %{
+              name: "client url",
+              value: Keyword.fetch!(opts, :client_url) || "",
+              inline: true
+            },
+            %{
+              name: "# of users in the room",
+              value: Keyword.fetch!(opts, :n_of_users) || "",
+              inline: true
+            }
+          ]
+        }
+      ]
+    }
+    |> send_message(webhook_url_app_notifications())
+  end
+
   ### Low-level API
 
   def send_message(message, webhook_url) when is_map(message) do
@@ -60,12 +145,13 @@ defmodule Liveroom.Discord do
   defp color(:red), do: 15_548_997
   defp color(:yellow), do: 16_705_372
   # defp color(:grey), do: 10_070_709
-  # defp color(:green), do: 5_763_719
-  # defp color(:purple), do: 5_793_266
-  # defp color(:dark_navy), do: 2_899_536
+  defp color(:green), do: 5_763_719
+  defp color(:purple), do: 5_793_266
+  defp color(:dark_navy), do: 2_899_536
 
   defp is_discord_enabled?, do: config()[:enabled]
   defp webhook_url_app_logs, do: config()[:webhook_url_app_logs]
+  defp webhook_url_app_notifications, do: config()[:webhook_url_app_notifications]
 
   defp config, do: Application.get_env(:liveroom, :discord)
 end

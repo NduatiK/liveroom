@@ -152,13 +152,7 @@ defmodule LiveroomWeb.Hooks.Liveroom do
   defp assign_initial_state(socket, room_id, type)
        when is_binary(room_id) and room_id != "" and
               type in [:client, :admin] do
-    if not connected?(socket) do
-      assign(socket,
-        _liveroom_room_id: room_id,
-        _liveroom_user_id: nil,
-        _liveroom_users: %{}
-      )
-    else
+    if connected?(socket) do
       me = LiveroomWeb.Presence.create_user(room_id, type, socket.assigns.analytics_data)
 
       :ok = LiveroomWeb.Presence.join_room(room_id, me)
@@ -167,6 +161,12 @@ defmodule LiveroomWeb.Hooks.Liveroom do
         _liveroom_room_id: room_id,
         _liveroom_user_id: me.id,
         _liveroom_users: LiveroomWeb.Presence.list_users(room_id)
+      )
+    else
+      assign(socket,
+        _liveroom_room_id: room_id,
+        _liveroom_user_id: nil,
+        _liveroom_users: %{}
       )
     end
   end

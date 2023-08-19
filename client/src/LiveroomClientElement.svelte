@@ -56,7 +56,7 @@
       params: {
         room_id,
         user_name,
-        current_url: window.origin,
+        current_url: window.location.href,
         inner_width: window.innerWidth,
         inner_height: window.innerHeight,
       },
