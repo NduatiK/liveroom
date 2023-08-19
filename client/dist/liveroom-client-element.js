@@ -2293,7 +2293,7 @@ var lt = (s) => typeof s == "function" ? s : function() {
 };
 class tn {
   constructor(n) {
-    this.connected = !1, this.config = n, this.socket = new Ks(this.config.url, { logger: (t, e, r) => {
+    this.connected = !1, this.config = n, this.socket = new Ks(this.config.url, this.config.socketOptions || { logger: (t, e, r) => {
       console.log(`${t}: ${e}`, r);
     } }), this.channel = this.socket.channel(this.config.topic, this.config.params), this.eventTarget = new EventTarget();
   }

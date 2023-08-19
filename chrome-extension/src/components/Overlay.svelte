@@ -187,6 +187,8 @@
         inner_width: window.innerWidth,
         inner_height: window.innerHeight,
       },
+      socketOptions:
+        process.env.NODE_ENV === "production" ? { logger: null } : undefined,
     });
 
     liveState.connect();
