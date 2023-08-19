@@ -1,0 +1,37 @@
+#
+# NOTE: Inspired from https://jam.dev/blog/automating-chrome-extension-publishing.
+#
+
+name: "workflow: update client element"
+
+on:
+  workflow_call:
+
+jobs:
+  build-client-element:
+    name: build artifact
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+          cache: "npm"
+          cache-dependency-path: "client/package-lock.json"
+
+      - name: Install npm dependencies
+        working-directory: client
+        run: npm ci
+
+      - name: Build client-element
+        working-directory: client
+        run: npm run build
+
+      - name: Upload client-element artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: client-element-${{ github.sha }}
+          path: client/dist/

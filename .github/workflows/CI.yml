@@ -51,7 +51,13 @@ jobs:
   update-chrome-extension:
     if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
     name: "update chrome extension"
-    # needs: [build-docker-image]
     # needs: [build-and-test, type-linting, quality-checks, build-docker-image]
-    needs: [build-and-test, quality-checks, build-docker-image]
+    # needs: [build-and-test, quality-checks, build-docker-image]
     uses: ./.github/workflows/update-chrome-extension.yml
+
+  update-client-element:
+    if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+    name: "update client element"
+    # needs: [build-and-test, type-linting, quality-checks, build-docker-image]
+    # needs: [build-and-test, quality-checks, build-docker-image]
+    uses: ./.github/workflows/update-client-element.yml
