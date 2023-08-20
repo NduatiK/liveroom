@@ -13,7 +13,16 @@ defmodule LiveroomWeb.Presence do
 
   ### API
 
-  def create_user(room_id, type, analytics_data \\ %{}, user_name \\ nil)
+  def create_user(
+        room_id,
+        type,
+        analytics_data \\ %{
+          url: "not found",
+          inner_width: 0,
+          inner_height: 0
+        },
+        user_name \\ nil
+      )
       when is_binary(room_id) and room_id != "" and
              type in [:client, :admin] and
              (user_name == nil or (is_binary(user_name) and user_name != "")) do
