@@ -47,7 +47,8 @@ defmodule LiveroomWeb.Presence do
       is_shift_key_down: false,
       hovered_elements: %{},
       focused_elements: %{},
-      inputs: %{}
+      inputs: %{},
+      _connected_node: Node.self()
     }
   end
 
@@ -120,17 +121,22 @@ defmodule LiveroomWeb.Presence do
     for user_id <- users_ids_left do
       user = hd(leaves[user_id].metas)
 
-      EventNotifier.emit(
-        :user_left_room,
-        %{
-          inner_width: user.inner_width,
-          inner_height: user.inner_height,
-          url: user.current_url
-        },
-        room_id: user.room_id,
-        client_url: user.current_url,
-        n_of_users: n_of_users
-      )
+      # NOTE: In production, we run in a cluster.
+      #       We need to make sure the event is sent only once.
+      #       Only by the node the user is connected to.
+      if user._connected_node == Node.self() do
+        EventNotifier.emit(
+          :user_left_room,
+          %{
+            inner_width: user.inner_width,
+            inner_height: user.inner_height,
+            url: user.current_url
+          },
+          room_id: user.room_id,
+          client_url: user.current_url,
+          n_of_users: n_of_users
+        )
+      end
     end
 
     {:ok, state}
