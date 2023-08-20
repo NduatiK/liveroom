@@ -18,6 +18,8 @@ defmodule Liveroom.EventNotifier do
              :user_joined_room,
              :user_left_room
            ] do
+    dbg("EMITTING #{event}")
+
     Task.start(fn -> Analytics.send_event(event, analytics_data, opts) end)
     Task.start(fn -> Discord.send_notification(event, opts) end)
   end
