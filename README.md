@@ -49,7 +49,7 @@ The landing page has an interactive dashboard to play with. Open 2 browser windo
 ```html
 <script
   type="module"
-  src="https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.15/dist/main.min.js"
+  src="https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.16/dist/main.min.js"
   data-url="wss://liveroom.app/client_socket"
 ></script>
 ```
@@ -72,7 +72,7 @@ http://localhost:3000/my-super-app/?_liveroom=my_room
 const script = document.createElement("script");
 script.type = "module";
 script.src =
-  "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.15/dist/main.min.js";
+  "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.16/dist/main.min.js";
 
 script.setAttribute("data-url", "wss://liveroom.app/client_socket");
 script.setAttribute("data-roomid", "my_room");
