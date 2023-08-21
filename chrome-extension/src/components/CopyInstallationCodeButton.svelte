@@ -14,19 +14,15 @@
 
   const SCRIPT_SRC =
     process.env.NODE_ENV === "production"
-      ? "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.10/dist/liveroom-client-element.min.js"
+      ? "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.10"
       : "http://localhost:5173/src/main.ts";
 
   const SCRIPT = `
 const script = document.createElement("script");
 script.type = "module";
 script.src = "${SCRIPT_SRC}";
-script.onload = function () {
-  const liveroomElement = document.createElement("liveroom-client-element");
-  liveroomElement.setAttribute("url", "${url}");
-  liveroomElement.setAttribute("room_id", "${roomId}");
-  document.body.appendChild(liveroomElement);
-};
+script.setAttribute("data-url", "${url}");
+script.setAttribute("data-roomid", "${roomId}");
 document.head.appendChild(script);
 `;
 </script>

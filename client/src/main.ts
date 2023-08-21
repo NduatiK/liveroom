@@ -16,16 +16,28 @@ const ELEMENT_TAG = "liveroom-client-element";
 
 async function maybeInjectElement() {
   const params = new URLSearchParams(window.location.search);
-  const liveroomParam = params.get("_liveroom");
+  const room_id_from_query_param = params.get("_liveroom");
+
+  const script =
+    // prod
+    document.querySelector("script[src*='liveroom-client-element.js']") ||
+    // local dev
+    document.querySelector("script[src*='client/dist/main.js']");
+
+  const room_id_from_attr = script?.getAttribute("data-roomid");
+
+  const new_room_id = room_id_from_query_param || room_id_from_attr;
 
   // if room_id changes
-  if (liveroomParam && liveroomParam != room_id) {
-    room_id = liveroomParam;
+  if (new_room_id && new_room_id != room_id) {
+    room_id = new_room_id;
+
     // delete element if present
     if (element) {
       element.remove();
       element = undefined;
     }
+
     // inject element
     await injectElement(room_id);
   }
@@ -53,7 +65,7 @@ async function injectElement(room_id?: string) {
 
   // append the element at the end of the body
   body.appendChild(element);
-  console.log("[Liveroom] Element was injected successfully");
+  console.log("[Liveroom] Injected successfully");
 
   return true;
 }

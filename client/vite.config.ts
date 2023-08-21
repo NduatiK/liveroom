@@ -7,10 +7,13 @@ export default defineConfig({
   // NOTE: See https://vitejs.dev/guide/build.html#library-mode.
   build: {
     lib: {
-      entry: "./src/main.ts",
+      entry: {
+        main: "./src/main.ts",
+        "liveroom-client-element": "./src/LiveroomClientElement.svelte",
+      },
       name: "LiveroomClientElement",
       // the proper extensions will be added
-      fileName: "liveroom-client-element",
+      // fileName: "main",
     },
     // rollupOptions: {
     //   // make sure to externalize deps that shouldn't be bundled

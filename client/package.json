@@ -10,6 +10,10 @@
   ],
   "exports": {
     ".": {
+      "import": "./dist/main.js",
+      "require": "./dist/main.umd.cjs"
+    },
+    "./liveroom-client-element": {
       "import": "./dist/liveroom-client-element.js",
       "require": "./dist/liveroom-client-element.umd.cjs"
     }

@@ -49,17 +49,15 @@ The landing page has an interactive dashboard to play with. Open 2 browser windo
 ```html
 <script
   type="module"
-  src="https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.10/dist/liveroom-client-element.min.js"
+  src="https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.10"
+  data-url="wss://liveroom.app/client_socket"
 ></script>
 ```
 
-2. add the **Liveroom Client HTML element** at the end of your `<body>`:
+2. open your app on any page adding the `_liveroom` query param:
 
-```html
-<liveroom-client-element
-  url="wss://liveroom.app/client_socket"
-  room_id="my_room"
-/>
+```
+http://localhost:3000/my-super-app/?_liveroom=my_room
 ```
 
 3. open https://liveroom.app/room/my_room/admin in a second browser window.
@@ -73,14 +71,11 @@ The landing page has an interactive dashboard to play with. Open 2 browser windo
 ```js
 const script = document.createElement("script");
 script.type = "module";
-script.src =
-  "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.10/dist/liveroom-client-element.min.js";
-script.onload = function () {
-  const liveroomElement = document.createElement("liveroom-client-element");
-  liveroomElement.setAttribute("url", "wss://liveroom.app/client_socket");
-  liveroomElement.setAttribute("room_id", "my_room");
-  document.body.appendChild(liveroomElement);
-};
+script.src = "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.10";
+
+script.setAttribute("data-url", "wss://liveroom.app/client_socket");
+script.setAttribute("data-roomid", "my_room");
+
 document.head.appendChild(script);
 ```
 

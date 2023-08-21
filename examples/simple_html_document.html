@@ -19,16 +19,18 @@
     <!-- Load Liveroom HTML Custom Element here: -->
 
     <!-- Option 1: from npm using JSDelivr -->
-    <script
-      type="module"
-      src="https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.10/dist/liveroom-client-element.min.js"
-    ></script>
-
-    <!-- Option 2: from local build -->
     <!-- <script
       type="module"
-      src="../client/dist/liveroom-client-element.js"
+      src="https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.10"
+      data-url="wss://liveroom.app/client_socket"
     ></script> -->
+
+    <!-- Option 2: from local build -->
+    <script
+      type="module"
+      src="../../client/dist/main.js"
+      data-url="ws://localhost:4000/client_socket"
+    ></script>
   </head>
 
   <body class="h-screen w-screen flex flex-col items-stretch">
@@ -131,19 +133,5 @@
         </p>
       </div>
     </footer>
-
-    <!-- Insert Liveroom HTML Custom Element here: -->
-
-    <!-- Option 1: connect to Liveroom production environment -->
-    <liveroom-client-element
-      url="wss://liveroom.app/client_socket"
-      room_id="my_room"
-    />
-
-    <!-- Option 2: connect to local environment -->
-    <!-- <liveroom-client-element
-      url="ws://localhost:4000/client_socket"
-      room_id="my_room"
-    /> -->
   </body>
 </html>
