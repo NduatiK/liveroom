@@ -6,7 +6,8 @@
   "module": "./dist/main.js",
   "main": "./dist/main.cjs",
   "files": [
-    "dist"
+    "dist",
+    "!dist/vite.svg"
   ],
   "exports": {
     ".": {
