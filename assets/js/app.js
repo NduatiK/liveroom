@@ -39,6 +39,7 @@ let liveSocket = new LiveSocket("/live", Socket, {
     screen_width: window.screen.width,
     screen_height: window.screen.height,
     language: window.navigator.language,
+    user_agent: window.navigator.userAgent,
   }),
 });
 

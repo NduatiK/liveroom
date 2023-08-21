@@ -83,13 +83,28 @@ defmodule Liveroom.Discord do
             },
             %{
               name: "client url",
-              value: Keyword.fetch!(opts, :client_url) || "",
+              value: opts[:analytics_data][:url] || "",
               inline: true
             },
             %{
               name: "# of users in the room",
               value: Keyword.fetch!(opts, :n_of_users) || "",
               inline: true
+            },
+            %{
+              name: "analytics data",
+              value:
+                %{
+                  referrer: opts[:analytics_data][:referrer],
+                  user_ip: opts[:analytics_data][:user_ip],
+                  screen:
+                    "#{opts[:analytics_data][:inner_width]}x#{opts[:analytics_data][:inner_height]}",
+                  language: opts[:analytics_data][:language],
+                  user_agent: opts[:analytics_data][:user_agent]
+                }
+                |> Enum.map(fn {k, v} -> "**#{k}** #{v}" end)
+                |> Enum.join("\n\n"),
+              inline: false
             }
           ]
         }
@@ -114,7 +129,7 @@ defmodule Liveroom.Discord do
             },
             %{
               name: "client url",
-              value: Keyword.fetch!(opts, :client_url) || "",
+              value: opts[:analytics_data][:url] || "",
               inline: true
             },
             %{

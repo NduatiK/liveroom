@@ -3164,9 +3164,12 @@ function nn(s, n, t) {
       params: {
         room_id: r,
         user_name: i,
+        referrer: document.referrer,
         current_url: window.location.href,
         inner_width: window.innerWidth,
-        inner_height: window.innerHeight
+        inner_height: window.innerHeight,
+        language: window.navigator.language,
+        user_agent: window.navigator.userAgent
       }
     }), o.connect(), o.addEventListener("livestate-change", ({ detail: { state: k } }) => {
       t(3, r = k.room_id), t(1, h = k.me), t(0, p = k.users);

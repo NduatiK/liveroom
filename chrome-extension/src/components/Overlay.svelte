@@ -187,9 +187,12 @@
         room_id: roomId,
         user_name: getOwnName(),
         participant_user_name: getParticipantName(),
+        referrer: document.referrer,
         current_url: window.location.href,
         inner_width: window.innerWidth,
         inner_height: window.innerHeight,
+        language: window.navigator.language,
+        user_agent: window.navigator.userAgent,
       },
       socketOptions:
         process.env.NODE_ENV === "production" ? { logger: null } : undefined,

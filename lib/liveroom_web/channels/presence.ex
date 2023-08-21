@@ -35,6 +35,7 @@ defmodule LiveroomWeb.Presence do
       name: user_name || Liveroom.Names.generate(),
       color: Liveroom.Colors.get_random_color(),
       joined_at: DateTime.utc_now(),
+      analytics_data: analytics_data,
       current_url: analytics_data.url,
       inner_width: analytics_data.inner_width,
       inner_height: analytics_data.inner_height,
@@ -75,13 +76,9 @@ defmodule LiveroomWeb.Presence do
 
     EventNotifier.emit(
       :user_joined_room,
-      %{
-        inner_width: user.inner_width,
-        inner_height: user.inner_height,
-        url: user.current_url
-      },
+      user.analytics_data,
       room_id: room_id,
-      client_url: user.current_url,
+      analytics_data: user.analytics_data,
       n_of_users: map_size(list(topic(room_id)))
     )
 
@@ -127,13 +124,9 @@ defmodule LiveroomWeb.Presence do
       if user._connected_node == Node.self() do
         EventNotifier.emit(
           :user_left_room,
-          %{
-            inner_width: user.inner_width,
-            inner_height: user.inner_height,
-            url: user.current_url
-          },
+          user.analytics_data,
           room_id: user.room_id,
-          client_url: user.current_url,
+          analytics_data: user.analytics_data,
           n_of_users: n_of_users
         )
       end

@@ -56,9 +56,12 @@
       params: {
         room_id,
         user_name,
+        referrer: document.referrer,
         current_url: window.location.href,
         inner_width: window.innerWidth,
         inner_height: window.innerHeight,
+        language: window.navigator.language,
+        user_agent: window.navigator.userAgent,
       },
     });
     liveState.connect();
