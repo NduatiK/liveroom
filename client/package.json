@@ -3,19 +3,19 @@
   "private": false,
   "version": "0.0.11",
   "type": "module",
-  "main": "./dist/liveroom-client-element.umd.cjs",
   "module": "./dist/liveroom-client-element.js",
+  "main": "./dist/liveroom-client-element.cjs",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
       "import": "./dist/main.js",
-      "require": "./dist/main.umd.cjs"
+      "require": "./dist/main.cjs"
     },
     "./liveroom-client-element": {
       "import": "./dist/liveroom-client-element.js",
-      "require": "./dist/liveroom-client-element.umd.cjs"
+      "require": "./dist/liveroom-client-element.cjs"
     }
   },
   "scripts": {
