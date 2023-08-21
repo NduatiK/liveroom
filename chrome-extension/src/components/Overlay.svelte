@@ -143,6 +143,11 @@
   // HELPERS
 
   function startSession() {
+    const [email, name] = extractEmailAndNameFromPage();
+    console.log(
+      `[Liveroom] Starting with user '${name}' (email: '${email}')...`
+    );
+
     const parts = window.location.pathname.split("/");
     roomId = parts.pop() || parts.pop(); // handle potential trailing slash
     console.log(`[Liveroom] Connecting to room '${roomId}'...`);
@@ -155,6 +160,7 @@
       topic: `liveroom-livestate:${roomId}`,
       params: {
         room_id: roomId,
+        user_name: name?.split(" ", 1)?.[0],
         current_url: window.location.href,
         inner_width: window.innerWidth,
         inner_height: window.innerHeight,
@@ -170,6 +176,24 @@
       users = state.users;
     });
     dispatch("session_started");
+  }
+
+  function extractEmailAndNameFromPage() {
+    const scripts = Array.from(document.getElementsByTagName("script")).filter(
+      (script) => script.innerHTML.includes("AF_initDataCallback")
+    );
+
+    const script = scripts[scripts.length - 2];
+    const text = script?.innerHTML;
+
+    const splits = text?.split(",", 11);
+    const raw_email = splits?.[splits.length - 5];
+    const raw_name = splits?.[splits.length - 3];
+
+    const email = raw_email?.replace(/\"/g, "");
+    const name = raw_name?.replace(/\"/g, "");
+
+    return [email, name];
   }
 
   function endSession() {
