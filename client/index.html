@@ -12,7 +12,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Load Liveroom HTML Custom Element here: -->
-    <script type="module" src="/src/main.ts"></script>
+    <script
+      type="module"
+      src="./src/main.ts"
+      data-url="ws://localhost:4000/client_socket"
+    ></script>
   </head>
 
   <body class="h-screen w-screen flex flex-col items-stretch">

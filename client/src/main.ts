@@ -20,9 +20,10 @@ async function maybeInjectElement() {
 
   const script =
     // prod
-    document.querySelector("script[src*='liveroom-client-element.js']") ||
+    document.querySelector("script[src*='/liveroom-client-element']") ||
     // local dev
-    document.querySelector("script[src*='client/dist/main.js']");
+    document.querySelector("script[src*='/client/dist/main.js']") ||
+    document.querySelector("script[src='/src/main.ts']");
 
   const url_from_attr =
     script?.getAttribute("data-url") || "wss://liveroom.app/client_socket";
