@@ -2,6 +2,7 @@
 
 let room_id: string | undefined;
 let element: HTMLElement | undefined;
+let script: HTMLScriptElement | null = null;
 
 // MAIN
 
@@ -18,7 +19,7 @@ async function maybeInjectElement() {
   const params = new URLSearchParams(window.location.search);
   const room_id_from_query_param = params.get("_liveroom");
 
-  const script =
+  script =
     // prod
     document.querySelector("script[src*='/liveroom-client-element']") ||
     // local dev
@@ -55,7 +56,15 @@ async function injectElement(url: string, room_id?: string) {
   if (!room_id) return false;
 
   // import client element sources
-  await import("./LiveroomClientElement.svelte");
+  await import(
+    script
+      ?.getAttribute("src")
+      ?.startsWith(
+        "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.15",
+      )
+      ? "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.15/dist/liveroom-client-element.min.js"
+      : "./LiveroomClientElement.svelte"
+  );
   console.log("[Liveroom] Installed successfully");
 
   const body = document.getElementsByTagName("body")[0];
