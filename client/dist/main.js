@@ -1,22 +1,22 @@
-let c, e;
-s();
-a();
-const l = "liveroom-client-element";
-async function s() {
-  const o = new URLSearchParams(window.location.search).get("_liveroom"), n = (
+let r, t;
+l();
+m();
+const i = "liveroom-client-element";
+async function l() {
+  const o = new URLSearchParams(window.location.search).get("_liveroom"), e = (
     // prod
     document.querySelector("script[src*='liveroom-client-element.js']") || // local dev
     document.querySelector("script[src*='client/dist/main.js']")
-  ), i = n == null ? void 0 : n.getAttribute("data-roomid"), r = o || i;
-  r && r != c && (c = r, e && (e.remove(), e = void 0), await m(c));
+  ), s = (e == null ? void 0 : e.getAttribute("data-url")) || "wss://liveroom.app/client_socket", a = (e == null ? void 0 : e.getAttribute("data-roomid")) || null, n = o || a;
+  n && n != r && (r = n, t && (t.remove(), t = void 0), await u(s, r));
 }
-function a() {
-  window.addEventListener("popstate", s);
+function m() {
+  window.addEventListener("popstate", l);
 }
-async function m(t) {
-  if (!t)
+async function u(c, o) {
+  if (!o)
     return !1;
   await import("./liveroom-client-element.js"), console.log("[Liveroom] Installed successfully");
-  const o = document.getElementsByTagName("body")[0];
-  return e = document.createElement(l), e.setAttribute("url", "ws://localhost:4000/client_socket"), e.setAttribute("room_id", t), o.appendChild(e), console.log("[Liveroom] Injected successfully"), !0;
+  const e = document.getElementsByTagName("body")[0];
+  return t = document.createElement(i), t.setAttribute("url", c), o && t.setAttribute("room_id", o), e.appendChild(t), console.log("[Liveroom] Injected successfully"), !0;
 }
