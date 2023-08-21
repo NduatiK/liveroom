@@ -92,17 +92,21 @@ defmodule LiveroomWeb.LiveStateChannel do
         } = _params,
         state
       ) do
-    Logger.info(
-      "User '#{updated_by_id}' updated user name of User '#{user_id}' to '#{user_name}'"
-    )
+    if state.users[user_id][:name] == user_name do
+      {:noreply, state}
+    else
+      Logger.info(
+        "User '#{updated_by_id}' updated user name of User '#{user_id}' to '#{user_name}'"
+      )
 
-    LiveroomWeb.Presence.broadcast(state.room_id, "update_user_name", %{
-      user_id: user_id,
-      user_name: user_name,
-      updated_by_id: updated_by_id
-    })
+      LiveroomWeb.Presence.broadcast(state.room_id, "update_user_name", %{
+        user_id: user_id,
+        user_name: user_name,
+        updated_by_id: updated_by_id
+      })
 
-    {:noreply, state}
+      {:noreply, state}
+    end
   end
 
   # TODO: Not handled yet by the HTML Client Element:

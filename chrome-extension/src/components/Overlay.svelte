@@ -33,6 +33,36 @@
   let users: { [key: User["id"]]: User };
   let liveState: LiveState;
 
+  let circuitbreaker_sendParticipantName = true;
+
+  let users_ids;
+  $: users_ids = users && Object.keys(users);
+  $: if (users_ids?.length == 2) {
+    const participant_user_name = getParticipantName();
+
+    if (participant_user_name && circuitbreaker_sendParticipantName) {
+      const participant_id = users_ids.find((x) => x != me.id);
+      const user_name = users[participant_id].name;
+
+      if (
+        user_name != participant_user_name &&
+        participant_id &&
+        liveState &&
+        me?.id
+      ) {
+        liveState.dispatchEvent(
+          new CustomEvent("user_name_updated", {
+            detail: {
+              user_name: participant_user_name,
+              user_id: participant_id,
+              updated_by_id: me.id,
+            },
+          })
+        );
+      }
+    }
+  }
+
   // Start selecting the screensharing video (screensharingVideoEl)
   $: if (started && !screensharingVideoEl) {
     // add video click handlers
@@ -143,11 +173,6 @@
   // HELPERS
 
   function startSession() {
-    const [email, name] = extractEmailAndNameFromPage();
-    console.log(
-      `[Liveroom] Starting with user '${name}' (email: '${email}')...`
-    );
-
     const parts = window.location.pathname.split("/");
     roomId = parts.pop() || parts.pop(); // handle potential trailing slash
     console.log(`[Liveroom] Connecting to room '${roomId}'...`);
@@ -160,7 +185,8 @@
       topic: `liveroom-livestate:${roomId}`,
       params: {
         room_id: roomId,
-        user_name: name?.split(" ", 1)?.[0],
+        user_name: getOwnName(),
+        participant_user_name: getParticipantName(),
         current_url: window.location.href,
         inner_width: window.innerWidth,
         inner_height: window.innerHeight,
@@ -176,6 +202,26 @@
       users = state.users;
     });
     dispatch("session_started");
+  }
+
+  function getOwnName(): string | null {
+    const [email, name] = extractEmailAndNameFromPage();
+    console.log(`[Liveroom] Admin is user '${name}' (email: '${email}')...`);
+    return formatFirstName(name);
+  }
+
+  function getParticipantName(): string | null {
+    const texts = document.querySelectorAll(
+      `img[src^="https://lh3.googleusercontent.com/"] + span`
+    );
+    const text = texts?.[texts.length - 1]?.innerHTML;
+    const name = text?.split(" (", 1)?.[0];
+    console.log(`[Liveroom] Participant is user '${name}'`);
+    return formatFirstName(name);
+  }
+
+  function formatFirstName(name: string | null): string | null {
+    return name?.split(" ", 1)?.[0];
   }
 
   function extractEmailAndNameFromPage() {
