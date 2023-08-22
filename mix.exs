@@ -35,6 +35,7 @@ defmodule Liveroom.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bcrypt_elixir, "~> 3.0"},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
       {:live_state, "~> 0.6.1"},
       {:cors_plug, "~> 3.0.3"},

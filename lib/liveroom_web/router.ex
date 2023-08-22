@@ -1,6 +1,8 @@
 defmodule LiveroomWeb.Router do
   use LiveroomWeb, :router
 
+  import LiveroomWeb.Accounts.UserAuth
+
   import Phoenix.LiveDashboard.Router
 
   alias LiveroomWeb.Hooks
@@ -13,6 +15,7 @@ defmodule LiveroomWeb.Router do
     plug :put_root_layout, {LiveroomWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_user
     # no plug Plugs.Analytics, it is handled by a Liveview hook on mount
   end
 
@@ -90,5 +93,43 @@ defmodule LiveroomWeb.Router do
     password = Application.fetch_env!(:liveroom, :admin_basic_auth)[:password]
 
     Plug.BasicAuth.basic_auth(conn, username: username, password: password)
+  end
+
+  ## Authentication routes
+
+  scope "/", LiveroomWeb.Accounts, as: :accounts do
+    pipe_through [:browser, :redirect_if_user_is_authenticated]
+
+    live_session :redirect_if_user_is_authenticated,
+      on_mount: [{LiveroomWeb.Accounts.UserAuth, :redirect_if_user_is_authenticated}] do
+      live "/register", UserRegistrationLive, :new
+      live "/log_in", UserLoginLive, :new
+      live "/reset_password", UserForgotPasswordLive, :new
+      live "/reset_password/:token", UserResetPasswordLive, :edit
+    end
+
+    post "/log_in", UserSessionController, :create
+  end
+
+  scope "/accounts", LiveroomWeb.Accounts, as: :accounts do
+    pipe_through [:browser, :require_authenticated_user]
+
+    live_session :require_authenticated_user,
+      on_mount: [{LiveroomWeb.Accounts.UserAuth, :ensure_authenticated}] do
+      live "/users/settings", UserSettingsLive, :edit
+      live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+    end
+  end
+
+  scope "/accounts", LiveroomWeb.Accounts, as: :accounts do
+    pipe_through [:browser]
+
+    delete "/users/log_out", UserSessionController, :delete
+
+    live_session :current_user,
+      on_mount: [{LiveroomWeb.Accounts.UserAuth, :mount_current_user}] do
+      live "/users/confirm/:token", UserConfirmationLive, :edit
+      live "/users/confirm", UserConfirmationInstructionsLive, :new
+    end
   end
 end
