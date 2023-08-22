@@ -97,7 +97,7 @@ defmodule LiveroomWeb.Accounts.UserResetPasswordLiveTest do
         |> render_click()
         |> follow_redirect(conn, ~p"/log_in")
 
-      assert conn.resp_body =~ "Log in"
+      assert conn.resp_body =~ "Sign in"
     end
 
     test "redirects to password reset page when the Register button is clicked", %{

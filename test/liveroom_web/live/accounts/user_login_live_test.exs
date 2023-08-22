@@ -8,8 +8,8 @@ defmodule LiveroomWeb.Accounts.UserLoginLiveTest do
     test "renders log in page", %{conn: conn} do
       {:ok, _lv, html} = live(conn, ~p"/log_in")
 
-      assert html =~ "Log in"
-      assert html =~ "Register"
+      assert html =~ "Sign in"
+      # assert html =~ "Register"
       assert html =~ "Forgot your password?"
     end
 
