@@ -6,7 +6,7 @@ defmodule LiveroomWeb.Accounts.UserConfirmationInstructionsLive do
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-sm">
-      <.header class="text-center">
+      <.header class="text-left mb-8">
         No confirmation instructions received?
         <:subtitle>We'll send a new confirmation link to your inbox</:subtitle>
       </.header>

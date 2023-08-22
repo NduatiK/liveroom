@@ -1,10 +1,37 @@
 defmodule LiveroomWeb.Layouts do
   use LiveroomWeb, :html
 
+  def render("empty.html", assigns) do
+    ~H"""
+    <div class="relative min-h-[100dvh] grid grid-cols-1 grid-rows-[auto_1fr_auto] overflow-hidden">
+      <.flash_group flash={@flash} />
+
+      <main class="h-full flex flex-col items-center overflow-x-hidden">
+        <%= @inner_content %>
+      </main>
+    </div>
+    """
+  end
+
   def render("app.html", assigns) do
     ~H"""
     <div class="relative min-h-[100dvh] grid grid-cols-1 grid-rows-[auto_1fr_auto] overflow-hidden">
       <.flash_group flash={@flash} />
+
+      <header class="w-full flex items-center py-4 px-8 mb-8">
+        <%!-- liveroom logo --%>
+        <a
+          href="https://liveroom.app"
+          target="_blank"
+          class="flex items-center py-1 pl-1 pr-3 font-semibold rounded-md hover:bg-slate-200/60 transition-colors"
+        >
+          <img
+            src={LiveroomWeb.Endpoint.static_url() <> ~p"/images/liveroom_logo.png"}
+            class="w-10 h-10 pt-1"
+          />
+          <span class="text-xl font-bold text-accent">Liveroom</span>
+        </a>
+      </header>
 
       <main class="h-full flex flex-col items-center overflow-x-hidden">
         <%= @inner_content %>

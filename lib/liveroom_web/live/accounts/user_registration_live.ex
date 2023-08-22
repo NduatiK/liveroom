@@ -7,7 +7,7 @@ defmodule LiveroomWeb.Accounts.UserRegistrationLive do
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-sm">
-      <.header class="text-center">
+      <.header class="text-left mb-8">
         Register for an account
         <:subtitle>
           Already registered?

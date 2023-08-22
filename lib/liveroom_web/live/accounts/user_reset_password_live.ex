@@ -6,7 +6,7 @@ defmodule LiveroomWeb.Accounts.UserResetPasswordLive do
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-sm">
-      <.header class="text-center">Reset Password</.header>
+      <.header class="text-left mb-8">Reset Password</.header>
 
       <.simple_form
         for={@form}

@@ -4,7 +4,7 @@ defmodule LiveroomWeb.Accounts.UserLoginLive do
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-sm">
-      <.header class="text-center">
+      <.header class="text-left mb-8">
         Sign in to account
         <:subtitle>
           Don't have an account?
