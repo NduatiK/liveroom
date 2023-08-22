@@ -8,22 +8,19 @@ defmodule LiveroomWeb.LiveStateChannel do
         _topic,
         %{
           "room_id" => room_id,
-          "referrer" => referrer,
           "current_url" => current_url,
           "inner_width" => inner_width,
-          "inner_height" => inner_height,
-          "language" => language,
-          "user_agent" => user_agent
+          "inner_height" => inner_height
         } = params,
         _socket
       ) do
     analytics_data = %{
-      referrer: referrer,
+      referrer: params["referrer"],
       url: current_url,
       inner_width: inner_width,
       inner_height: inner_height,
-      language: language,
-      user_agent: user_agent
+      language: params["language"],
+      user_agent: params["user_agent"]
     }
 
     me =
