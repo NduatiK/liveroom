@@ -86,8 +86,13 @@ defmodule Liveroom.AccountsTest do
 
     test "registers users with a hashed password" do
       email = unique_user_email()
-      {:ok, user} = Accounts.register_user(valid_user_attributes(email: email))
+      picture_url = "https://img.com/picture.png"
+
+      {:ok, user} =
+        Accounts.register_user(valid_user_attributes(email: email, picture_url: picture_url))
+
       assert user.email == email
+      assert user.picture_url == picture_url
       assert is_binary(user.hashed_password)
       assert is_nil(user.confirmed_at)
       assert is_nil(user.password)
@@ -103,16 +108,18 @@ defmodule Liveroom.AccountsTest do
     test "allows fields to be set" do
       email = unique_user_email()
       password = valid_user_password()
+      picture_url = "https://img.com/picture.png"
 
       changeset =
         Accounts.change_user_registration(
           %User{},
-          valid_user_attributes(email: email, password: password)
+          valid_user_attributes(email: email, password: password, picture_url: picture_url)
         )
 
       assert changeset.valid?
       assert get_change(changeset, :email) == email
       assert get_change(changeset, :password) == password
+      assert get_change(changeset, :picture_url) == picture_url
       assert is_nil(get_change(changeset, :hashed_password))
     end
   end

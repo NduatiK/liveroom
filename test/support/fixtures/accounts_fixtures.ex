@@ -10,7 +10,8 @@ defmodule Liveroom.AccountsFixtures do
   def valid_user_attributes(attrs \\ %{}) do
     Enum.into(attrs, %{
       email: unique_user_email(),
-      password: valid_user_password()
+      password: valid_user_password(),
+      picture_url: "https://img.com/picture.png"
     })
   end
 
