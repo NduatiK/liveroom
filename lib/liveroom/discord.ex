@@ -96,14 +96,14 @@ defmodule Liveroom.Discord do
               value:
                 %{
                   referrer: opts[:analytics_data][:referrer],
-                  user_ip: opts[:analytics_data][:user_ip],
+                  # user_ip: opts[:analytics_data][:user_ip],
                   screen:
                     "#{opts[:analytics_data][:inner_width]}x#{opts[:analytics_data][:inner_height]}",
-                  language: opts[:analytics_data][:language],
-                  user_agent: opts[:analytics_data][:user_agent]
+                  language: opts[:analytics_data][:language]
+                  # user_agent: opts[:analytics_data][:user_agent]
                 }
-                |> Enum.map(fn {k, v} -> "**#{k}** #{v}" end)
-                |> Enum.join("\n\n"),
+                |> Enum.map(fn {k, v} -> "#{k}: #{v}" end)
+                |> Enum.join("\n"),
               inline: false
             }
           ]
