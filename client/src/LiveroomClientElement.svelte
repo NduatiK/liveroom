@@ -63,6 +63,8 @@
         language: window.navigator.language,
         user_agent: window.navigator.userAgent,
       },
+      socketOptions:
+        process.env.NODE_ENV === "production" ? { logger: null } : undefined,
     });
     liveState.connect();
     liveState.addEventListener(

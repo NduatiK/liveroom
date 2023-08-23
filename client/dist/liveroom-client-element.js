@@ -24,14 +24,14 @@ function Me(s) {
 function W(s, n) {
   s.appendChild(n);
 }
-function Le(s, n, t) {
-  const e = Ne(s);
+function Ne(s, n, t) {
+  const e = Le(s);
   if (!e.getElementById(n)) {
     const r = Q("style");
     r.id = n, r.textContent = t, Re(e, r);
   }
 }
-function Ne(s) {
+function Le(s) {
   if (!s)
     return document;
   const n = s.getRootNode ? s.getRootNode() : s.ownerDocument;
@@ -110,7 +110,7 @@ let Mt = !1;
 function Ve() {
   Mt || (Mt = !0, Je.then(ct));
 }
-function Lt(s) {
+function Nt(s) {
   it.push(s);
 }
 const xt = /* @__PURE__ */ new Set();
@@ -144,7 +144,7 @@ function Be(s) {
   if (s.fragment !== null) {
     s.update(), gt(s.before_update);
     const n = s.dirty;
-    s.dirty = [-1], s.fragment && s.fragment.p(s.ctx, n), s.after_update.forEach(Lt);
+    s.dirty = [-1], s.fragment && s.fragment.p(s.ctx, n), s.after_update.forEach(Nt);
   }
 }
 function ze(s) {
@@ -190,10 +190,10 @@ function Ge(s, n, t, e, r, i, o, h, p, d, b, _) {
 }
 function Xe(s, n, t) {
   const { fragment: e, after_update: r } = s.$$;
-  e && e.m(n, t), Lt(() => {
+  e && e.m(n, t), Nt(() => {
     const i = s.$$.on_mount.map(oe).filter(ae);
     s.$$.on_destroy ? s.$$.on_destroy.push(...i) : gt(i), s.$$.on_mount = [];
-  }), r.forEach(Lt);
+  }), r.forEach(Nt);
 }
 function qe(s, n) {
   const t = s.$$;
@@ -921,7 +921,7 @@ class _s extends U {
     t.encodeArrayHeader(r ? 4 : 5), t.writer.u8(7), t.encodeArray(this.path), t.encodeNumber(this.pos), r ? t.encodeString(this.str) : (t.writer.u8(0), t.encodeNumber(this.len));
   }
 }
-const { isArray: bs } = Array, Nt = (s) => !!s && typeof s == "object" && typeof s.text == "string", Rt = (s) => !!s && typeof s == "object" && bs(s.children), Es = (s, n) => {
+const { isArray: bs } = Array, Lt = (s) => !!s && typeof s == "object" && typeof s.text == "string", Rt = (s) => !!s && typeof s == "object" && bs(s.children), Es = (s, n) => {
   const t = new RegExp(s, n ? "i" : void 0);
   return (e) => t.test(e);
 };
@@ -958,7 +958,7 @@ class $s extends U {
           text: o
         }
       ] : [i, o];
-    } else if (Nt(t)) {
+    } else if (Lt(t)) {
       const { pos: e, props: r } = this, i = t.text.slice(0, e), o = t.text.slice(e);
       return [
         {
@@ -1031,7 +1031,7 @@ class Cs extends U {
     return e.obj[e.key - 1] = o, e.obj.splice(e.key, 1), { doc: t, old: [r, i] };
   }
   merge(t, e) {
-    return typeof t == "string" && typeof e == "string" || typeof t == "number" && typeof e == "number" ? t + e : Nt(t) && Nt(e) ? { ...t, ...e, text: t.text + e.text } : Rt(t) && Rt(e) ? { ...t, ...e, children: [...t.children, ...e.children] } : [t, e];
+    return typeof t == "string" && typeof e == "string" || typeof t == "number" && typeof e == "number" ? t + e : Lt(t) && Lt(e) ? { ...t, ...e, text: t.text + e.text } : Rt(t) && Rt(e) ? { ...t, ...e, children: [...t.children, ...e.children] } : [t, e];
   }
   toJson(t) {
     const e = {
@@ -1263,7 +1263,7 @@ class Ms extends I {
     t.encodeArrayHeader(this.not ? 4 : 3), t.writer.u8(41), t.encodeArray(e ? this.path.slice(e.path.length) : this.path), t.encodeNumber(this.len), this.not && t.writer.u8(1);
   }
 }
-class Ls extends I {
+class Ns extends I {
   constructor(t, e, r) {
     super(t);
     f(this, "value");
@@ -1300,7 +1300,7 @@ class Ls extends I {
     t.encodeArrayHeader(r ? 4 : 3), t.writer.u8(30), t.encodeArray(e ? this.path.slice(e.path.length) : this.path), t.encodeString(this.value), r && t.writer.u8(1);
   }
 }
-class Ns extends I {
+class Ls extends I {
   constructor(t, e, r) {
     super(t);
     f(this, "value");
@@ -1707,9 +1707,9 @@ const Fs = (s, n) => {
     case "test_string_len":
       return new Ms(w(s.path), s.len, !!s.not);
     case "contains":
-      return new Ls(w(s.path), s.value, !!s.ignore_case);
-    case "ends":
       return new Ns(w(s.path), s.value, !!s.ignore_case);
+    case "ends":
+      return new Ls(w(s.path), s.value, !!s.ignore_case);
     case "starts":
       return new Rs(w(s.path), s.value, !!s.ignore_case);
     case "matches":
@@ -2421,7 +2421,7 @@ var se;
       }
     }, b = Object.getPrototypeOf(Function), _ = typeof process == "object" && process.env && process.env.REFLECT_METADATA_USE_MAP_POLYFILL === "true", A = !_ && typeof Map == "function" && typeof Map.prototype.entries == "function" ? Map : Ae(), T = !_ && typeof Set == "function" && typeof Set.prototype.entries == "function" ? Set : Te(), j = !_ && typeof WeakMap == "function" ? WeakMap : Oe(), R = new j();
     function M(a, c, l, u) {
-      if (L(l)) {
+      if (N(l)) {
         if (!Wt(a))
           throw new TypeError();
         if (!Gt(c))
@@ -2430,9 +2430,9 @@ var se;
       } else {
         if (!Wt(a))
           throw new TypeError();
-        if (!N(c))
+        if (!L(c))
           throw new TypeError();
-        if (!N(u) && !L(u) && !tt(u))
+        if (!L(u) && !N(u) && !tt(u))
           throw new TypeError();
         return tt(u) && (u = void 0), l = F(l), ge(a, c, l, u);
       }
@@ -2440,9 +2440,9 @@ var se;
     n("decorate", M);
     function X(a, c) {
       function l(u, g) {
-        if (!N(u))
+        if (!L(u))
           throw new TypeError();
-        if (!L(g) && !be(g))
+        if (!N(g) && !be(g))
           throw new TypeError();
         Vt(a, c, u, g);
       }
@@ -2450,58 +2450,58 @@ var se;
     }
     n("metadata", X);
     function q(a, c, l, u) {
-      if (!N(l))
+      if (!L(l))
         throw new TypeError();
-      return L(u) || (u = F(u)), Vt(a, c, l, u);
+      return N(u) || (u = F(u)), Vt(a, c, l, u);
     }
     n("defineMetadata", q);
     function k(a, c, l) {
-      if (!N(c))
+      if (!L(c))
         throw new TypeError();
-      return L(l) || (l = F(l)), Dt(a, c, l);
+      return N(l) || (l = F(l)), Dt(a, c, l);
     }
     n("hasMetadata", k);
     function z(a, c, l) {
-      if (!N(c))
+      if (!L(c))
         throw new TypeError();
-      return L(l) || (l = F(l)), At(a, c, l);
+      return N(l) || (l = F(l)), At(a, c, l);
     }
     n("hasOwnMetadata", z);
     function J(a, c, l) {
-      if (!N(c))
+      if (!L(c))
         throw new TypeError();
-      return L(l) || (l = F(l)), Ut(a, c, l);
+      return N(l) || (l = F(l)), Ut(a, c, l);
     }
     n("getMetadata", J);
     function Y(a, c, l) {
-      if (!N(c))
+      if (!L(c))
         throw new TypeError();
-      return L(l) || (l = F(l)), Jt(a, c, l);
+      return N(l) || (l = F(l)), Jt(a, c, l);
     }
     n("getOwnMetadata", Y);
     function x(a, c) {
-      if (!N(a))
+      if (!L(a))
         throw new TypeError();
-      return L(c) || (c = F(c)), Bt(a, c);
+      return N(c) || (c = F(c)), Bt(a, c);
     }
     n("getMetadataKeys", x);
     function P(a, c) {
-      if (!N(a))
+      if (!L(a))
         throw new TypeError();
-      return L(c) || (c = F(c)), zt(a, c);
+      return N(c) || (c = F(c)), zt(a, c);
     }
     n("getOwnMetadataKeys", P);
     function V(a, c, l) {
-      if (!N(c))
+      if (!L(c))
         throw new TypeError();
-      L(l) || (l = F(l));
+      N(l) || (l = F(l));
       var u = ot(
         c,
         l,
         /*Create*/
         !1
       );
-      if (L(u) || !u.delete(a))
+      if (N(u) || !u.delete(a))
         return !1;
       if (u.size > 0)
         return !0;
@@ -2512,7 +2512,7 @@ var se;
     function K(a, c) {
       for (var l = a.length - 1; l >= 0; --l) {
         var u = a[l], g = u(c);
-        if (!L(g) && !tt(g)) {
+        if (!N(g) && !tt(g)) {
           if (!Gt(g))
             throw new TypeError();
           c = g;
@@ -2523,8 +2523,8 @@ var se;
     function ge(a, c, l, u) {
       for (var g = a.length - 1; g >= 0; --g) {
         var H = a[g], y = H(c, l, u);
-        if (!L(y) && !tt(y)) {
-          if (!N(y))
+        if (!N(y) && !tt(y)) {
+          if (!L(y))
             throw new TypeError();
           u = y;
         }
@@ -2533,13 +2533,13 @@ var se;
     }
     function ot(a, c, l) {
       var u = R.get(a);
-      if (L(u)) {
+      if (N(u)) {
         if (!l)
           return;
         u = new A(), R.set(a, u);
       }
       var g = u.get(c);
-      if (L(g)) {
+      if (N(g)) {
         if (!l)
           return;
         g = new A(), u.set(c, g);
@@ -2560,7 +2560,7 @@ var se;
         /*Create*/
         !1
       );
-      return L(u) ? !1 : we(u.has(a));
+      return N(u) ? !1 : we(u.has(a));
     }
     function Ut(a, c, l) {
       var u = At(a, c, l);
@@ -2577,7 +2577,7 @@ var se;
         /*Create*/
         !1
       );
-      if (!L(u))
+      if (!N(u))
         return u.get(a);
     }
     function Vt(a, c, l, u) {
@@ -2615,7 +2615,7 @@ var se;
         /*Create*/
         !1
       );
-      if (L(u))
+      if (N(u))
         return l;
       for (var g = u.keys(), H = Ee(g), y = 0; ; ) {
         var m = Ce(H);
@@ -2654,7 +2654,7 @@ var se;
           return 6;
       }
     }
-    function L(a) {
+    function N(a) {
       return a === void 0;
     }
     function tt(a) {
@@ -2663,7 +2663,7 @@ var se;
     function ve(a) {
       return typeof a == "symbol";
     }
-    function N(a) {
+    function L(a) {
       return typeof a == "object" ? a !== null : typeof a == "function";
     }
     function ye(a, c) {
@@ -2684,7 +2684,7 @@ var se;
       var l = c === 3 ? "string" : c === 5 ? "number" : "default", u = Xt(a, r);
       if (u !== void 0) {
         var g = u.call(a, l);
-        if (N(g))
+        if (L(g))
           throw new TypeError();
         return g;
       }
@@ -2695,26 +2695,26 @@ var se;
         var l = a.toString;
         if (et(l)) {
           var u = l.call(a);
-          if (!N(u))
+          if (!L(u))
             return u;
         }
         var g = a.valueOf;
         if (et(g)) {
           var u = g.call(a);
-          if (!N(u))
+          if (!L(u))
             return u;
         }
       } else {
         var g = a.valueOf;
         if (et(g)) {
           var u = g.call(a);
-          if (!N(u))
+          if (!L(u))
             return u;
         }
         var H = a.toString;
         if (et(H)) {
           var u = H.call(a);
-          if (!N(u))
+          if (!L(u))
             return u;
         }
       }
@@ -2766,7 +2766,7 @@ var se;
       if (!et(c))
         throw new TypeError();
       var l = c.call(a);
-      if (!N(l))
+      if (!L(l))
         throw new TypeError();
       return l;
     }
@@ -3002,7 +3002,7 @@ var se;
   });
 })(se || (se = {}));
 function en(s) {
-  Le(s, "svelte-1tmn7wo", '#liveroom-client-element.svelte-1tmn7wo.svelte-1tmn7wo{font-family:Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;line-height:1.5;font-weight:400;font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;-webkit-text-size-adjust:100%}#users-container.svelte-1tmn7wo.svelte-1tmn7wo{z-index:99999;position:fixed;inset:0;overflow:hidden;pointer-events:none}.user.svelte-1tmn7wo.svelte-1tmn7wo{z-index:10;position:absolute;top:0;left:0;user-select:none;transform:translate(var(--x), var(--y))}.user.svelte-1tmn7wo .cursor.svelte-1tmn7wo{position:absolute;top:0;left:0;color:var(--color);transform-origin:top left;transform:rotate(6deg)}.user[data-isself="true"].svelte-1tmn7wo .cursor.svelte-1tmn7wo{display:none}.user-name.svelte-1tmn7wo.svelte-1tmn7wo{padding:4px 10px;font-size:14px;line-height:20px;font-weight:600;color:black;background-color:var(--color);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-radius:9999px;box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05)}.user.svelte-1tmn7wo .user-name.svelte-1tmn7wo{position:absolute;top:20px;left:16px}.user[data-isself="true"].svelte-1tmn7wo .user-name.svelte-1tmn7wo{display:none}.user.svelte-1tmn7wo .halo.svelte-1tmn7wo{transform:scale(0);z-index:-1;position:absolute;top:-60px;left:-60px;width:120px;height:120px;border-radius:9999px;background-color:var(--color);opacity:0.25;transition:transform 100ms ease-out;box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05)}.user.svelte-1tmn7wo .halo[data-show="true"].svelte-1tmn7wo{transform:scale(1)}');
+  Ne(s, "svelte-1tmn7wo", '#liveroom-client-element.svelte-1tmn7wo.svelte-1tmn7wo{font-family:Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;line-height:1.5;font-weight:400;font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;-webkit-text-size-adjust:100%}#users-container.svelte-1tmn7wo.svelte-1tmn7wo{z-index:99999;position:fixed;inset:0;overflow:hidden;pointer-events:none}.user.svelte-1tmn7wo.svelte-1tmn7wo{z-index:10;position:absolute;top:0;left:0;user-select:none;transform:translate(var(--x), var(--y))}.user.svelte-1tmn7wo .cursor.svelte-1tmn7wo{position:absolute;top:0;left:0;color:var(--color);transform-origin:top left;transform:rotate(6deg)}.user[data-isself="true"].svelte-1tmn7wo .cursor.svelte-1tmn7wo{display:none}.user-name.svelte-1tmn7wo.svelte-1tmn7wo{padding:4px 10px;font-size:14px;line-height:20px;font-weight:600;color:black;background-color:var(--color);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-radius:9999px;box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05)}.user.svelte-1tmn7wo .user-name.svelte-1tmn7wo{position:absolute;top:20px;left:16px}.user[data-isself="true"].svelte-1tmn7wo .user-name.svelte-1tmn7wo{display:none}.user.svelte-1tmn7wo .halo.svelte-1tmn7wo{transform:scale(0);z-index:-1;position:absolute;top:-60px;left:-60px;width:120px;height:120px;border-radius:9999px;background-color:var(--color);opacity:0.25;transition:transform 100ms ease-out;box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05)}.user.svelte-1tmn7wo .halo[data-show="true"].svelte-1tmn7wo{transform:scale(1)}');
 }
 function ne(s, n, t) {
   const e = s.slice();
@@ -3170,7 +3170,8 @@ function nn(s, n, t) {
         inner_height: window.innerHeight,
         language: window.navigator.language,
         user_agent: window.navigator.userAgent
-      }
+      },
+      socketOptions: process.env.NODE_ENV === "production" ? { logger: null } : void 0
     }), o.connect(), o.addEventListener("livestate-change", ({ detail: { state: k } }) => {
       t(3, r = k.room_id), t(1, h = k.me), t(0, p = k.users);
     }), window.addEventListener("mousemove", A), window.addEventListener("mousedown", T), window.addEventListener("mouseup", j), window.addEventListener("keydown", M), window.addEventListener("keyup", X), window.addEventListener("resize", q);
