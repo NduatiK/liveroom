@@ -23,7 +23,9 @@
         window.getComputedStyle(entry.target).display != "none" &&
         !entry.isIntersecting
       ) {
-        console.log("[Liveroom] Toolbar removed, trying re-injection...");
+        console.log(
+          "[Liveroom Extension] Toolbar removed, trying re-injection..."
+        );
         injectionInterval = setInterval(maybeInjectInToolbar, 1000);
       }
     });
@@ -47,7 +49,7 @@
       // stop periodic check
       clearInterval(injectionInterval);
 
-      console.log("[Liveroom] Injecting in the toolbar...");
+      console.log("[Liveroom Extension] Injecting in the toolbar...");
 
       // inject the liveroom main component in the toolbar as the 1st child
       toolbarButtonsContainer.insertBefore(
@@ -58,9 +60,11 @@
       // show the liveroom main component
       thisEl.style.display = "flex";
 
-      console.log("[Liveroom] Injected in the toolbar.");
+      console.log("[Liveroom Extension] Injected in the toolbar.");
     } else {
-      console.log("[Liveroom] Waiting for the toolbar to be ready...");
+      console.log(
+        "[Liveroom Extension] Waiting for the toolbar to be ready..."
+      );
     }
   }
 

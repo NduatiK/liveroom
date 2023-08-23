@@ -175,7 +175,7 @@
   function startSession() {
     const parts = window.location.pathname.split("/");
     roomId = parts.pop() || parts.pop(); // handle potential trailing slash
-    console.log(`[Liveroom] Connecting to room '${roomId}'...`);
+    console.log(`[Liveroom Extension] Connecting to room '${roomId}'...`);
 
     liveState = new LiveState({
       url:
@@ -209,7 +209,9 @@
 
   function getOwnName(): string | null {
     const [email, name] = extractEmailAndNameFromPage();
-    console.log(`[Liveroom] Admin is user '${name}' (email: '${email}')...`);
+    console.log(
+      `[Liveroom Extension] Admin is user '${name}' (email: '${email}')...`
+    );
     return formatFirstName(name);
   }
 
@@ -219,7 +221,7 @@
     );
     const text = texts?.[texts.length - 1]?.innerHTML;
     const name = text?.split(" (", 1)?.[0];
-    console.log(`[Liveroom] Participant is user '${name}'`);
+    console.log(`[Liveroom Extension] Participant is user '${name}'`);
     return formatFirstName(name);
   }
 
