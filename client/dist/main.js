@@ -18,8 +18,8 @@ async function u(i, o) {
   if (!o)
     return !1;
   await ((n = e == null ? void 0 : e.getAttribute("src")) != null && n.startsWith(
-    "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.16"
-  ) ? import("https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.16/dist/liveroom-client-element.min.js") : import("./liveroom-client-element.js")), console.log("[Liveroom] Installed successfully");
+    "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.17"
+  ) ? import("https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.17/dist/liveroom-client-element.min.js") : import("./liveroom-client-element.js")), console.log("[Liveroom] Installed successfully");
   const r = document.getElementsByTagName("body")[0];
   return t = document.createElement(m), t.setAttribute("url", i), o && t.setAttribute("room_id", o), r.appendChild(t), console.log("[Liveroom] Injected successfully"), !0;
 }
