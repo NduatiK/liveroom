@@ -41,9 +41,6 @@ The landing page has an interactive dashboard to play with. Open 2 browser windo
 
 ### on your own website
 
-> [!WARNING]
-> Liveroom is **NOT production ready**, please don't deploy it yet. This is only for tests purposes.
-
 1. load the **Liveroom Client script** in your HTML header:
 
 ```html
