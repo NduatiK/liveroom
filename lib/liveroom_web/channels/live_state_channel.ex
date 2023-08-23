@@ -37,10 +37,34 @@ defmodule LiveroomWeb.LiveStateChannel do
 
     :ok = LiveroomWeb.Presence.join_room(room_id, me)
 
+    users = LiveroomWeb.Presence.list_users(room_id)
+
+    # NOTE: We can automatically set the name of the participant if:
+    #       1. it is given in the connect params by the admin user
+    #       2. only 2 users are present in the room, the admin and the participant
+    participant_user_name = params["participant_user_name"]
+
+    if is_binary(participant_user_name) and participant_user_name != "" and
+         map_size(users) == 2 and
+         users[me.id] != nil do
+      participant_id = users |> Map.keys() |> Enum.find(&(&1 != me.id))
+      updated_by_id = me.id
+
+      Logger.info(
+        "Automatically setting participant '#{participant_id}' name to '#{participant_user_name}' after User '#{updated_by_id}' joined the room"
+      )
+
+      LiveroomWeb.Presence.broadcast(room_id, "update_user_name", %{
+        user_id: participant_id,
+        user_name: participant_user_name,
+        updated_by_id: updated_by_id
+      })
+    end
+
     state = %{
       room_id: room_id,
       me: me,
-      users: LiveroomWeb.Presence.list_users(room_id),
+      users: users,
       analytics_data: analytics_data
     }
 

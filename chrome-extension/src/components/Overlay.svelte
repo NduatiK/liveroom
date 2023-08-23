@@ -33,36 +33,6 @@
   let users: { [key: User["id"]]: User };
   let liveState: LiveState;
 
-  let circuitbreaker_sendParticipantName = true;
-
-  let users_ids;
-  $: users_ids = users && Object.keys(users);
-  $: if (users_ids?.length == 2) {
-    const participant_user_name = getParticipantName();
-
-    if (participant_user_name && circuitbreaker_sendParticipantName) {
-      const participant_id = users_ids.find((x) => x != me.id);
-      const user_name = users[participant_id].name;
-
-      if (
-        user_name != participant_user_name &&
-        participant_id &&
-        liveState &&
-        me?.id
-      ) {
-        liveState.dispatchEvent(
-          new CustomEvent("user_name_updated", {
-            detail: {
-              user_name: participant_user_name,
-              user_id: participant_id,
-              updated_by_id: me.id,
-            },
-          })
-        );
-      }
-    }
-  }
-
   // Start selecting the screensharing video (screensharingVideoEl)
   $: if (started && !screensharingVideoEl) {
     // add video click handlers
