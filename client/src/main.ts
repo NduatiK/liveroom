@@ -67,15 +67,13 @@ async function injectElement(url: string, room_id?: string) {
   );
   console.log("[Liveroom] Installed successfully");
 
-  const body = document.getElementsByTagName("body")[0];
-
   // create new client element
   element = document.createElement(ELEMENT_TAG);
   element.setAttribute("url", url);
   room_id && element.setAttribute("room_id", room_id);
 
   // append the element at the end of the body
-  body.appendChild(element);
+  document.body.appendChild(element);
   console.log("[Liveroom] Injected successfully");
 
   return true;
