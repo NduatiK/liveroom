@@ -178,10 +178,9 @@
     console.log(`[Liveroom Extension] Connecting to room '${roomId}'...`);
 
     liveState = new LiveState({
-      url:
-        process.env.NODE_ENV === "production"
-          ? "wss://liveroom.app/client_socket"
-          : "ws://localhost:4000/client_socket",
+      url: import.meta.env.PROD
+        ? "wss://liveroom.app/client_socket"
+        : "ws://localhost:4000/client_socket",
       topic: `liveroom-livestate:${roomId}`,
       params: {
         room_id: roomId,
@@ -194,8 +193,7 @@
         language: window.navigator.language,
         user_agent: window.navigator.userAgent,
       },
-      socketOptions:
-        process.env.NODE_ENV === "production" ? { logger: null } : undefined,
+      socketOptions: import.meta.env.PROD ? { logger: null } : undefined,
     });
 
     liveState.connect();
