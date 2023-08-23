@@ -35,10 +35,6 @@ Simply screenshare your tab on the fake product https://mysaas.fly.dev using the
 
 https://mysaas.fly.dev/?_liveroom=https://meet.google.com/aaa-bbb-ccc
 
-### on [liveroom.app](https://liveroom.app)
-
-The landing page has an interactive dashboard to play with. Open 2 browser windows to see the collaborative features in real-time.
-
 ### on your own website
 
 1. load the **Liveroom Client script** in your HTML header:
@@ -82,6 +78,11 @@ document.head.appendChild(script);
 > This is a quick and dirty solution to test Liveroom.
 > It only works on the current loaded web page.
 > It may fail if the current website is blocking external scripts.
+
+### on [liveroom.app](https://liveroom.app)
+
+The landing page has an interactive dashboard to play with.
+Open 2 browser windows to see the collaborative features in real-time.
 
 ## Links
 
