@@ -13,7 +13,7 @@
   }
 
   const SCRIPT_SRC = import.meta.env.PROD
-    ? "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.17/dist/main.min.js"
+    ? "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.18/dist/main.min.js"
     : "http://localhost:5173/src/main.ts";
 
   const SCRIPT = `

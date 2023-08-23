@@ -1,4 +1,4 @@
-const m = "liveroom-client-element", a = "0.0.17", d = "module", u = "./dist/main.js", v = "./dist/main.cjs", p = [
+const m = "liveroom-client-element", a = "0.0.18", d = "module", u = "./dist/main.js", v = "./dist/main.cjs", p = [
   "dist",
   "!dist/vite.svg"
 ], f = {
@@ -60,6 +60,6 @@ function b() {
 async function k(r, n) {
   var i;
   return n ? (await ((i = e == null ? void 0 : e.getAttribute("src")) != null && i.startsWith(
-    "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.17"
-  ) ? import("https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.17/dist/liveroom-client-element.min.js") : import("./liveroom-client-element.js")), console.log(`[Liveroom] Installed successfully (v${g})`), t = document.createElement(w), t.setAttribute("url", r), n && t.setAttribute("room_id", n), document.body.appendChild(t), console.log("[Liveroom] Injected successfully"), !0) : !1;
+    "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.18"
+  ) ? import("https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.18/dist/liveroom-client-element.min.js") : import("./liveroom-client-element.js")), console.log(`[Liveroom] Installed successfully (v${g})`), t = document.createElement(w), t.setAttribute("url", r), n && t.setAttribute("room_id", n), document.body.appendChild(t), console.log("[Liveroom] Injected successfully"), !0) : !1;
 }

@@ -63,9 +63,9 @@ async function injectElement(url: string, room_id?: string) {
     script
       ?.getAttribute("src")
       ?.startsWith(
-        "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.17",
+        "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.18",
       )
-      ? "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.17/dist/liveroom-client-element.min.js"
+      ? "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.18/dist/liveroom-client-element.min.js"
       : "./LiveroomClientElement.svelte"
   );
   console.log(`[Liveroom] Installed successfully (v${VERSION})`);
