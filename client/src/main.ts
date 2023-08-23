@@ -1,3 +1,6 @@
+import packageJson from "../package.json";
+const VERSION = packageJson["version"];
+
 // STATE
 
 let room_id: string | undefined;
@@ -65,7 +68,7 @@ async function injectElement(url: string, room_id?: string) {
       ? "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.17/dist/liveroom-client-element.min.js"
       : "./LiveroomClientElement.svelte"
   );
-  console.log("[Liveroom] Installed successfully");
+  console.log(`[Liveroom] Installed successfully (v${VERSION})`);
 
   // create new client element
   element = document.createElement(ELEMENT_TAG);
