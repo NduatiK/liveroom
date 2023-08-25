@@ -12,14 +12,14 @@
     }, 4000);
   }
 
-  const SCRIPT_SRC = import.meta.env.PROD
-    ? "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.18/dist/main.min.js"
-    : "http://localhost:5173/src/main.ts";
-
-  const SCRIPT = `
+  const INSTALLATION_CODE = `
 const script = document.createElement("script");
 script.type = "module";
-script.src = "${SCRIPT_SRC}";
+script.src = "${
+    import.meta.env.PROD
+      ? "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.18/dist/main.min.js"
+      : "http://localhost:5173/src/main.ts"
+  }";
 script.setAttribute("data-url", "${url}");
 script.setAttribute("data-roomid", "${roomId}");
 document.head.appendChild(script);
@@ -29,7 +29,7 @@ document.head.appendChild(script);
 <button
   on:click={() => {
     if (copied) return;
-    navigator.clipboard.writeText(SCRIPT);
+    navigator.clipboard.writeText(INSTALLATION_CODE);
     copied = true;
   }}
   disabled={copied}
