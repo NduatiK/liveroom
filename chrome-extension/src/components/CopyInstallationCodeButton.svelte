@@ -12,29 +12,30 @@
     }, 4000);
   }
 
-  const INSTALLATION_CODE = `
+  function onClick() {
+    if (copied) return;
+
+    // NOTE: Note to Chrome Web Store reviewers - this code is NOT executed by the Chrome extension,
+    //       so no remote code execution is possible. It is only used to generate the installation code,
+    //       copied to the user clipboard, to send it to his interlocutor.
+    navigator.clipboard.writeText(`
 const script = document.createElement("script");
 script.type = "module";
 script.src = "${
-    import.meta.env.PROD
-      ? "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.18/dist/main.min.js"
-      : "http://localhost:5173/src/main.ts"
-  }";
+      import.meta.env.PROD
+        ? "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.18/dist/main.min.js"
+        : "http://localhost:5173/src/main.ts"
+    }";
 script.setAttribute("data-url", "${url}");
 script.setAttribute("data-roomid", "${roomId}");
 document.head.appendChild(script);
-`;
+`);
+
+    copied = true;
+  }
 </script>
 
-<button
-  on:click={() => {
-    if (copied) return;
-    navigator.clipboard.writeText(INSTALLATION_CODE);
-    copied = true;
-  }}
-  disabled={copied}
-  data-copied={copied}
->
+<button on:click={onClick} disabled={copied} data-copied={copied}>
   {#if !copied}
     <svg
       height="16"
