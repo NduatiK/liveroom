@@ -61,15 +61,7 @@ async function injectElement(url: string, room_id?: string) {
   if (!room_id) return false;
 
   // import client element sources
-  await import(
-    script
-      ?.getAttribute("src")
-      ?.startsWith(
-        "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.18",
-      )
-      ? "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.18/dist/liveroom-client-element.min.js"
-      : "./LiveroomClientElement.svelte"
-  );
+  await import("./LiveroomClientElement.svelte");
   console.log(`[Liveroom] Installed successfully (v${VERSION})`);
 
   // create new client element
