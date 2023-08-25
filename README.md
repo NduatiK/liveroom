@@ -43,7 +43,6 @@ https://mysaas.fly.dev/?_liveroom=https://meet.google.com/aaa-bbb-ccc
 <script
   type="module"
   src="https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.18/dist/main.min.js"
-  data-url="wss://liveroom.app/client_socket"
 ></script>
 ```
 
@@ -66,8 +65,6 @@ const script = document.createElement("script");
 script.type = "module";
 script.src =
   "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.18/dist/main.min.js";
-
-script.setAttribute("data-url", "wss://liveroom.app/client_socket");
 script.setAttribute("data-roomid", "my_room");
 
 document.head.appendChild(script);
