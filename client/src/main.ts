@@ -1,5 +1,7 @@
 import packageJson from "../package.json";
-const VERSION = packageJson["version"];
+const VERSION = import.meta.env.PROD
+  ? packageJson["version"]
+  : `${packageJson["version"]}.dev`;
 
 // STATE
 
@@ -22,12 +24,12 @@ async function maybeInjectElement() {
   const params = new URLSearchParams(window.location.search);
   const room_id_from_query_param = params.get("_liveroom");
 
-  script =
-    // prod
-    document.querySelector("script[src*='/liveroom-client-element']") ||
-    // local dev
-    document.querySelector("script[src*='/client/dist/main.js']") ||
-    document.querySelector("script[src='/src/main.ts']");
+  script = import.meta.env.PROD
+    ? // prod
+      document.querySelector("script[src*='/liveroom-client-element']")
+    : // local dev
+      document.querySelector("script[src*='/client/dist/main.js']") ||
+      document.querySelector("script[src='/src/main.ts']");
 
   const url_from_attr =
     script?.getAttribute("data-url") || "wss://liveroom.app/client_socket";

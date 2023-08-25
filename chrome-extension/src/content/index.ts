@@ -1,7 +1,9 @@
 import Main from "../components/Main.svelte";
 import packageJson from "../../package.json";
 
-const VERSION = packageJson["version"];
+const VERSION = import.meta.env.PROD
+  ? packageJson["version"]
+  : `${packageJson["version"]}.dev`;
 
 // Some global styles on the page
 // import "./styles.css";
