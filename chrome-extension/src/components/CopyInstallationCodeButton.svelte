@@ -23,7 +23,7 @@ const script = document.createElement("script");
 script.type = "module";
 script.src = "${
       import.meta.env.PROD
-        ? "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.18/dist/main.min.js"
+        ? "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.19/dist/main.min.js"
         : "http://localhost:5173/src/main.ts"
     }";
 script.setAttribute("data-url", "${url}");

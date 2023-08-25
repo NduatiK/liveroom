@@ -1,4 +1,4 @@
-const m = "liveroom-client-element", a = "0.0.18", d = "module", u = "./dist/main.js", v = "./dist/main.cjs", p = [
+const m = "liveroom-client-element", a = "0.0.19", d = "module", v = "./dist/main.js", u = "./dist/main.cjs", p = [
   "dist",
   "!dist/vite.svg"
 ], f = {
@@ -10,7 +10,7 @@ const m = "liveroom-client-element", a = "0.0.18", d = "module", u = "./dist/mai
     import: "./dist/liveroom-client-element.js",
     require: "./dist/liveroom-client-element.cjs"
   }
-}, y = {
+}, _ = {
   dev: "vite",
   build: "vite build",
   preview: "vite preview",
@@ -18,9 +18,9 @@ const m = "liveroom-client-element", a = "0.0.18", d = "module", u = "./dist/mai
   "check-format": "prettier . --check",
   check: "svelte-check --tsconfig ./tsconfig.json",
   lint: "npm run check-format && npm run check"
-}, _ = {
+}, w = {
   "phx-live-state": "^0.9.4"
-}, h = {
+}, y = {
   "@sveltejs/vite-plugin-svelte": "^2.4.2",
   "@tsconfig/svelte": "^5.0.0",
   prettier: "3.0.1",
@@ -29,37 +29,33 @@ const m = "liveroom-client-element", a = "0.0.18", d = "module", u = "./dist/mai
   tslib: "^2.6.0",
   typescript: "^5.0.2",
   vite: "^4.4.5"
-}, j = {
+}, g = {
   name: m,
   private: !1,
   version: a,
   type: d,
-  module: u,
-  main: v,
+  module: v,
+  main: u,
   files: p,
   exports: f,
-  scripts: y,
-  dependencies: _,
-  devDependencies: h
-}, g = j.version;
-let s, t, e = null;
+  scripts: _,
+  dependencies: w,
+  devDependencies: y
+}, h = g.version;
+let o, t, e = null;
 c();
 b();
-const w = "liveroom-client-element";
+const j = "liveroom-client-element";
 async function c() {
   const n = new URLSearchParams(window.location.search).get("_liveroom");
   e = // prod
-  document.querySelector("script[src*='/liveroom-client-element']") || // local dev
-  document.querySelector("script[src*='/client/dist/main.js']") || document.querySelector("script[src='/src/main.ts']");
-  const i = (e == null ? void 0 : e.getAttribute("data-url")) || "wss://liveroom.app/client_socket", l = (e == null ? void 0 : e.getAttribute("data-roomid")) || null, o = n || l;
-  o && o != s && (s = o, t && (t.remove(), t = void 0), await k(i, s));
+  document.querySelector("script[src*='/liveroom-client-element']");
+  const r = (e == null ? void 0 : e.getAttribute("data-url")) || "wss://liveroom.app/client_socket", l = (e == null ? void 0 : e.getAttribute("data-roomid")) || null, i = n || l;
+  i && i != o && (o = i, t && (t.remove(), t = void 0), await k(r, o));
 }
 function b() {
   window.addEventListener("popstate", c);
 }
-async function k(r, n) {
-  var i;
-  return n ? (await ((i = e == null ? void 0 : e.getAttribute("src")) != null && i.startsWith(
-    "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.18"
-  ) ? import("https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.18/dist/liveroom-client-element.min.js") : import("./liveroom-client-element.js")), console.log(`[Liveroom] Installed successfully (v${g})`), t = document.createElement(w), t.setAttribute("url", r), n && t.setAttribute("room_id", n), document.body.appendChild(t), console.log("[Liveroom] Injected successfully"), !0) : !1;
+async function k(s, n) {
+  return n ? (await import("./liveroom-client-element.js"), console.log(`[Liveroom] Installed successfully (v${h})`), t = document.createElement(j), t.setAttribute("url", s), n && t.setAttribute("room_id", n), document.body.appendChild(t), console.log("[Liveroom] Injected successfully"), !0) : !1;
 }
