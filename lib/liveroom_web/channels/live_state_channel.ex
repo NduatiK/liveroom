@@ -32,7 +32,9 @@ defmodule LiveroomWeb.LiveStateChannel do
           case params["user_name"] do
             x when x in [nil, ""] -> nil
             x when is_binary(x) -> String.trim(x)
-          end
+          end,
+        params["initial_mouse_x"],
+        params["initial_mouse_y"]
       )
 
     :ok = LiveroomWeb.Presence.join_room(room_id, me)

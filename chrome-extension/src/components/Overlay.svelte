@@ -162,6 +162,8 @@
         inner_height: window.innerHeight,
         language: window.navigator.language,
         user_agent: window.navigator.userAgent,
+        initial_mouse_x: mouseX,
+        initial_mouse_y: mouseY,
       },
       socketOptions: import.meta.env.PROD ? { logger: null } : undefined,
     });

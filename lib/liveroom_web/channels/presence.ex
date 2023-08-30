@@ -21,7 +21,9 @@ defmodule LiveroomWeb.Presence do
           inner_width: 0,
           inner_height: 0
         },
-        user_name \\ nil
+        user_name \\ nil,
+        initial_mouse_x \\ nil,
+        initial_mouse_y \\ nil
       )
       when is_binary(room_id) and room_id != "" and
              type in [:client, :admin] and
@@ -41,8 +43,8 @@ defmodule LiveroomWeb.Presence do
       inner_height: analytics_data.inner_height,
       # NOTE: Sent as string through the websockets, and used in template strings in style or css,
       #       so let's not take the performance penalty of converting it to integer.
-      x: "50",
-      y: "50",
+      x: initial_mouse_x || "50",
+      y: initial_mouse_y || "50",
       msg: "",
       is_mouse_down: false,
       is_shift_key_down: false,
