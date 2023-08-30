@@ -2349,7 +2349,7 @@ class tn {
   handlePatch({ patch: n, version: t }) {
     if (this.eventTarget.dispatchEvent(new CustomEvent("livestate-patch", {
       detail: { patch: n, version: t }
-    })), t === this.stateVersion + 1) {
+    })), this.versionMatches(t)) {
       const { doc: e, res: r } = Ws(this.state, n, { mutate: !1 });
       this.state = e, this.stateVersion = t, this.eventTarget.dispatchEvent(new CustomEvent("livestate-change", {
         detail: {
@@ -2359,6 +2359,9 @@ class tn {
       }));
     } else
       this.channel.push("lvs_refresh");
+  }
+  versionMatches(n) {
+    return n === this.stateVersion + 1 || n === 0;
   }
   pushEvent(n, t) {
     this.dispatchEvent(new CustomEvent(n, { detail: t }));
