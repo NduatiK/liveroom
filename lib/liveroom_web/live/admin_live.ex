@@ -2,10 +2,13 @@ defmodule LiveroomWeb.AdminLive do
   use LiveroomWeb, :live_view
 
   alias LiveroomWeb.Components.UserBanner
+  alias LiveroomWeb.Components.SignInWithGoogleButton
 
   def render(assigns) do
     ~H"""
     <div id="admin_live" class="min-h-[100dvh] flex flex-col items-stretch space-y-8 bg-slate-100">
+      <SignInWithGoogleButton.render oauth_google_url={@oauth_google_url} />
+
       <div class="flex flex-wrap items-start gap-8 mt-8 mb-32 px-8">
         <.live_component
           :for={
@@ -186,7 +189,8 @@ defmodule LiveroomWeb.AdminLive do
   def mount(%{"room_id" => room_id} = _params, _session, socket) do
     socket =
       assign(socket,
-        page_title: page_title(socket, room_id)
+        page_title: page_title(socket, room_id),
+        oauth_google_url: ElixirAuthGoogle.generate_oauth_url(LiveroomWeb.Endpoint.url())
       )
 
     {:ok, socket, layout: false}

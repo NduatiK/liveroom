@@ -30,6 +30,10 @@ if config_env() != :test do
     enabled: System.get_env("DISCORD_ENABLED") == "true",
     webhook_url_app_logs: System.get_env("DISCORD_WEBHOOK_URL_APP_LOGS"),
     webhook_url_app_notifications: System.get_env("DISCORD_WEBHOOK_URL_APP_NOTIFICATIONS")
+
+  config :elixir_auth_google,
+    client_id: System.fetch_env!("GOOGLE_CLIENT_ID"),
+    client_secret: System.fetch_env!("GOOGLE_CLIENT_SECRET")
 end
 
 if config_env() == :prod do

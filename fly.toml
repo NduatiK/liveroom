@@ -21,6 +21,8 @@ processes = []
   DISCORD_ENABLED = "true"
   # DISCORD_WEBHOOK_URL_APP_LOGS set as secret
   # DISCORD_WEBHOOK_URL_APP_NOTIFICATIONS set as secret
+  # GOOGLE_CLIENT_ID set as secret
+  # GOOGLE_CLIENT_SECRET set as secret
   # ADMIN_BASIC_AUTH_USERNAME set as secret
   # ADMIN_BASIC_AUTH_PASSWORD set as secret
 

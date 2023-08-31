@@ -38,13 +38,17 @@ defmodule LiveroomWeb.Router do
   scope "/", LiveroomWeb do
     pipe_through :browser
 
-    live_session :default,
+    live_session :default, on_mount: [Hooks.Analytics] do
+      live "/privacy", PrivacyPolicyLive, :index
+      live "/connected", ConnectedLive, :index
+    end
+
+    live_session :landing,
       on_mount: [
         Hooks.Analytics,
         {Hooks.Liveroom, %{type: :client, room_id: "public"}}
       ] do
       live "/", HomeLive, :index
-      live "/privacy", PrivacyPolicyLive, :index
     end
 
     live_session :_liveroom_admin,
@@ -62,6 +66,9 @@ defmodule LiveroomWeb.Router do
       ] do
       live "/room/:room_id/client", ClientLive
     end
+
+    # Auth
+    get "/auth/google/callback", GoogleAuthController, :index
   end
 
   # Other scopes may use custom stacks.

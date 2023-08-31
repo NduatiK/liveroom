@@ -36,6 +36,7 @@ defmodule Liveroom.MixProject do
   defp deps do
     [
       {:bcrypt_elixir, "~> 3.0"},
+      {:elixir_auth_google, "~> 1.6.9"},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
       {:live_state, "~> 0.6.1"},
       {:cors_plug, "~> 3.0.3"},
