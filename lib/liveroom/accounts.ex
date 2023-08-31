@@ -8,6 +8,25 @@ defmodule Liveroom.Accounts do
 
   alias Liveroom.Accounts.{User, UserToken, UserNotifier}
 
+  @doc """
+  Generates and delivers a "magic" sign in link to a user's email
+  """
+  def deliver_magic_link(user, magic_link_url_fun) do
+    {email_token, token} = UserToken.build_email_token(user, "magic_link")
+    Repo.insert!(token)
+
+    UserNotifier.deliver_magic_link(user, magic_link_url_fun.(email_token))
+  end
+
+  def get_user_by_email_token(token, context) do
+    with {:ok, query} <- UserToken.verify_email_token_query(token, context),
+         %User{} = user <- Repo.one(query) do
+      user
+    else
+      _ -> nil
+    end
+  end
+
   ## Database getters
 
   @doc """

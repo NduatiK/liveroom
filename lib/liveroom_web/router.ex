@@ -116,6 +116,7 @@ defmodule LiveroomWeb.Router do
     end
 
     post "/log_in", UserSessionController, :create
+    get "/log_in/:token", UserSessionController, :create
   end
 
   scope "/accounts", LiveroomWeb.Accounts, as: :accounts do
