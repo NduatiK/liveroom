@@ -22,15 +22,34 @@ defmodule LiveroomWeb.Accounts.UserSessionController do
   def create(conn, %{"_action" => "magic_link"} = params) do
     %{"user" => %{"email" => email}} = params
 
-    if user = Accounts.get_user_by_email(email) do
-      magic_link_url_fun = &"#{LiveroomWeb.Endpoint.url()}/log_in/#{&1}"
+    user =
+      if user = Accounts.get_user_by_email(email) do
+        user
+      else
+        case Accounts.register_user(%{"email" => email}) do
+          {:ok, user} ->
+            Accounts.deliver_user_confirmation_instructions(
+              user,
+              &url(~p"/accounts/users/confirm/#{&1}")
+            )
 
-      Accounts.deliver_magic_link(user, magic_link_url_fun)
-    end
+            user
+
+          {:error, _changeset} ->
+            nil
+        end
+      end
+
+    user &&
+      Accounts.deliver_magic_link(
+        user,
+        &"#{LiveroomWeb.Endpoint.url()}/log_in/#{&1}"
+      )
 
     # In order to prevent user enumeration attacks, don't disclose whether the email is registered.
     conn
-    |> put_flash(:info, "If we find an account for #{email} we'll send a one-time sign-in link")
+    |> put_flash(:info, "One-time sign-in link sent to #{email}")
+    # |> put_flash(:info, "If we find an account for #{email} we'll send a one-time sign-in link")
     |> redirect(to: ~p"/log_in")
   end
 

@@ -56,7 +56,6 @@ defmodule Liveroom.Accounts.User do
 
   defp validate_password(changeset, opts) do
     changeset
-    |> validate_required([:password])
     |> validate_length(:password, min: 12, max: 72)
     # Examples of additional password validation:
     # |> validate_format(:password, ~r/[a-z]/, message: "at least one lower case character")
@@ -122,6 +121,7 @@ defmodule Liveroom.Accounts.User do
   def password_changeset(user, attrs, opts \\ []) do
     user
     |> cast(attrs, [:password])
+    |> validate_required([:password])
     |> validate_confirmation(:password, message: "does not match password")
     |> validate_password(opts)
   end
