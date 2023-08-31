@@ -3,6 +3,7 @@ defmodule LiveroomWeb.Accounts.UserRegistrationLive do
 
   alias Liveroom.Accounts
   alias Liveroom.Accounts.User
+  alias LiveroomWeb.Components
 
   def render(assigns) do
     ~H"""
@@ -57,6 +58,12 @@ defmodule LiveroomWeb.Accounts.UserRegistrationLive do
           </.button>
         </:actions>
       </.simple_form>
+
+      <div class="flex justify-center mt-8">
+        <div class="align-center">OR</div>
+      </div>
+
+      <Components.GoogleAuthButton.render url={@oauth_google_url} />
     </div>
     """
   end
@@ -66,7 +73,11 @@ defmodule LiveroomWeb.Accounts.UserRegistrationLive do
 
     socket =
       socket
-      |> assign(trigger_submit: false, check_errors: false)
+      |> assign(
+        trigger_submit: false,
+        check_errors: false,
+        oauth_google_url: ElixirAuthGoogle.generate_oauth_url(LiveroomWeb.Endpoint.url())
+      )
       |> assign_form(changeset)
 
     {:ok, socket, temporary_assigns: [form: nil]}
