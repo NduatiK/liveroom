@@ -35,12 +35,24 @@ defmodule LiveroomWeb.Router do
     plug CORSPlug
   end
 
+  # Private (connected routes)
+  scope "/", LiveroomWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    live_session :_require_authenticated_user,
+      on_mount: [
+        {LiveroomWeb.Accounts.UserAuth, :ensure_authenticated}
+      ] do
+      live "/connected", ConnectedLive, :index
+    end
+  end
+
+  # Public
   scope "/", LiveroomWeb do
     pipe_through :browser
 
     live_session :default, on_mount: [Hooks.Analytics] do
       live "/privacy", PrivacyPolicyLive, :index
-      live "/connected", ConnectedLive, :index
     end
 
     live_session :landing,
