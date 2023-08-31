@@ -8,6 +8,14 @@ defmodule LiveroomWeb.ConnectedLive do
     <p :if={@email}><%= @email %></p>
     <p :if={@name}><%= @name %></p>
     <img :if={@picture_url} src={@picture_url} width="100px" />
+
+    <.link
+      href={~p"/accounts/users/log_out"}
+      method="delete"
+      class="mt-12 bg-zinc-200/75 hover:bg-zinc-200 py-1 px-2 font-medium rounded transition-colors"
+    >
+      Log out
+    </.link>
     """
   end
 

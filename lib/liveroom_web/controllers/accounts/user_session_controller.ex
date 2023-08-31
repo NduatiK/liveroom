@@ -26,7 +26,7 @@ defmodule LiveroomWeb.Accounts.UserSessionController do
       if user = Accounts.get_user_by_email(email) do
         user
       else
-        case Accounts.register_user(%{"email" => email}) do
+        case Accounts.register_user(%{"email" => email, "picture_url" => params["picture_url"]}) do
           {:ok, user} ->
             Accounts.deliver_user_confirmation_instructions(
               user,
