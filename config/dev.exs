@@ -1,5 +1,7 @@
 import Config
 
+config :mix_test_watch, clear: true
+
 # Configure your database
 config :liveroom, Liveroom.Repo.Local,
   database: Path.expand("../litefs/liveroom_dev.db", Path.dirname(__ENV__.file)),

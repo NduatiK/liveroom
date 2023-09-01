@@ -1,6 +1,7 @@
 defmodule LiveroomWeb.Components.GoogleAuthButton do
   use LiveroomWeb, :html
 
+  attr :label, :string, required: true
   attr :url, :string, required: true
 
   def render(assigns) do
@@ -8,7 +9,7 @@ defmodule LiveroomWeb.Components.GoogleAuthButton do
     <a
       href={@url}
       class={[
-        "mt-4 inline-flex items-center phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 p-2 pr-3",
+        "mt-4 inline-flex justify-center items-center phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 p-2 pr-3",
         "text-sm font-semibold leading-6 text-white active:text-white/80 transition-colors"
       ]}
     >
@@ -39,7 +40,7 @@ defmodule LiveroomWeb.Components.GoogleAuthButton do
       </div>
 
       <div class="ml-3">
-        Sign in with Google
+        <%= @label %>
       </div>
     </a>
     """

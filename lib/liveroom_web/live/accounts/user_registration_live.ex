@@ -7,19 +7,19 @@ defmodule LiveroomWeb.Accounts.UserRegistrationLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
-      <.header class="text-left mb-8">
+    <div class="mx-auto w-full max-w-xs flex flex-col items-stretch">
+      <.header class="text-left mb-16">
         Register for an account
         <:subtitle>
           Already registered?
           <.link navigate={~p"/log_in"} class="font-semibold text-brand hover:underline">
             Sign in
           </.link>
-          to your account now.
+          instead.
         </:subtitle>
       </.header>
 
-      <.simple_form
+      <%!-- <.simple_form
         for={@form}
         id="registration_form"
         phx-submit="save"
@@ -38,11 +38,13 @@ defmodule LiveroomWeb.Accounts.UserRegistrationLive do
         <:actions>
           <.button phx-disable-with="Creating account..." class="w-full">Create an account</.button>
         </:actions>
-      </.simple_form>
+      </.simple_form> --%>
 
-      <div class="flex justify-center mt-8">
-        <div class="align-center">OR</div>
-      </div>
+      <%!-- <div class="flex justify-center mt-12 mb-8 mx-16 border-b border-zinc-800/10" /> --%>
+
+      <Components.GoogleAuthButton.render url={@oauth_google_url} label="Sign up with Google" />
+
+      <div class="flex justify-center mt-12 mb-8 mx-16 border-b border-zinc-800/10" />
 
       <.simple_form
         for={@form}
@@ -53,17 +55,11 @@ defmodule LiveroomWeb.Accounts.UserRegistrationLive do
       >
         <.input field={@form[:email]} type="email" label="Email" required />
         <:actions>
-          <.button class="w-full">
-            Send me a link <.icon name="hero-envelope" />
+          <.button class="w-full flex justify-center items-center">
+            <.icon name="hero-envelope" class="mr-3" />Send me a link
           </.button>
         </:actions>
       </.simple_form>
-
-      <div class="flex justify-center mt-8">
-        <div class="align-center">OR</div>
-      </div>
-
-      <Components.GoogleAuthButton.render url={@oauth_google_url} />
     </div>
     """
   end

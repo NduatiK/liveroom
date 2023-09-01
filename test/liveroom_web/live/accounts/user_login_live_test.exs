@@ -10,7 +10,7 @@ defmodule LiveroomWeb.Accounts.UserLoginLiveTest do
 
       assert html =~ "Sign in"
       # assert html =~ "Register"
-      assert html =~ "Forgot your password?"
+      # assert html =~ "Forgot your password?"
     end
 
     test "redirects if already logged in", %{conn: conn} do
@@ -24,38 +24,38 @@ defmodule LiveroomWeb.Accounts.UserLoginLiveTest do
     end
   end
 
-  describe "user login" do
-    test "redirects if user login with valid credentials", %{conn: conn} do
-      password = "123456789abcd"
-      user = user_fixture(%{password: password})
+  # describe "user login" do
+  # test "redirects if user login with valid credentials", %{conn: conn} do
+  #   password = "123456789abcd"
+  #   user = user_fixture(%{password: password})
 
-      {:ok, lv, _html} = live(conn, ~p"/log_in")
+  #   {:ok, lv, _html} = live(conn, ~p"/log_in")
 
-      form =
-        form(lv, "#login_form", user: %{email: user.email, password: password, remember_me: true})
+  #   form =
+  #     form(lv, "#login_form", user: %{email: user.email, password: password, remember_me: true})
 
-      conn = submit_form(form, conn)
+  #   conn = submit_form(form, conn)
 
-      assert redirected_to(conn) == ~p"/connected"
-    end
+  #   assert redirected_to(conn) == ~p"/connected"
+  # end
 
-    test "redirects to login page with a flash error if there are no valid credentials", %{
-      conn: conn
-    } do
-      {:ok, lv, _html} = live(conn, ~p"/log_in")
+  # test "redirects to login page with a flash error if there are no valid credentials", %{
+  #   conn: conn
+  # } do
+  #   {:ok, lv, _html} = live(conn, ~p"/log_in")
 
-      form =
-        form(lv, "#login_form",
-          user: %{email: "test@email.com", password: "123456", remember_me: true}
-        )
+  #   form =
+  #     form(lv, "#login_form",
+  #       user: %{email: "test@email.com", password: "123456", remember_me: true}
+  #     )
 
-      conn = submit_form(form, conn)
+  #   conn = submit_form(form, conn)
 
-      assert Phoenix.Flash.get(conn.assigns.flash, :error) == "Invalid email or password"
+  #   assert Phoenix.Flash.get(conn.assigns.flash, :error) == "Invalid email or password"
 
-      assert redirected_to(conn) == "/log_in"
-    end
-  end
+  #   assert redirected_to(conn) == "/log_in"
+  # end
+  # end
 
   describe "login navigation" do
     test "redirects to registration page when the Register button is clicked", %{conn: conn} do
@@ -70,18 +70,18 @@ defmodule LiveroomWeb.Accounts.UserLoginLiveTest do
       assert login_html =~ "Register"
     end
 
-    test "redirects to forgot password page when the Forgot Password button is clicked", %{
-      conn: conn
-    } do
-      {:ok, lv, _html} = live(conn, ~p"/log_in")
+    # test "redirects to forgot password page when the Forgot Password button is clicked", %{
+    #   conn: conn
+    # } do
+    #   {:ok, lv, _html} = live(conn, ~p"/log_in")
 
-      {:ok, conn} =
-        lv
-        |> element(~s|main a:fl-contains("Forgot your password?")|)
-        |> render_click()
-        |> follow_redirect(conn, ~p"/reset_password")
+    #   {:ok, conn} =
+    #     lv
+    #     |> element(~s|main a:fl-contains("Forgot your password?")|)
+    #     |> render_click()
+    #     |> follow_redirect(conn, ~p"/reset_password")
 
-      assert conn.resp_body =~ "Forgot your password?"
-    end
+    #   assert conn.resp_body =~ "Forgot your password?"
+    # end
   end
 end

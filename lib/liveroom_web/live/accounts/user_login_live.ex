@@ -4,19 +4,19 @@ defmodule LiveroomWeb.Accounts.UserLoginLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
-      <.header class="text-left mb-8">
+    <div class="mx-auto w-full max-w-xs flex flex-col items-stretch">
+      <.header class="text-left mb-16">
         Sign in to account
         <:subtitle>
           Don't have an account?
           <.link navigate={~p"/register"} class="font-semibold text-brand hover:underline">
             Sign up
           </.link>
-          for an account now.
+          instead.
         </:subtitle>
       </.header>
 
-      <.simple_form for={@form} id="login_form" action={~p"/log_in"} phx-update="ignore">
+      <%!-- <.simple_form for={@form} id="login_form" action={~p"/log_in"} phx-update="ignore">
         <.input field={@form[:email]} type="email" label="Email" required />
         <.input field={@form[:password]} type="password" label="Password" required />
 
@@ -33,9 +33,11 @@ defmodule LiveroomWeb.Accounts.UserLoginLive do
         </:actions>
       </.simple_form>
 
-      <div class="flex justify-center mt-8">
-        <div class="align-center">OR</div>
-      </div>
+      <div class="flex justify-center mt-12 mb-8 mx-16 border-b border-zinc-800/10" /> --%>
+
+      <Components.GoogleAuthButton.render url={@oauth_google_url} label="Sign in with Google" />
+
+      <div class="flex justify-center mt-12 mb-8 mx-16 border-b border-zinc-800/10" />
 
       <.simple_form
         for={@form}
@@ -46,17 +48,11 @@ defmodule LiveroomWeb.Accounts.UserLoginLive do
       >
         <.input field={@form[:email]} type="email" label="Email" required />
         <:actions>
-          <.button class="w-full">
-            Send me a link <.icon name="hero-envelope" />
+          <.button class="w-full flex justify-center items-center">
+            <.icon name="hero-envelope" class="mr-3" />Send me a link
           </.button>
         </:actions>
       </.simple_form>
-
-      <div class="flex justify-center mt-8">
-        <div class="align-center">OR</div>
-      </div>
-
-      <Components.GoogleAuthButton.render url={@oauth_google_url} />
     </div>
     """
   end
