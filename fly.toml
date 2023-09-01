@@ -39,8 +39,7 @@ auto_rollback = true
 
 [[services]]
 http_checks = []
-# LiteFS proxy listening port, will forward requests to app port 8080
-internal_port = 8082
+internal_port = 8080
 processes = ["app"]
 protocol = "tcp"
 script_checks = []
