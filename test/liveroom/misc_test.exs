@@ -1,5 +1,5 @@
 defmodule Liveroom.MiscTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   test "extract email & name from Google Meet" do
     string =

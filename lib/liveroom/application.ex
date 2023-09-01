@@ -7,13 +7,17 @@ defmodule Liveroom.Application do
 
   @impl true
   def start(_type, _args) do
+    Liveroom.Release.migrate()
+
     topologies = Application.get_env(:libcluster, :topologies) || []
 
     children = [
       # Start the Telemetry supervisor
       LiveroomWeb.Telemetry,
+      # Start LiteFS GenServer
+      {Litefs, Application.get_env(:liveroom, Liveroom.Repo.Local)},
       # Start the Ecto repository
-      Liveroom.Repo,
+      Liveroom.Repo.Local,
       # Start the PubSub system
       {Phoenix.PubSub, name: Liveroom.PubSub},
       # Start Finch

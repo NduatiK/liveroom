@@ -1,5 +1,5 @@
 defmodule LiveroomWeb.Accounts.UserSessionControllerTest do
-  use LiveroomWeb.ConnCase, async: true
+  use LiveroomWeb.ConnCase, async: false
 
   import Liveroom.AccountsFixtures
 

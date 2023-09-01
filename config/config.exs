@@ -7,8 +7,10 @@
 # General application configuration
 import Config
 
+config :liveroom, Liveroom.Repo.Local, priv: "priv/repo"
+
 config :liveroom,
-  ecto_repos: [Liveroom.Repo],
+  ecto_repos: [Liveroom.Repo.Local],
   generators: [binary_id: true]
 
 # Configures the endpoint

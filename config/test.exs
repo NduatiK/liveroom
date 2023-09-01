@@ -8,11 +8,12 @@ config :bcrypt_elixir, :log_rounds, 1
 # The MIX_TEST_PARTITION environment variable can be used
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
-config :liveroom, Liveroom.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "liveroom_test#{System.get_env("MIX_TEST_PARTITION")}",
+config :liveroom, Liveroom.Repo.Local,
+  database:
+    Path.expand(
+      "../litefs/liveroom_test#{System.get_env("MIX_TEST_PARTITION")}.db",
+      Path.dirname(__ENV__.file)
+    ),
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
 

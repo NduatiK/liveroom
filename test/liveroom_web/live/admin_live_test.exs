@@ -1,5 +1,5 @@
 defmodule LiveroomWeb.AdminLiveTest do
-  use LiveroomWeb.ConnCase, async: true
+  use LiveroomWeb.ConnCase, async: false
 
   test "renders page", %{conn: conn} do
     {:ok, _view, html} = live(conn, ~p"/room/public/admin")

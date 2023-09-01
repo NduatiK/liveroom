@@ -1,11 +1,8 @@
 import Config
 
 # Configure your database
-config :liveroom, Liveroom.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "liveroom_dev",
+config :liveroom, Liveroom.Repo.Local,
+  database: Path.expand("../litefs/liveroom_dev.db", Path.dirname(__ENV__.file)),
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10

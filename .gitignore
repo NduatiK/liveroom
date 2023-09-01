@@ -1,3 +1,6 @@
+/litefs/
+*.db
+*.db-*
 .DS_Store
 **/.DS_Store
 /.elixir_ls/

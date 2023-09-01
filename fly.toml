@@ -5,10 +5,15 @@ primary_region = "cdg"
 processes = []
 
 [deploy]
-release_command = "/app/bin/migrate"
-strategy = "bluegreen"
+# release_command = "/app/bin/migrate"
+# strategy = "bluegreen"
+
+[mounts]
+source = "litefs"
+destination = "/mnt/litefs"
 
 [env]
+DATABASE_PATH = "/mnt/litefs/liveroom.db"
 ECTO_IPV6 = "true"
 ERL_AFLAGS = "-proto_dist inet6_tcp -kernel prevent_overlapping_partitions false"
 PHX_HOST = "liveroom.app"
@@ -26,13 +31,15 @@ DISCORD_ENABLED = "true"
 # GOOGLE_CLIENT_SECRET set as secret
 # ADMIN_BASIC_AUTH_USERNAME set as secret
 # ADMIN_BASIC_AUTH_PASSWORD set as secret
+# LITEFS_CLOUD_TOKEN set as secret
 
 [experimental]
 auto_rollback = true
 
 [[services]]
 http_checks = []
-internal_port = 8080
+# LiteFS proxy listening port, will forward requests to app port 8080
+internal_port = 8082
 processes = ["app"]
 protocol = "tcp"
 script_checks = []

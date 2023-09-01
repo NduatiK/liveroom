@@ -1,5 +1,5 @@
 defmodule LiveroomWeb.ErrorHTMLTest do
-  use LiveroomWeb.ConnCase, async: true
+  use LiveroomWeb.ConnCase, async: false
 
   # Bring render_to_string/4 for testing custom views
   import Phoenix.Template

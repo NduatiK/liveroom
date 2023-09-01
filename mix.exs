@@ -35,6 +35,8 @@ defmodule Liveroom.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:litefs, "~> 0.1.0"},
+      {:ecto_sqlite3, "~> 0.10"},
       {:bcrypt_elixir, "~> 3.0"},
       {:elixir_auth_google, "~> 1.6.9"},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
@@ -46,7 +48,6 @@ defmodule Liveroom.MixProject do
       {:phoenix, "~> 1.7.2"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},
-      {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 3.3"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 0.19.0"},

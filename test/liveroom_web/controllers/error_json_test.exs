@@ -1,5 +1,5 @@
 defmodule LiveroomWeb.ErrorJSONTest do
-  use LiveroomWeb.ConnCase, async: true
+  use LiveroomWeb.ConnCase, async: false
 
   test "renders 404" do
     assert LiveroomWeb.ErrorJSON.render("404.json", %{}) == %{errors: %{detail: "Not Found"}}

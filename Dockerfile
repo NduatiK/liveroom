@@ -89,8 +89,8 @@ RUN mix release
 FROM ${RUNNER_IMAGE}
 
 WORKDIR /app
-RUN chown nobody /app
-RUN apk add --no-cache libstdc++ openssl ncurses-libs
+# RUN chown nobody /app
+RUN apk add --no-cache libstdc++ openssl ncurses-libs ca-certificates fuse3 sqlite
 
 # NOTE: Set the locale
 # RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
@@ -98,8 +98,18 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-ARG MIX_ENV="prod"
-COPY --from=release --chown=nobody:root /app/_build/${MIX_ENV}/rel/liveroom .
+# install LiteFS
+COPY --from=flyio/litefs:0.5 /usr/local/bin/litefs /usr/local/bin/litefs
 
-USER nobody
-CMD ["/app/bin/server"]
+# copy LiteFS config
+COPY litefs.yml .
+
+# install Liveroom app
+ARG MIX_ENV="prod"
+# COPY --from=release --chown=nobody:root /app/_build/${MIX_ENV}/rel/liveroom .
+COPY --from=release /app/_build/${MIX_ENV}/rel/liveroom .
+
+# NOTE: LiteFS needs to be run as root
+# USER nobody
+# CMD ["/app/bin/server"]
+CMD /usr/local/bin/litefs mount

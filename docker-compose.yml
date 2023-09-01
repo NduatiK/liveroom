@@ -12,7 +12,7 @@ services:
       PHX_HOST: localhost
       # PHX_HOST: liveroom.eu.ngrok.io
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
-      DATABASE_URL: postgres://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@db:5432/${DATABASE_NAME}
+      DATABASE_PATH: litefs/liveroom_docker.db
       # UMAMI_TRACKING_ENABLED: ${UMAMI_TRACKING_ENABLED}
       UMAMI_TRACKING_ENABLED: "true"
       UMAMI_BASE_URL: http://analytics:3000
@@ -25,6 +25,7 @@ services:
       # SENDINBLUE_API_KEY: ${SENDINBLUE_API_KEY}
       ADMIN_BASIC_AUTH_USERNAME: ${ADMIN_BASIC_AUTH_USERNAME}
       ADMIN_BASIC_AUTH_PASSWORD: ${ADMIN_BASIC_AUTH_PASSWORD}
+      LITEFS_CLOUD_TOKEN: ${LITEFS_CLOUD_TOKEN}
 
   db:
     image: postgres:14-alpine

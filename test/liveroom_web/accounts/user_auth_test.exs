@@ -1,5 +1,5 @@
 defmodule LiveroomWeb.Accounts.UserAuthTest do
-  use LiveroomWeb.ConnCase, async: true
+  use LiveroomWeb.ConnCase, async: false
 
   alias Phoenix.LiveView
   alias Liveroom.Accounts

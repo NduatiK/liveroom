@@ -36,6 +36,15 @@ if config_env() != :test do
     client_secret: System.fetch_env!("GOOGLE_CLIENT_SECRET")
 end
 
+# if config_env() != :prod do
+#   config :libcluster,
+#     topologies: [
+#       local_epmd_example: [
+#         strategy: Elixir.Cluster.Strategy.LocalEpmd
+#       ]
+#     ]
+# end
+
 if config_env() == :prod do
   config :liveroom, :admin_basic_auth,
     username: System.fetch_env!("ADMIN_BASIC_AUTH_USERNAME"),
@@ -59,18 +68,17 @@ if config_env() == :prod do
       ]
   end
 
-  database_url =
-    System.get_env("DATABASE_URL") ||
+  database_path =
+    System.get_env("DATABASE_PATH") ||
       raise """
-      environment variable DATABASE_URL is missing.
-      For example: ecto://USER:PASS@HOST/DATABASE
+      environment variable DATABASE_PATH is missing.
+      For example: /data/litefs/liveroom.db
       """
 
   maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
-  config :liveroom, Liveroom.Repo,
-    # ssl: true,
-    url: database_url,
+  config :liveroom, Liveroom.Repo.Local,
+    database: database_path,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
     socket_options: maybe_ipv6
 

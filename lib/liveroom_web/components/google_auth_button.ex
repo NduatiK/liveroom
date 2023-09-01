@@ -7,11 +7,14 @@ defmodule LiveroomWeb.Components.GoogleAuthButton do
     ~H"""
     <a
       href={@url}
-      class="mt-4 inline-flex items-center bg-blue-600/90 hover:bg-blue-600 text-blue-50 text-lg font-semibold pr-8 rounded transition-colors duration-200 ease-in-out"
+      class={[
+        "mt-4 inline-flex items-center phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 p-2 pr-3",
+        "text-sm font-semibold leading-6 text-white active:text-white/80 transition-colors"
+      ]}
     >
-      <div class="m-1 p-1 flex justify-center items-center bg-blue-50 rounded-sm">
+      <div class="flex justify-center items-center">
         <svg
-          width="25"
+          width="20"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 533.5 544.3"
           class="inline-flex items-center"
@@ -35,7 +38,7 @@ defmodule LiveroomWeb.Components.GoogleAuthButton do
         </svg>
       </div>
 
-      <div class="ml-6">
+      <div class="ml-3">
         Sign in with Google
       </div>
     </a>

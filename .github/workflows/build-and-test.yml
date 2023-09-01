@@ -18,29 +18,30 @@ on:
 
 env:
   MIX_ENV: test
-  DATABASE_PORT: 5432
-  DATABASE_HOST: localhost
-  DATABASE_NAME: liveroom
-  DATABASE_USERNAME: postgres
-  DATABASE_PASSWORD: postgres
+  # DATABASE_PORT: 5432
+  # DATABASE_HOST: localhost
+  # DATABASE_NAME: liveroom
+  # DATABASE_USERNAME: postgres
+  # DATABASE_PASSWORD: postgres
+  DATABASE_PATH: litefs/liveroom_ci.db
 
 jobs:
   run:
     name: " "
-    services:
-      db:
-        image: postgis/postgis:13-3.1
-        env:
-          POSTGRES_DB: ${{ env.DATABASE_NAME }}
-          POSTGRES_USER: ${{ env.DATABASE_USERNAME }}
-          POSTGRES_PASSWORD: ${{ env.DATABASE_PASSWORD }}
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 2s
-          --health-timeout 5s
-          --health-retries 5
+    # services:
+    # db:
+    #   image: postgis/postgis:13-3.1
+    #   env:
+    #     POSTGRES_DB: ${{ env.DATABASE_NAME }}
+    #     POSTGRES_USER: ${{ env.DATABASE_USERNAME }}
+    #     POSTGRES_PASSWORD: ${{ env.DATABASE_PASSWORD }}
+    #   ports:
+    #     - 5432:5432
+    #   options: >-
+    #     --health-cmd pg_isready
+    #     --health-interval 2s
+    #     --health-timeout 5s
+    #     --health-retries 5
 
     runs-on: ubuntu-latest
     steps:
