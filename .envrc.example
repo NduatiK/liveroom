@@ -1,3 +1,5 @@
+export BREVO_API_KEY="FILL_ME"
+
 export LITEFS_CLOUD_TOKEN="FILL_ME"
 
 export DATABASE_PATH="litefs/liveroom.db"
