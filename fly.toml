@@ -14,7 +14,7 @@ destination = "/mnt/litefs"
 
 [env]
 DATABASE_PATH = "/mnt/litefs/liveroom.db"
-ECTO_IPV6 = "true"
+# ECTO_IPV6 = "true"
 ERL_AFLAGS = "-proto_dist inet6_tcp -kernel prevent_overlapping_partitions false"
 PHX_HOST = "liveroom.app"
 PORT = "8080"
