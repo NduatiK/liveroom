@@ -7,8 +7,6 @@ defmodule LiveroomWeb.Components.CheckExtensionInstallation do
   def render(assigns) do
     ~H"""
     <div
-      id="check_extension_installation_container"
-      phx-hook="SendExtensionVersionHook"
       data-hasversion={if @version, do: "true", else: "false"}
       class={[
         "p-6 shadow-md shadow-indigo-400/10 border-4 border-indigo-400/10 bg-indigo-400/10 text-brand rounded-3xl flex flex-col gap-4",
@@ -48,21 +46,14 @@ defmodule LiveroomWeb.Components.CheckExtensionInstallation do
   end
 
   @impl true
-  def update(_assigns, socket) do
+  def update(assigns, socket) do
     socket =
       assign(socket,
         # version: "0.0.8"
-        version: nil
+        version: assigns.version
       )
 
     {:ok, socket}
-  end
-
-  @impl true
-  def handle_event("update_version", %{"version" => version} = _payload, socket) do
-    socket = assign(socket, version: version)
-
-    {:noreply, socket}
   end
 
   ### Components

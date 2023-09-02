@@ -9,7 +9,11 @@ defmodule LiveroomWeb.ConnectedLive do
   def render(assigns) do
     ~H"""
     <%!-- <p :if={@name} class="text-lg font-bold tracking-tight select-none">Welcome <%= @name %> 👋</p> --%>
-    <div class="w-[min(100%,550px)] flex flex-col items-stretch gap-8">
+    <div
+      id="connected"
+      phx-hook="SendExtensionVersionHook"
+      class="w-[min(100%,550px)] flex flex-col items-stretch gap-8"
+    >
       <div class="w-full flex justify-between items-center gap-32">
         <div class="flex items-center gap-4">
           <img :if={@picture_url} src={@picture_url} width="44px" class="rounded-full" />
@@ -26,23 +30,33 @@ defmodule LiveroomWeb.ConnectedLive do
       </div>
 
       <h2 class="mt-12 text-lg font-semibold tracking-tight">Liveroom Chrome Extension</h2>
+
       <.live_component
         module={Components.CheckExtensionInstallation}
         id="check_extension_installation"
+        version={@version_extension}
       />
 
-      <h2 class="mt-12 text-lg font-semibold tracking-tight">Liveroom Client</h2>
+      <div class="flex justify-between items-baseline">
+        <h2 class="mt-12 font-semibold tracking-tight text-lg">Liveroom Client</h2>
+        <a
+          href={@website_url}
+          target="_blank"
+          class="block underline font-medium text-zinc-600 text-sm"
+        >
+          <%= @website_url %>
+        </a>
+      </div>
 
       <.live_component
         module={Components.CheckClientInstallation}
         id="check_client_installation"
-        website_url={@website_url}
-        version={@version}
+        version={@version_client}
       />
 
       <h2 class="mt-12 text-lg font-semibold tracking-tight">Settings</h2>
 
-      <div class="flex flex-col items-start gap-2">
+      <div class="px-6 flex flex-col items-start gap-2">
         <p>Enter your website url below:</p>
 
         <.form
@@ -73,7 +87,7 @@ defmodule LiveroomWeb.ConnectedLive do
       socket
       |> assign_user(socket.assigns.current_user)
       |> assign_form()
-      |> assign(version: nil)
+      |> assign(version_client: nil, version_extension: nil)
 
     if connected?(socket) do
       fetch_client_version!(socket.assigns.website_url)
@@ -107,7 +121,7 @@ defmodule LiveroomWeb.ConnectedLive do
          |> assign(current_user: user)
          |> assign_user(user)
          |> assign_form()
-         |> assign(version: nil)}
+         |> assign(version_client: nil)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}
@@ -124,8 +138,15 @@ defmodule LiveroomWeb.ConnectedLive do
   end
 
   @impl true
+  def handle_event("update_version_extension", %{"version" => version} = _payload, socket) do
+    socket = assign(socket, version_extension: version)
+
+    {:noreply, socket}
+  end
+
+  @impl true
   def handle_info({:client_version, version}, socket) do
-    {:noreply, assign(socket, version: version)}
+    {:noreply, assign(socket, version_client: version)}
   end
 
   ### Helpers

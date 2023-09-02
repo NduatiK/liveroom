@@ -11,7 +11,6 @@ defmodule LiveroomWeb.GoogleAuthController do
     {:ok, token} = ElixirAuthGoogle.get_token(code, LiveroomWeb.Endpoint.url())
     {:ok, profile} = ElixirAuthGoogle.get_user_profile(token.access_token)
 
-    dbg(profile)
     email = profile.email
 
     user =

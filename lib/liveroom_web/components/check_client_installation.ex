@@ -14,15 +14,8 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
         @class
       ]}
     >
-      <p :if={@version} class="flex items-center gap-2">
-        Up and running on
-        <a href={@website_url} target="_blank" class="underline font-semibold"><%= @website_url %></a>
-      </p>
-
-      <p :if={!@version}>
-        Client not installed on
-        <a href={@website_url} target="_blank" class="underline font-semibold"><%= @website_url %></a>
-      </p>
+      <p :if={@version} class="flex items-center gap-2">Up and running</p>
+      <p :if={!@version}>Client not installed</p>
 
       <p :if={!@version}>
         <span class="mb-4 block">
@@ -55,12 +48,7 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
 
   @impl true
   def update(assigns, socket) do
-    socket =
-      assign(socket,
-        website_url: assigns.website_url,
-        version: assigns.version
-      )
-
+    socket = assign(socket, version: assigns.version)
     {:ok, socket}
   end
 
