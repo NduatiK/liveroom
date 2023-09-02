@@ -37,7 +37,7 @@ defmodule LiveroomWeb.Components.CheckExtensionInstallation do
           version <span class="font-medium tabular-nums"><%= @version %></span>
         </span>
 
-        <span :if={@version == "0.0.8"} class="text-sm text-indigo-600/75">
+        <span :if={@version == "0.0.9"} class="text-sm text-indigo-600/75">
           you're up to date
         </span>
       </p>
@@ -49,7 +49,7 @@ defmodule LiveroomWeb.Components.CheckExtensionInstallation do
   def update(assigns, socket) do
     socket =
       assign(socket,
-        # version: "0.0.8"
+        # version: "0.0.9"
         version: assigns.version
       )
 
