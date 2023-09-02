@@ -19,28 +19,35 @@
   let selectVideoElStyle = createSelectVideoElStyle();
   let pointerEventsOnVideoElStyle = createPointerEventsOnVideoElStyle();
 
-  let resizeObserver: ResizeObserver;
+  let resizeObserver: ResizeObserver | undefined;
 
-  let screensharingVideoEl: HTMLVideoElement;
-  let screensharingVideoElWidth: number;
-  let screensharingVideoElHeight: number;
+  let screensharingVideoEl: HTMLVideoElement | undefined;
+  let screensharingVideoElWidth: number | undefined;
+  let screensharingVideoElHeight: number | undefined;
 
   let mouseX: string; // string because we round it to 2 decimals using `toFixed(2)`
   let mouseY: string; // string because we round it to 2 decimals using `toFixed(2)`
 
-  let roomId: string;
+  let roomId: string | undefined;
   let me: User<"admin">;
   let users: { [key: User["id"]]: User };
-  let liveState: LiveState;
+  type State = {
+    room_id: string;
+    me: User<"admin">;
+    users: { [key: User["id"]]: User };
+  };
+  let liveState: LiveState | undefined;
 
   // Start selecting the screensharing video (screensharingVideoEl)
   $: if (started && !screensharingVideoEl) {
     // add video click handlers
     const videoEls = Array.from(document.querySelectorAll("video"));
 
-    function handleVideoClick(e) {
-      screensharingVideoEl = e.target;
-      cleanup();
+    function handleVideoClick(e: MouseEvent) {
+      if (e.target instanceof HTMLVideoElement) {
+        screensharingVideoEl = e.target;
+        cleanup();
+      }
     }
 
     videoEls.forEach((videoEl) => {
@@ -51,7 +58,7 @@
 
     // add escape key handler
 
-    function handleEscapeKey(e) {
+    function handleEscapeKey(e: KeyboardEvent) {
       if (e.key === "Escape") {
         cleanup();
         open = false;
@@ -115,7 +122,7 @@
     //       so we can better target it in the stylesheet overload 'pointerEventsOnVideoElStyle'.
     screensharingVideoEl
       .closest("[data-participant-id]")
-      .setAttribute("data-isliveroomscreensharing", "true");
+      ?.setAttribute("data-isliveroomscreensharing", "true");
     document.head.appendChild(pointerEventsOnVideoElStyle);
 
     screensharingVideoEl.addEventListener("mousemove", handleMouseMove);
@@ -169,15 +176,18 @@
     });
 
     liveState.connect();
-    liveState.addEventListener("livestate-change", ({ detail: { state } }) => {
-      roomId = state.room_id;
-      me = state.me;
-      users = state.users;
-    });
+    liveState.addEventListener(
+      "livestate-change",
+      ({ detail: { state } }: { detail: { state: State } }) => {
+        roomId = state.room_id;
+        me = state.me;
+        users = state.users;
+      }
+    );
     dispatch("session_started");
   }
 
-  function getOwnName(): string | null {
+  function getOwnName(): string | undefined {
     const [email, name] = extractEmailAndNameFromPage();
     console.log(
       `[Liveroom Extension] Admin is user '${name}' (email: '${email}')...`
@@ -185,7 +195,7 @@
     return formatFirstName(name);
   }
 
-  function getParticipantName(): string | null {
+  function getParticipantName(): string | undefined {
     const texts = document.querySelectorAll(
       `img[src^="https://lh3.googleusercontent.com/"] + span`
     );
@@ -195,7 +205,7 @@
     return formatFirstName(name);
   }
 
-  function formatFirstName(name: string | null): string | null {
+  function formatFirstName(name: string | undefined): string | undefined {
     return name?.split(" ", 1)?.[0];
   }
 
@@ -243,21 +253,25 @@
     }
   }
 
-  function handleMouseMove(e) {
-    // const xRatio = e.layerX / screensharingVideoEl.offsetWidth;
-    const xRatio = e.layerX / screensharingVideoElWidth;
-    mouseX = Number(xRatio * 100).toFixed(2); // in %
+  function handleMouseMove(e: MouseEvent) {
+    if (screensharingVideoElWidth && screensharingVideoElHeight) {
+      // const xRatio = e.layerX / screensharingVideoEl.offsetWidth;
+      // @ts-ignore-next-line
+      const xRatio = e.layerX / screensharingVideoElWidth;
+      mouseX = Number(xRatio * 100).toFixed(2); // in %
 
-    // const yRatio = e.layerY / screensharingVideoEl.offsetHeight;
-    const yRatio = e.layerY / screensharingVideoElHeight;
-    mouseY = Number(yRatio * 100).toFixed(2); // in %
+      // const yRatio = e.layerY / screensharingVideoEl.offsetHeight;
+      // @ts-ignore-next-line
+      const yRatio = e.layerY / screensharingVideoElHeight;
+      mouseY = Number(yRatio * 100).toFixed(2); // in %
 
-    if (liveState && me?.id) {
-      liveState.dispatchEvent(
-        new CustomEvent("mouse_move", {
-          detail: { user_id: me.id, x: mouseX, y: mouseY },
-        })
-      );
+      if (liveState && me?.id) {
+        liveState.dispatchEvent(
+          new CustomEvent("mouse_move", {
+            detail: { user_id: me.id, x: mouseX, y: mouseY },
+          })
+        );
+      }
     }
   }
 
@@ -298,8 +312,8 @@
       );
     }
   }
-  function onUserNameUpdated(user_id) {
-    return function _onUserNameUpdated(e) {
+  function onUserNameUpdated(user_id: string) {
+    return function _onUserNameUpdated(e: CustomEvent) {
       if (liveState && me?.id) {
         liveState.dispatchEvent(
           new CustomEvent("user_name_updated", {
@@ -348,7 +362,7 @@
       <div class="separator" />
 
       <div class="buttons-container">
-        <CopyInstallationCodeButton url={liveState.config.url} {roomId} />
+        <CopyInstallationCodeButton url={liveState?.config.url} {roomId} />
 
         <button
           class="end-session-button"

@@ -4,19 +4,21 @@
 
   export let me_id: string;
   export let users: { [key: User["id"]]: User };
-  export let screensharingVideoEl: HTMLVideoElement;
-  export let screensharingVideoElWidth: number;
-  export let screensharingVideoElHeight: number;
+  export let screensharingVideoEl: HTMLVideoElement | undefined;
+  export let screensharingVideoElWidth: number | undefined;
+  export let screensharingVideoElHeight: number | undefined;
 
   function placeCursorsContainerNextToScreensharingVideoEl(
     cursorsContainerEl: HTMLElement
   ) {
-    screensharingVideoEl.parentElement.style.position = "relative";
-    screensharingVideoEl.parentElement.appendChild(cursorsContainerEl);
+    if (screensharingVideoEl?.parentElement) {
+      screensharingVideoEl.parentElement.style.position = "relative";
+      screensharingVideoEl.parentElement.appendChild(cursorsContainerEl);
+    }
     return {
       destroy() {
         if (screensharingVideoEl?.parentElement) {
-          delete screensharingVideoEl.parentElement.style.position;
+          screensharingVideoEl.parentElement.style.position = "";
           if (screensharingVideoEl.parentElement.contains(cursorsContainerEl)) {
             screensharingVideoEl.parentElement.removeChild(cursorsContainerEl);
           }
@@ -34,8 +36,12 @@
       data-isself={user.id == me_id}
       style="
           --color: {user.color};
-          --x: {(parseFloat(user.x) / 100) * screensharingVideoElWidth}px;
-          --y: {(parseFloat(user.y) / 100) * screensharingVideoElHeight}px;
+          --x: {(screensharingVideoElWidth &&
+        (parseFloat(user.x) / 100) * screensharingVideoElWidth) ||
+        0}px;
+          --y: {(screensharingVideoElHeight &&
+        (parseFloat(user.y) / 100) * screensharingVideoElHeight) ||
+        0}px;
         "
     >
       <svg

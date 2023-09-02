@@ -1,6 +1,6 @@
-<script>
-  export let height;
-  export let width;
+<script lang="ts">
+  export let height: string;
+  export let width: string;
   export let color = "#4F46E5";
 </script>
 

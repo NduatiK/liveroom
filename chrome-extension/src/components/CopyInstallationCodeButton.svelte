@@ -1,9 +1,9 @@
 <script lang="ts">
-  export let url: string;
-  export let roomId: string;
+  export let url: string | undefined;
+  export let roomId: string | undefined;
 
   let copied = false;
-  let timeout: number;
+  let timeout: number | undefined;
 
   $: if (copied && !timeout) {
     timeout = setTimeout(() => {

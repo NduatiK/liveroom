@@ -13,15 +13,16 @@
 
   const dispatch = createEventDispatcher();
 
-  function handleInput(event) {
-    text = event.target.textContent;
+  function handleInput(event: Event & { currentTarget: HTMLElement }) {
+    if (event.currentTarget?.textContent)
+      text = event.currentTarget.textContent;
 
     if (text !== user_name && text != null && text != "") {
       dispatch("_user_name_updated", { user_name: text });
       user_name = text;
     }
   }
-  function preventNewLines(event) {
+  function preventNewLines(event: KeyboardEvent) {
     if (event.key === "Enter") {
       event.preventDefault();
     }
