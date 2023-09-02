@@ -10,6 +10,7 @@ defmodule Liveroom.Accounts.User do
     field :hashed_password, :string, redact: true
 
     field :picture_url, :string
+    field :website_url, :string
 
     field :confirmed_at, :naive_datetime
 
@@ -124,6 +125,13 @@ defmodule Liveroom.Accounts.User do
     |> validate_required([:password])
     |> validate_confirmation(:password, message: "does not match password")
     |> validate_password(opts)
+  end
+
+  def website_url_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:website_url])
+    |> validate_required([:website_url])
+    |> validate_format(:website_url, ~r/^https:\/\//, message: "must begin with https://")
   end
 
   @doc """
