@@ -1,4 +1,4 @@
-const m = "liveroom-client-element", a = "0.0.19", d = "module", v = "./dist/main.js", u = "./dist/main.cjs", p = [
+const m = "liveroom-client-element", a = "0.0.20", d = "module", v = "./dist/main.js", u = "./dist/main.cjs", p = [
   "dist",
   "!dist/vite.svg"
 ], f = {

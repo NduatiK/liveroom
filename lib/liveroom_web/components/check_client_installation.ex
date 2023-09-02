@@ -26,7 +26,7 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
             <%= ~s{
     <script
     type="module"
-    src="https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.19/dist/main.min.js"
+    src="https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.20/dist/main.min.js"
     ></script>
             } |> String.trim() %>
           </code>
@@ -38,7 +38,7 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
           version <span class="font-medium tabular-nums"><%= @version %></span>
         </span>
 
-        <span :if={@version == "0.0.19"} class="text-sm text-indigo-600/75">
+        <span :if={@version == "0.0.20"} class="text-sm text-indigo-600/75">
           you're up to date
         </span>
       </p>
