@@ -56,8 +56,8 @@ defmodule LiveroomWeb.ConnectedLive do
 
       <h2 class="mt-12 text-lg font-semibold tracking-tight">Settings</h2>
 
-      <div class="px-6 flex flex-col items-start gap-2">
-        <p>Enter your website url below:</p>
+      <div class="flex flex-col items-start gap-2">
+        <p>Your website url:</p>
 
         <.form
           for={@form}
