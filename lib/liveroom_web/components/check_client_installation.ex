@@ -1,48 +1,50 @@
 defmodule LiveroomWeb.Components.CheckClientInstallation do
   use LiveroomWeb, :live_component
 
-  attr :class, :string, default: nil
+  alias LiveroomWeb.Components.Banner
 
   @impl true
   def render(assigns) do
     ~H"""
-    <div
-      data-hasversion={if @version, do: "true", else: "false"}
-      class={[
-        "p-6 shadow-md shadow-indigo-400/10 border-4 border-indigo-400/10 bg-indigo-400/10 text-brand rounded-3xl flex flex-col gap-4",
-        "data-[hasversion=false]:bg-white data-[hasversion=false]:border-zinc-400/10 data-[hasversion=false]:shadow-md",
-        @class
-      ]}
-    >
-      <p :if={@version} class="flex items-center gap-2">Up and running</p>
-      <p :if={!@version}>Client not installed</p>
+    <%!-- Super weird, Liveview throws an error if I don't wrap the banner in a span. --%>
+    <span>
+      <Banner.render version={@version} latest_version="0.0.20">
+        <:when_no_version>
+          <div class="flex justify-between items-center">
+            <p class="flex items-center gap-1.5 text-amber-600">
+              <.icon name="hero-exclamation-triangle-mini" class="mt-0.5 h-5 w-5" />
+              <span class="font-semibold">not installed</span>
+            </p>
 
-      <p :if={!@version}>
-        <span class="mb-4 block">
-          Copy the following code in the <%= "<head>" %> HTML tag of your website:
-        </span>
-        <div class="group text-xs font-semibold bg-zinc-100 rounded pt-0 pb-4 px-6 whitespace-pre-line">
-          <code>
-            <%= ~s{
-    <script
-    type="module"
-    src="https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.20/dist/main.min.js"
-    ></script>
-            } |> String.trim() %>
-          </code>
-        </div>
-      </p>
+            <.button
+              :if={!@version}
+              phx-click="refresh_client_version"
+              class="flex justify-center items-center group"
+            >
+              Refresh
+              <.icon
+                name="hero-arrow-path-mini"
+                class="inline-block ml-2 h-4 w-4 group-hover:rotate-45 transition-transform"
+              />
+            </.button>
+          </div>
 
-      <p class="flex items-baseline gap-4">
-        <span :if={@version} class="w-fit bg-white text-sm rounded-full py-0.5 px-2">
-          version <span class="font-medium tabular-nums"><%= @version %></span>
-        </span>
+          <p>
+            copy the following code in the <span class="font-semibold">&lt;head&gt;</span>
+            HTML tag of your website
+          </p>
 
-        <span :if={@version == "0.0.20"} class="text-sm text-indigo-600/75">
-          you're up to date
-        </span>
-      </p>
-    </div>
+          <p class="group text-xs font-bold bg-white outline outline-amber-600/10 rounded pt-1 pb-6 px-6 whitespace-pre-line">
+            <code class="select-all"><%= ~s{
+                <script
+                  type="module"
+                  src="https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.20/dist/main.min.js"
+                ></script>
+              } |> String.trim() %></code>
+          </p>
+        </:when_no_version>
+      </Banner.render>
+    </span>
     """
   end
 
@@ -51,8 +53,4 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
     socket = assign(socket, version: assigns.version)
     {:ok, socket}
   end
-
-  ### Components
-
-  ### Helpers
 end

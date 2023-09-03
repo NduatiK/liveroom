@@ -12,7 +12,7 @@ defmodule LiveroomWeb.ConnectedLive do
     <div
       id="connected"
       phx-hook="SendExtensionVersionHook"
-      class="w-[min(100%,550px)] flex flex-col items-stretch gap-8"
+      class="w-[min(100%,700px)] flex flex-col items-stretch gap-8"
     >
       <div class="w-full flex justify-between items-center gap-32">
         <div class="flex items-center gap-4">
@@ -38,11 +38,11 @@ defmodule LiveroomWeb.ConnectedLive do
       />
 
       <div class="flex justify-between items-baseline">
-        <h2 class="mt-12 font-semibold tracking-tight text-lg">Liveroom Client</h2>
+        <h2 class="mt-12 text-lg font-semibold tracking-tight">Liveroom Client</h2>
         <a
           href={@website_url}
           target="_blank"
-          class="block underline font-medium text-zinc-600 text-sm"
+          class="mr-1 block underline font-medium text-zinc-600 text-sm"
         >
           <%= @website_url %>
         </a>
@@ -139,8 +139,12 @@ defmodule LiveroomWeb.ConnectedLive do
 
   @impl true
   def handle_event("update_version_extension", %{"version" => version} = _payload, socket) do
-    socket = assign(socket, version_extension: version)
+    {:noreply, assign(socket, version_extension: version)}
+  end
 
+  @impl true
+  def handle_event("refresh_client_version", _params, socket) do
+    fetch_client_version!(socket.assigns.current_user.website_url)
     {:noreply, socket}
   end
 

@@ -337,7 +337,7 @@
 >
   <div class="body">
     {#if !started}
-      <button on:click={() => (started = true)}> Start session </button>
+      <button on:click={() => (started = true)}>Start session</button>
     {:else if !screensharingVideoEl}
       <p class="instructions">Click on the screensharing video</p>
       <p class="sub-instructions">
