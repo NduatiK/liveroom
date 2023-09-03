@@ -1,6 +1,8 @@
 defmodule LiveroomWeb.LiveStateChannel do
   use LiveState.Channel, web_module: LiveroomWeb, json_patch: true
 
+  alias Liveroom.Accounts
+
   require Logger
 
   @impl true
@@ -10,7 +12,8 @@ defmodule LiveroomWeb.LiveStateChannel do
           "room_id" => room_id,
           "current_url" => current_url,
           "inner_width" => inner_width,
-          "inner_height" => inner_height
+          "inner_height" => inner_height,
+          "auth_user_token" => user_token
         } = params,
         _socket
       ) do
@@ -67,7 +70,14 @@ defmodule LiveroomWeb.LiveStateChannel do
       room_id: room_id,
       me: me,
       users: users,
-      analytics_data: analytics_data
+      analytics_data: analytics_data,
+      current_user:
+        if user_token do
+          dbg(user_token)
+          Accounts.get_user_by_session_token(user_token)
+        else
+          nil
+        end
     }
 
     {:ok, state}

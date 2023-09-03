@@ -122,13 +122,13 @@ defmodule LiveroomWeb.Router do
     live_session :redirect_if_user_is_authenticated,
       on_mount: [{LiveroomWeb.Accounts.UserAuth, :redirect_if_user_is_authenticated}] do
       live "/register", UserRegistrationLive, :new
-      live "/log_in", UserLoginLive, :new
+      live "/login", UserLoginLive, :new
       live "/reset_password", UserForgotPasswordLive, :new
       live "/reset_password/:token", UserResetPasswordLive, :edit
     end
 
-    post "/log_in", UserSessionController, :create
-    get "/log_in/:token", UserSessionController, :create
+    post "/login", UserSessionController, :create
+    get "/login/:token", UserSessionController, :create
   end
 
   scope "/accounts", LiveroomWeb.Accounts, as: :accounts do

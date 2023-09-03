@@ -15,7 +15,7 @@ defmodule LiveroomWeb.Accounts.UserSessionController do
       _ ->
         conn
         |> put_flash(:error, "That link didn't seem to work. Please try again.")
-        |> redirect(to: ~p"/log_in")
+        |> redirect(to: ~p"/login")
     end
   end
 
@@ -43,14 +43,14 @@ defmodule LiveroomWeb.Accounts.UserSessionController do
     user &&
       Accounts.deliver_magic_link(
         user,
-        &"#{LiveroomWeb.Endpoint.url()}/log_in/#{&1}"
+        &"#{LiveroomWeb.Endpoint.url()}/login/#{&1}"
       )
 
     # In order to prevent user enumeration attacks, don't disclose whether the email is registered.
     conn
     |> put_flash(:info, "One-time sign-in link sent to #{email}")
     # |> put_flash(:info, "If we find an account for #{email} we'll send a one-time sign-in link")
-    |> redirect(to: ~p"/log_in")
+    |> redirect(to: ~p"/login")
   end
 
   def create(conn, %{"_action" => "registered"} = params) do
@@ -79,7 +79,7 @@ defmodule LiveroomWeb.Accounts.UserSessionController do
       conn
       |> put_flash(:error, "Invalid email or password")
       |> put_flash(:email, String.slice(email, 0, 160))
-      |> redirect(to: ~p"/log_in")
+      |> redirect(to: ~p"/login")
     end
   end
 

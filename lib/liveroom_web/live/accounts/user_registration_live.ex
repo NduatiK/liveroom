@@ -12,7 +12,7 @@ defmodule LiveroomWeb.Accounts.UserRegistrationLive do
         Register for an account
         <:subtitle>
           Already registered?
-          <.link navigate={~p"/log_in"} class="font-semibold text-brand hover:underline">
+          <.link navigate={~p"/login"} class="font-semibold text-brand hover:underline">
             Sign in
           </.link>
           instead.
@@ -25,7 +25,7 @@ defmodule LiveroomWeb.Accounts.UserRegistrationLive do
         phx-submit="save"
         phx-change="validate"
         phx-trigger-action={@trigger_submit}
-        action={~p"/log_in?_action=registered"}
+        action={~p"/login?_action=registered"}
         method="post"
       >
         <.error :if={@check_errors}>
@@ -49,7 +49,7 @@ defmodule LiveroomWeb.Accounts.UserRegistrationLive do
       <.simple_form
         for={@form}
         id="magic_link_form"
-        action={~p"/log_in?_action=magic_link"}
+        action={~p"/login?_action=magic_link"}
         phx-update="ignore"
         class="my-0 py-0"
       >

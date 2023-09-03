@@ -16,7 +16,7 @@ defmodule LiveroomWeb.Accounts.UserLoginLive do
         </:subtitle>
       </.header>
 
-      <%!-- <.simple_form for={@form} id="login_form" action={~p"/log_in"} phx-update="ignore">
+      <%!-- <.simple_form for={@form} id="login_form" action={~p"/login"} phx-update="ignore">
         <.input field={@form[:email]} type="email" label="Email" required />
         <.input field={@form[:password]} type="password" label="Password" required />
 
@@ -42,7 +42,7 @@ defmodule LiveroomWeb.Accounts.UserLoginLive do
       <.simple_form
         for={@form}
         id="magic_link_form"
-        action={~p"/log_in?_action=magic_link"}
+        action={~p"/login?_action=magic_link"}
         phx-update="ignore"
         class="my-0 py-0"
       >
