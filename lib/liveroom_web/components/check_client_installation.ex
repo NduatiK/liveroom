@@ -16,11 +16,7 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
               <span class="font-semibold">not installed</span>
             </p>
 
-            <.button
-              :if={!@version}
-              phx-click="refresh_client_version"
-              class="flex justify-center items-center group"
-            >
+            <.button phx-click="refresh_client_version" class="flex justify-center items-center group">
               Refresh
               <.icon
                 name="hero-arrow-path-mini"

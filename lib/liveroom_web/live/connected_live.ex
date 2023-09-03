@@ -144,8 +144,9 @@ defmodule LiveroomWeb.ConnectedLive do
 
   @impl true
   def handle_event("refresh_client_version", _params, socket) do
-    fetch_client_version!(socket.assigns.current_user.website_url)
-    {:noreply, socket}
+    # simulate latency for better UX
+    fetch_client_version!(socket.assigns.current_user.website_url, true)
+    {:noreply, assign(socket, version_client: nil)}
   end
 
   @impl true
@@ -184,10 +185,13 @@ defmodule LiveroomWeb.ConnectedLive do
     )
   end
 
-  def fetch_client_version!(url) do
+  def fetch_client_version!(url, pause \\ false) do
     self = self()
 
     Task.start(fn ->
+      # simulate latency for better UX
+      pause && Process.sleep(500)
+
       version =
         case Req.get(url) do
           {:ok, %Req.Response{status: 200, body: html}} ->
@@ -202,12 +206,12 @@ defmodule LiveroomWeb.ConnectedLive do
                   |> Enum.at(1)
 
                 [] ->
-                  nil
+                  "noversion"
               end
             )
 
           _x ->
-            nil
+            "noversion"
         end
 
       send(self, {:client_version, version})
