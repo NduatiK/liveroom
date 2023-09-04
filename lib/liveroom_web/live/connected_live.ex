@@ -218,7 +218,7 @@ defmodule LiveroomWeb.ConnectedLive do
                 |> Enum.at(1)
 
               [] ->
-                case Mix.env() == :dev && Floki.find(doc, "script[src='/src/main.ts']") do
+                case Floki.find(doc, "script[src='/src/main.ts']") do
                   [_] -> "local"
                   _ -> "noversion"
                 end

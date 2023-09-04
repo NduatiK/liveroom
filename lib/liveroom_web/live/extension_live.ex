@@ -7,13 +7,7 @@ defmodule LiveroomWeb.ExtensionLive do
       id="extension"
       phx-hook="PutAuthUserTokenHook"
       data-usertoken={@user_token}
-      data-extensionid={
-        if Mix.env() == :prod do
-          "famgmncbiedbdkgpkfdnmefhfhbgljhb"
-        else
-          "cjaebgpalgiknhanmkoplhhnekdcbnne"
-        end
-      }
+      data-extensionid={Application.fetch_env!(:liveroom, :chrome_extension_id)}
       class="mx-auto w-full max-w-md flex flex-col items-stretch font-semibold py-16"
     >
       You can now close this tab and go back to Google Meet

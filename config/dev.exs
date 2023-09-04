@@ -1,5 +1,7 @@
 import Config
 
+config :liveroom, chrome_extension_id: "cjaebgpalgiknhanmkoplhhnekdcbnne"
+
 config :mix_test_watch, clear: true
 
 # Configure your database

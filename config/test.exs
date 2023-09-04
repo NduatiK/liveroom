@@ -1,5 +1,7 @@
 import Config
 
+config :liveroom, chrome_extension_id: "cjaebgpalgiknhanmkoplhhnekdcbnne"
+
 # Only in tests, remove the complexity from the password hashing algorithm
 config :bcrypt_elixir, :log_rounds, 1
 
