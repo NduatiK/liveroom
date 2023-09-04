@@ -25,10 +25,17 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
               </.button>
 
               <.button
-                phx-click="refresh_client_version"
-                class="flex justify-center items-center group"
+                id="copy_script_tag"
+                phx-hook="CopyToClipboardButtonHook"
+                data-tocopy={@script_tag_text}
+                class="flex justify-center items-center group disabled:bg-zinc-900 disabled:hover:bg-zinc-900"
               >
-                Copy <.icon name="hero-clipboard-mini" class="inline-block ml-2 h-4 w-4" />
+                <span class="hidden group-data-[copied=true]:block">Copied!</span>
+                <span class="group-data-[copied=true]:hidden">Copy</span>
+                <.icon
+                  name="hero-clipboard-mini"
+                  class="group-data-[copied=true]:hidden inline-block ml-2 h-4 w-4"
+                />
               </.button>
             </div>
           </div>
@@ -39,12 +46,7 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
           </p>
 
           <p class="group text-xs font-bold bg-white outline outline-amber-600/10 rounded pt-1 pb-6 px-6 whitespace-pre-line">
-            <code class="select-all"><%= ~s{
-                <script
-                  type="module"
-                  src="https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.20/dist/main.min.js"
-                ></script>
-              } |> String.trim() %></code>
+            <code class="select-all"><%= @script_tag_text %></code>
           </p>
         </:when_no_version>
       </Banner.render>
@@ -56,7 +58,15 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
   def update(assigns, socket) do
     socket =
       assign(socket,
-        version: assigns.version
+        version: assigns.version,
+        script_tag_text:
+          """
+          <script
+            type="module"
+            src="https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.20/dist/main.min.js"
+          ></script>
+          """
+          |> String.trim()
       )
 
     {:ok, socket}
