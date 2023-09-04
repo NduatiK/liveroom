@@ -3,6 +3,7 @@ defmodule LiveroomWeb.Components.Banner do
 
   attr :version, :string, required: true
   attr :latest_version, :string, required: true
+  attr :installed, :string, default: "up and running"
   attr :class, :string, default: nil
 
   slot :when_no_version, required: true
@@ -30,16 +31,14 @@ defmodule LiveroomWeb.Components.Banner do
     >
       <%= case @version do %>
         <% nil -> %>
-          <p class="mx-auto">
-            <.icon name="hero-plus" class="h-5 w-5 text-zinc-950/25 animate-spin" />
-          </p>
+          <p class="mx-auto text-zinc-950/25 font-semibold">checking...</p>
         <% "noversion" -> %>
           <%= render_slot(@when_no_version) %>
         <% version -> %>
           <div class="flex justify-between items-center">
             <p class="flex items-center gap-1.5 text-indigo-600">
               <.icon name="hero-check-badge-mini" class="mt-0.5 h-5 w-5" />
-              <span class="font-semibold">up and running</span>
+              <span class="font-semibold"><%= @installed %></span>
             </p>
 
             <p class="flex items-baseline gap-2">

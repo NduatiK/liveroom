@@ -388,8 +388,8 @@
       <div class="buttons-container">
         {#if currentUser}
           <CopyInstallationCodeButton
-            label="Copy website url"
-            labelCopied="Url copied!"
+            label="Copy website URL"
+            labelCopied="URL copied!"
             textToCopy={`${currentUser.website_url}?_liveroom=${roomId}`}
           />
         {/if}
@@ -604,16 +604,19 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    padding-bottom: 1rem;
   }
 
   .buttons-container {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 1rem;
-    padding: 1rem;
+    gap: 0.5rem;
   }
 
+  .end-session-button {
+    margin-top: 0.5rem;
+  }
   .end-session-button:hover {
     color: rgb(239, 68, 68) !important; /* Tailwind red-500 */
     background-color: rgb(220, 38, 38, 0.1) !important; /* Tailwind red-600 */

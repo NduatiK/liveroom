@@ -8,7 +8,7 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
     ~H"""
     <%!-- Super weird, Liveview throws an error if I don't wrap the banner in a span. --%>
     <span>
-      <Banner.render version={@version} latest_version="0.0.20">
+      <Banner.render version={@version} latest_version="0.0.20" installed="installed on your website">
         <:when_no_version>
           <div class="flex justify-between items-center">
             <p class="flex items-center gap-1.5 text-amber-600">
@@ -16,13 +16,21 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
               <span class="font-semibold">not installed</span>
             </p>
 
-            <.button phx-click="refresh_client_version" class="flex justify-center items-center group">
-              Refresh
-              <.icon
-                name="hero-arrow-path-mini"
-                class="inline-block ml-2 h-4 w-4 group-hover:rotate-45 transition-transform"
-              />
-            </.button>
+            <div class="flex items-center gap-4">
+              <.button
+                phx-click="refresh_client_version"
+                class="flex justify-center items-center group !text-zinc-800 !bg-transparent hover:!bg-white"
+              >
+                Check again <.icon name="hero-arrow-path-mini" class="inline-block ml-2 h-4 w-4" />
+              </.button>
+
+              <.button
+                phx-click="refresh_client_version"
+                class="flex justify-center items-center group"
+              >
+                Copy <.icon name="hero-clipboard-mini" class="inline-block ml-2 h-4 w-4" />
+              </.button>
+            </div>
           </div>
 
           <p>
@@ -46,7 +54,11 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
 
   @impl true
   def update(assigns, socket) do
-    socket = assign(socket, version: assigns.version)
+    socket =
+      assign(socket,
+        version: assigns.version
+      )
+
     {:ok, socket}
   end
 end

@@ -29,35 +29,19 @@ defmodule LiveroomWeb.ConnectedLive do
         </.link>
       </div>
 
-      <h2 class="mt-12 text-lg font-semibold tracking-tight">Liveroom Chrome Extension</h2>
-
-      <.live_component
-        module={Components.CheckExtensionInstallation}
-        id="check_extension_installation"
-        version={@version_extension}
-      />
-
       <div class="flex justify-between items-baseline">
         <h2 class="mt-12 text-lg font-semibold tracking-tight">Liveroom Client</h2>
-        <a
+        <%!-- <a
           href={@website_url}
           target="_blank"
           class="mr-1 block underline font-medium text-zinc-600 text-sm"
         >
           <%= @website_url %>
-        </a>
+        </a> --%>
       </div>
 
-      <.live_component
-        module={Components.CheckClientInstallation}
-        id="check_client_installation"
-        version={@version_client}
-      />
-
-      <h2 class="mt-12 text-lg font-semibold tracking-tight">Settings</h2>
-
       <div class="flex justify-between items-baseline gap-6">
-        <p class="font-semibold">Your website URL</p>
+        <p class="font-medium">Your product demo page:</p>
 
         <.form
           for={@form}
@@ -76,6 +60,20 @@ defmodule LiveroomWeb.ConnectedLive do
           <.button class="!w-fit ml-auto flex justify-center items-center px-4">Save</.button>
         </.form>
       </div>
+
+      <.live_component
+        module={Components.CheckClientInstallation}
+        id="check_client_installation"
+        version={@version_client}
+      />
+
+      <h2 class="mt-12 text-lg font-semibold tracking-tight">Liveroom Chrome Extension</h2>
+
+      <.live_component
+        module={Components.CheckExtensionInstallation}
+        id="check_extension_installation"
+        version={@version_extension}
+      />
     </div>
     """
   end
@@ -93,7 +91,7 @@ defmodule LiveroomWeb.ConnectedLive do
       |> assign(version_client: nil, version_extension: nil)
 
     if connected?(socket) do
-      fetch_client_version!(socket.assigns.website_url)
+      fetch_client_version!(socket.assigns.website_url, false)
     end
 
     {:ok, socket}
@@ -117,7 +115,7 @@ defmodule LiveroomWeb.ConnectedLive do
          |> User.website_url_changeset(%{website_url: user_params["website_url"]})
          |> Repo.update() do
       {:ok, user} ->
-        fetch_client_version!(user.website_url)
+        fetch_client_version!(user.website_url, true)
 
         {:noreply,
          socket

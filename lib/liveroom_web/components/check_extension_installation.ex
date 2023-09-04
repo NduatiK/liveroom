@@ -8,7 +8,7 @@ defmodule LiveroomWeb.Components.CheckExtensionInstallation do
     ~H"""
     <%!-- Super weird, Liveview throws an error if I don't wrap the banner in a span. --%>
     <span>
-      <Banner.render version={@version} latest_version="0.0.9">
+      <Banner.render version={@version} latest_version="0.0.9" installed="installed on your computer">
         <:when_no_version>
           <div class="flex justify-between items-center">
             <p class="flex items-center gap-1.5 text-amber-600">
