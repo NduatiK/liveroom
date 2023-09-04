@@ -30,7 +30,7 @@ defmodule LiveroomWeb.ConnectedLive do
       </div>
 
       <div class="flex justify-between items-baseline">
-        <h2 class="mt-12 text-lg font-semibold tracking-tight">Liveroom Client</h2>
+        <h2 class="mt-12 text-lg font-semibold tracking-tight">Liveroom Script</h2>
         <%!-- <a
           href={@website_url}
           target="_blank"
@@ -41,27 +41,28 @@ defmodule LiveroomWeb.ConnectedLive do
       </div>
 
       <div class="flex justify-between items-baseline gap-6">
-        <p class="font-medium">Your product demo page:</p>
+        <p>Your product demo page:</p>
 
         <.form
           for={@form}
           id="website_form"
           phx-submit="save"
           phx-change="validate"
-          class="w-[min(100%,400px)] flex [&>*]:w-full items-center gap-4"
+          class="w-[min(100%,400px)] flex [&>*]:w-full items-start gap-4"
         >
           <.input
             field={@form[:website_url]}
             type="text"
             placeholder="https://mysaas.com"
             required
-            input_class="!mt-0"
+            input_class="!mt-0 placeholder:text-zinc-400/50"
           />
           <.button class="!w-fit ml-auto flex justify-center items-center px-4">Save</.button>
         </.form>
       </div>
 
       <.live_component
+        :if={@website_url}
         module={Components.CheckClientInstallation}
         id="check_client_installation"
         version={@version_client}
