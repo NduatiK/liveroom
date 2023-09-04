@@ -66,11 +66,14 @@ defmodule LiveroomWeb.ConnectedLive do
           phx-change="validate"
           class="w-[min(100%,400px)] flex [&>*]:w-full items-center gap-4"
         >
-          <.input field={@form[:website_url]} type="text" placeholder="https://mysaas.com" required />
-
-          <.button class="!w-fit mt-2 ml-auto flex justify-center items-center pl-2 pr-4">
-            <.icon name="hero-pencil" class="h-4 w-4 mr-2" />Save
-          </.button>
+          <.input
+            field={@form[:website_url]}
+            type="text"
+            placeholder="https://mysaas.com"
+            required
+            input_class="!mt-0"
+          />
+          <.button class="!w-fit ml-auto flex justify-center items-center px-4">Save</.button>
         </.form>
       </div>
     </div>
@@ -190,22 +193,40 @@ defmodule LiveroomWeb.ConnectedLive do
 
     Task.start(fn ->
       # simulate latency for better UX
-      pause && Process.sleep(500)
+      pause && Process.sleep(600)
+
+      url =
+        case url do
+          "http://localhost" <> _ = url ->
+            url
+            |> String.trim_trailing("/")
+            |> then(&(&1 <> "/index.html"))
+
+          url ->
+            url
+        end
 
       version =
-        case Req.get(url) do
+        case Req.get(url, retry: false) do
           {:ok, %Req.Response{status: 200, body: html}} ->
-            html
-            |> Floki.parse_document!()
-            |> Floki.find("liveroom-client-element[version]")
-            |> then(
-              &case Floki.attribute(&1, "version") do
-                [v] -> v
-                [] -> "noversion"
-              end
-            )
+            doc = Floki.parse_document!(html)
 
-          _x ->
+            case doc
+                 |> Floki.find("script[src*='liveroom-client-element']")
+                 |> Floki.attribute("src") do
+              [src] ->
+                ~r/liveroom-client-element@((\d|\.)+)\//
+                |> Regex.run(src)
+                |> Enum.at(1)
+
+              [] ->
+                case Mix.env() == :dev && Floki.find(doc, "script[src='/src/main.ts']") do
+                  [_] -> "local"
+                  _ -> "noversion"
+                end
+            end
+
+          _ ->
             "noversion"
         end
 
