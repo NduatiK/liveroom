@@ -15,12 +15,12 @@ defmodule Liveroom.Analytics.Umami do
         "/api/send",
         body: body(event, url, opts) |> Jason.encode!(),
         base_url: base_url(),
-        headers: [
-          {"User-Agent", user_agent},
+        headers: %{
+          "user-agent" => [user_agent],
           # From CLIENT_IP_HEADER env var set in umami/fly.toml
-          {"umami-client-ip", ip},
-          {"Content-Type", "application/json"}
-        ]
+          "umami-client-ip" => [ip],
+          "content-type" => ["application/json"]
+        }
       )
     end
   end
