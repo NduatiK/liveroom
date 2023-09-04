@@ -64,12 +64,10 @@ defmodule LiveroomWeb.Accounts.UserLoginLive do
     email = live_flash(socket.assigns.flash, :email)
     form = to_form(%{"email" => email}, as: "user")
 
-    extension? = session[:user_return_to] == ~p"/extension"
-
     socket =
       assign(socket,
         form: form,
-        oauth_google_url: oauth_google_url(extension?)
+        oauth_google_url: oauth_google_url(session[:user_return_to])
       )
 
     {:ok, socket, temporary_assigns: [form: form]}
@@ -77,11 +75,13 @@ defmodule LiveroomWeb.Accounts.UserLoginLive do
 
   ### Helpers
 
-  defp oauth_google_url(true = _extension?) do
-    oauth_google_url(false) <> "&state=extension"
+  defp oauth_google_url(user_return_to \\ nil)
+
+  defp oauth_google_url("/extension") do
+    oauth_google_url() <> "&state=extension"
   end
 
-  defp oauth_google_url(false = _extension?) do
+  defp oauth_google_url(_user_return_to) do
     ElixirAuthGoogle.generate_oauth_url(LiveroomWeb.Endpoint.url())
   end
 end
