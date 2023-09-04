@@ -7,7 +7,7 @@ defmodule LiveroomWeb.GoogleAuthController do
   @doc """
   `index/2` handles the callback from Google Auth API redirect.
   """
-  def index(conn, %{"code" => code}) do
+  def index(conn, %{"code" => code} = params) do
     {:ok, token} = ElixirAuthGoogle.get_token(code, LiveroomWeb.Endpoint.url())
     {:ok, profile} = ElixirAuthGoogle.get_user_profile(token.access_token)
 
@@ -33,6 +33,16 @@ defmodule LiveroomWeb.GoogleAuthController do
 
     conn
     |> put_flash(:info, "Welcome 👋")
-    |> UserAuth.log_in_user(user, %{"remember_me" => "true"})
+    |> UserAuth.log_in_user(
+      user,
+      %{"remember_me" => "true"},
+      case params["state"] do
+        "extension" ->
+          ~p"/extension"
+
+        _ ->
+          nil
+      end
+    )
   end
 end

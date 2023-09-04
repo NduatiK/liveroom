@@ -1,7 +1,4 @@
 import packageJson from "../package.json";
-const VERSION = import.meta.env.PROD
-  ? packageJson["version"]
-  : `${packageJson["version"]}.dev`;
 
 // STATE
 
@@ -17,6 +14,10 @@ listenForQueryParam();
 // CONSTANTS
 
 const ELEMENT_TAG = "liveroom-client-element";
+
+const VERSION = import.meta.env.PROD
+  ? packageJson["version"]
+  : `${packageJson["version"]}.dev`;
 
 // HELPERS
 
@@ -67,6 +68,7 @@ async function injectElement(url: string, room_id?: string) {
   // create new client element
   element = document.createElement(ELEMENT_TAG);
   element.setAttribute("url", url);
+  element.setAttribute("version", VERSION);
   room_id && element.setAttribute("room_id", room_id);
 
   // append the element at the end of the body

@@ -44,6 +44,7 @@ defmodule LiveroomWeb.Router do
         {LiveroomWeb.Accounts.UserAuth, :ensure_authenticated}
       ] do
       live "/connected", ConnectedLive, :index
+      live "/extension", ExtensionLive
     end
   end
 

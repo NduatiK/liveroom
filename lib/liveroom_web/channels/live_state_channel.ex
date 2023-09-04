@@ -12,8 +12,7 @@ defmodule LiveroomWeb.LiveStateChannel do
           "room_id" => room_id,
           "current_url" => current_url,
           "inner_width" => inner_width,
-          "inner_height" => inner_height,
-          "auth_user_token" => user_token
+          "inner_height" => inner_height
         } = params,
         _socket
       ) do
@@ -72,9 +71,11 @@ defmodule LiveroomWeb.LiveStateChannel do
       users: users,
       analytics_data: analytics_data,
       current_user:
-        if user_token do
-          dbg(user_token)
-          Accounts.get_user_by_session_token(user_token)
+        if user_token = params["auth_user_token"] do
+          user_token
+          |> Jason.decode!()
+          |> :erlang.list_to_binary()
+          |> Accounts.get_user_by_session_token()
         else
           nil
         end

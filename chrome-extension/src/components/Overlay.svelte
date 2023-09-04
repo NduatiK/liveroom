@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, onDestroy } from "svelte";
+  import { createEventDispatcher, onDestroy, onMount } from "svelte";
   import { LiveState } from "phx-live-state";
   import PoweredByLiveroom from "./PoweredByLiveroom.svelte";
   import CopyInstallationCodeButton from "./CopyInstallationCodeButton.svelte";
@@ -9,7 +9,7 @@
     createSelectVideoElStyle,
     createPointerEventsOnVideoElStyle,
   } from "./stylesheets";
-  import type { User } from "src/types/User";
+  import type { State } from "src/types/State";
 
   export let open = true;
   export let started = false;
@@ -28,14 +28,12 @@
   let mouseX: string; // string because we round it to 2 decimals using `toFixed(2)`
   let mouseY: string; // string because we round it to 2 decimals using `toFixed(2)`
 
-  let roomId: string | undefined;
-  let me: User<"admin">;
-  let users: { [key: User["id"]]: User };
-  type State = {
-    room_id: string;
-    me: User<"admin">;
-    users: { [key: User["id"]]: User };
-  };
+  let authUserToken: string | undefined;
+  let roomId: State["room_id"] | undefined;
+  let me: State["me"] | undefined;
+  let users: State["users"] | undefined;
+  let currentUser: State["current_user"] | undefined;
+
   let liveState: LiveState | undefined;
 
   // Start selecting the screensharing video (screensharingVideoEl)
@@ -142,6 +140,10 @@
 
   // LIFECYCLE
 
+  onMount(() => {
+    getAuthToken();
+  });
+
   onDestroy(() => {
     endSession();
     cleanStyles();
@@ -171,6 +173,7 @@
         user_agent: window.navigator.userAgent,
         initial_mouse_x: mouseX,
         initial_mouse_y: mouseY,
+        auth_user_token: authUserToken,
       },
       socketOptions: import.meta.env.PROD ? { logger: null } : undefined,
     });
@@ -182,6 +185,7 @@
         roomId = state.room_id;
         me = state.me;
         users = state.users;
+        currentUser = state.current_user;
       }
     );
     dispatch("session_started");
@@ -327,6 +331,28 @@
       }
     };
   }
+
+  function loggedInCallback() {
+    function callback() {
+      getAuthToken();
+      window.removeEventListener("focus", callback);
+    }
+    window.addEventListener("focus", callback);
+  }
+
+  function getAuthToken() {
+    chrome.runtime.sendMessage({ type: "getAuthUserToken" }, (response) => {
+      if (response?.userToken) {
+        console.log("[Liveroom Extension] User is logged in");
+        authUserToken = response.userToken;
+        // reload session if open
+        liveState && endSession();
+      } else {
+        console.log("[Liveroom Extension] User is NOT logged in");
+        authUserToken = undefined;
+      }
+    });
+  }
 </script>
 
 <div
@@ -359,10 +385,31 @@
         </div>
       {/if}
 
-      <div class="separator" />
-
       <div class="buttons-container">
-        <CopyInstallationCodeButton url={liveState?.config.url} {roomId} />
+        {#if currentUser}
+          <CopyInstallationCodeButton
+            label="Copy website url"
+            labelCopied="Url copied!"
+            textToCopy={`${currentUser.website_url}?_liveroom=${roomId}`}
+          />
+        {/if}
+
+        <CopyInstallationCodeButton
+          label="Copy installation code"
+          labelCopied="Code copied!"
+          textToCopy={`
+          const script = document.createElement("script");
+          script.type = "module";
+          script.src = "${
+            import.meta.env.PROD
+              ? "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.20/dist/main.min.js"
+              : "http://localhost:5173/src/main.ts"
+          }";
+          script.setAttribute("data-url", "${liveState?.config.url}");
+          script.setAttribute("data-roomid", "${roomId}");
+          document.head.appendChild(script);
+          `}
+        />
 
         <button
           class="end-session-button"
@@ -378,7 +425,42 @@
   </div>
 
   <div class="footer">
-    <PoweredByLiveroom />
+    <div class="powered-by-container">
+      <PoweredByLiveroom />
+    </div>
+
+    <div class="user">
+      {#if started && screensharingVideoEl}
+        {#if currentUser}
+          <a
+            href={import.meta.env.PROD
+              ? "https://liveroom.app/connected"
+              : "http://localhost:4000/connected"}
+            target="_blank"
+            class="profilepic"
+          >
+            <img
+              class="profilepic"
+              src={currentUser.picture_url}
+              alt="profile pic"
+            />
+          </a>
+        {/if}
+
+        {#if !currentUser}
+          <a
+            class="login-btn"
+            target="_blank"
+            on:click={loggedInCallback}
+            href={import.meta.env.PROD
+              ? "https://liveroom.app/extension"
+              : "http://localhost:4000/extension"}
+          >
+            Log in
+          </a>
+        {/if}
+      {/if}
+    </div>
   </div>
 </div>
 
@@ -448,9 +530,51 @@
   }
 
   .footer {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+  }
+
+  .powered-by-container {
+    padding: 0.5rem;
+  }
+
+  .user {
+    justify-self: end;
+  }
+
+  a.profilepic {
+    margin: 0.1rem;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 9999px;
     display: flex;
     justify-content: center;
-    padding: 0.3rem;
+    align-items: center;
+  }
+  a.profilepic:hover {
+    background-color: rgb(161, 161, 170, 0.2) /* Tailwind neutral-400 */;
+  }
+  img.profilepic {
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 9999px;
+  }
+
+  a.login-btn {
+    display: block;
+    color: #737373; /* Tailwind neutral-400 */
+    text-decoration: underline;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0.5rem;
+    transition: color 100ms ease-out;
+  }
+  a.login-btn:hover {
+    color: #525252; /* Tailwind neutral-600 */
   }
 
   .instructions {
@@ -482,20 +606,12 @@
     gap: 0.5rem;
   }
 
-  .separator {
-    height: 1px;
-    width: 50%;
-    margin: 1.5rem auto;
-    border-radius: 100%;
-    background-color: rgb(229, 229, 229, 0.6); /* Tailwind neutral-200 */
-  }
-
   .buttons-container {
     display: flex;
     flex-direction: column;
     align-items: stretch;
     gap: 1rem;
-    padding: 0 1rem;
+    padding: 1rem;
   }
 
   .end-session-button:hover {

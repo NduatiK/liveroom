@@ -1,6 +1,8 @@
 defmodule Liveroom.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
+
+  @derive {Jason.Encoder, except: [:__meta__]}
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "users" do
@@ -131,7 +133,7 @@ defmodule Liveroom.Accounts.User do
     user
     |> cast(attrs, [:website_url])
     |> validate_required([:website_url])
-    |> validate_format(:website_url, ~r/^https:\/\//, message: "must begin with https://")
+    |> validate_format(:website_url, ~r/^https?:\/\//, message: "must begin with https://")
   end
 
   @doc """

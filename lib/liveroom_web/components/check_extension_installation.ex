@@ -17,7 +17,6 @@ defmodule LiveroomWeb.Components.CheckExtensionInstallation do
             </p>
 
             <a
-              :if={!@version}
               href="https://chrome.google.com/webstore/detail/liveroom/famgmncbiedbdkgpkfdnmefhfhbgljhb"
               target="_blank"
               class="w-fit font-semibold group"

@@ -56,8 +56,8 @@ defmodule LiveroomWeb.ConnectedLive do
 
       <h2 class="mt-12 text-lg font-semibold tracking-tight">Settings</h2>
 
-      <div class="flex flex-col items-start gap-2">
-        <p>Your website url:</p>
+      <div class="flex justify-between items-baseline gap-6">
+        <p class="font-semibold">Your website URL</p>
 
         <.form
           for={@form}
@@ -197,16 +197,11 @@ defmodule LiveroomWeb.ConnectedLive do
           {:ok, %Req.Response{status: 200, body: html}} ->
             html
             |> Floki.parse_document!()
-            |> Floki.find("script[src*='liveroom-client-element']")
+            |> Floki.find("liveroom-client-element[version]")
             |> then(
-              &case Floki.attribute(&1, "src") do
-                [src] ->
-                  ~r/liveroom-client-element@((\d|\.)+)\//
-                  |> Regex.run(src)
-                  |> Enum.at(1)
-
-                [] ->
-                  "noversion"
+              &case Floki.attribute(&1, "version") do
+                [v] -> v
+                [] -> "noversion"
               end
             )
 

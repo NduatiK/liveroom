@@ -1,6 +1,7 @@
 defmodule LiveroomWeb.Accounts.UserLoginLive do
-  alias LiveroomWeb.Components
   use LiveroomWeb, :live_view
+
+  alias LiveroomWeb.Components
 
   def render(assigns) do
     ~H"""
@@ -57,6 +58,8 @@ defmodule LiveroomWeb.Accounts.UserLoginLive do
     """
   end
 
+  ### Server
+
   def mount(_params, _session, socket) do
     email = live_flash(socket.assigns.flash, :email)
     form = to_form(%{"email" => email}, as: "user")
@@ -64,9 +67,15 @@ defmodule LiveroomWeb.Accounts.UserLoginLive do
     socket =
       assign(socket,
         form: form,
-        oauth_google_url: ElixirAuthGoogle.generate_oauth_url(LiveroomWeb.Endpoint.url())
+        oauth_google_url: oauth_google_url()
       )
 
     {:ok, socket, temporary_assigns: [form: form]}
+  end
+
+  ### Helpers
+
+  defp oauth_google_url() do
+    ElixirAuthGoogle.generate_oauth_url(LiveroomWeb.Endpoint.url()) <> "&state=extension"
   end
 end
