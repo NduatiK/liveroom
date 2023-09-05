@@ -5,7 +5,7 @@
     "*.livemd": "markdown",
     ".envrc.example": "shellscript"
   },
-  "elixirLS.dialyzerEnabled": true,
+  "elixirLS.dialyzerEnabled": false,
   "elixirLS.suggestSpecs": false,
   "elixirLS.enableTestLenses": false,
   "elixirLS.fetchDeps": false,
@@ -28,6 +28,7 @@
     "editor.defaultFormatter": "JakeBecker.elixir-ls"
   },
   "[svelte]": {
+    "editor.formatOnSave": true,
     "editor.defaultFormatter": "svelte.svelte-vscode"
   },
   "svg.preview.background": "editor"
