@@ -15,9 +15,9 @@ defmodule LiveroomWeb.Components.Banner do
       data-hasversion={if @version in [nil, "noversion"], do: "false", else: "true"}
       class={[
         "flex flex-col gap-4",
-        "p-4 shadow-xl shadow-indigo-950/5",
-        "outline outline-indigo-600/10",
-        "bg-gradient-to-br from-indigo-400/5 via-indigo-400/10 to-indigo-400/20",
+        "p-6 shadow-xl shadow-green-950/5",
+        "outline outline-green-600/10",
+        "bg-gradient-to-br from-green-400/5 via-green-400/10 to-green-400/20",
         "text-brand rounded-lg",
         "data-[hasversion=false]:shadow-amber-950/5",
         "data-[hasversion=false]:outline-amber-600/10",
@@ -36,21 +36,20 @@ defmodule LiveroomWeb.Components.Banner do
           <%= render_slot(@when_no_version) %>
         <% version -> %>
           <div class="flex justify-between items-center">
-            <p class="flex items-center gap-1.5 text-indigo-600">
-              <.icon name="hero-check-badge-mini" class="mt-0.5 h-5 w-5" />
+            <p class="flex items-center gap-1.5 text-green-600">
+              <.icon name="hero-check-circle-mini" class="mt-0.5 h-5 w-5" />
               <span class="font-semibold"><%= @installed %></span>
             </p>
 
-            <p class="flex items-baseline gap-2">
+            <p class="relative">
+              <span class="w-fit bg-white font-semibold text-sm rounded-full shadow-sm py-1 px-3">
+                version <%= version %>
+              </span>
               <span
                 :if={version in [@latest_version, "#{@latest_version}.dev"]}
-                class="text-sm text-indigo-600/50"
+                class="absolute bottom-[-20px] inset-x-0 text-right pr-2 text-xs text-green-600/75"
               >
                 you're up to date
-              </span>
-
-              <span class="w-fit bg-white text-sm rounded-full py-0.5 px-2">
-                version <span class="font-semibold"><%= version %></span>
               </span>
             </p>
           </div>
