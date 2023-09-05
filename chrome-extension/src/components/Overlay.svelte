@@ -138,6 +138,13 @@
     startSession();
   }
 
+  // Manually fetch current user if we have a token but live state is not up yet
+  $: if (authUserToken && !liveState) {
+    fetchCurrentUser().then(({ current_user: user }) => {
+      if (user) currentUser = user;
+    });
+  }
+
   // LIFECYCLE
 
   onMount(() => {
@@ -150,6 +157,25 @@
   });
 
   // HELPERS
+
+  async function fetchCurrentUser() {
+    const url = import.meta.env.PROD
+      ? "https://liveroom.app/api/current_user"
+      : "http://localhost:4000/api/current_user";
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // Origin: "https://meet.google.com",
+      },
+      body: JSON.stringify({
+        user_token: authUserToken,
+      }),
+    });
+
+    return response.json();
+  }
 
   function startSession() {
     const parts = window.location.pathname.split("/");

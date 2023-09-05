@@ -31,10 +31,6 @@ defmodule LiveroomWeb.Router do
     plug Plugs.Analytics
   end
 
-  pipeline :client do
-    plug CORSPlug
-  end
-
   # Private (connected routes)
   scope "/", LiveroomWeb do
     pipe_through [:browser, :require_authenticated_user]
@@ -85,9 +81,11 @@ defmodule LiveroomWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", LiveroomWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", LiveroomWeb do
+    pipe_through :api
+
+    post "/current_user", ApiController, :get_current_user
+  end
 
   # Admin
   scope "/_admin", LiveroomWeb do
