@@ -16,7 +16,9 @@ defmodule LiveroomWeb.ApiController do
             |> json(%{current_user: user})
 
           _ ->
-            nil
+            conn
+            |> put_status(:bad_request)
+            |> json(%{message: "Invalid token"})
         end
 
       {:error, _} ->
