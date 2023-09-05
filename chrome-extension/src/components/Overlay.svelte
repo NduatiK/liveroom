@@ -59,7 +59,7 @@
     function handleEscapeKey(e: KeyboardEvent) {
       if (e.key === "Escape") {
         cleanup();
-        open = false;
+        // open = false;
         started = false;
       }
     }
@@ -363,7 +363,17 @@
 >
   <div class="body">
     {#if !started}
-      <button on:click={() => (started = true)}>Start session</button>
+      <div class="start-buttons-container">
+        <button on:click={() => (started = true)}>Start session</button>
+
+        {#if currentUser}
+          <CopyInstallationCodeButton
+            label="Copy website URL"
+            labelCopied="URL copied!"
+            textToCopy={`${currentUser.website_url}?_liveroom=${roomId}`}
+          />
+        {/if}
+      </div>
     {:else if !screensharingVideoEl}
       <p class="instructions">Click on the screensharing video</p>
       <p class="sub-instructions">
@@ -386,6 +396,16 @@
       {/if}
 
       <div class="buttons-container">
+        <button
+          class="end-session-button"
+          on:click={() => {
+            started = false;
+            screensharingVideoEl = undefined;
+          }}
+        >
+          End session
+        </button>
+
         {#if currentUser}
           <CopyInstallationCodeButton
             label="Copy website URL"
@@ -410,16 +430,6 @@
           document.head.appendChild(script);
           `}
         />
-
-        <button
-          class="end-session-button"
-          on:click={() => {
-            started = false;
-            screensharingVideoEl = undefined;
-          }}
-        >
-          End session
-        </button>
       </div>
     {/if}
   </div>
@@ -430,35 +440,33 @@
     </div>
 
     <div class="user">
-      {#if started && screensharingVideoEl}
-        {#if currentUser}
-          <a
-            href={import.meta.env.PROD
-              ? "https://liveroom.app/connected"
-              : "http://localhost:4000/connected"}
-            target="_blank"
+      {#if currentUser}
+        <a
+          href={import.meta.env.PROD
+            ? "https://liveroom.app/connected"
+            : "http://localhost:4000/connected"}
+          target="_blank"
+          class="profilepic"
+        >
+          <img
             class="profilepic"
-          >
-            <img
-              class="profilepic"
-              src={currentUser.picture_url}
-              alt="profile pic"
-            />
-          </a>
-        {/if}
+            src={currentUser.picture_url}
+            alt="profile pic"
+          />
+        </a>
+      {/if}
 
-        {#if !currentUser}
-          <a
-            class="login-btn"
-            target="_blank"
-            on:click={loggedInCallback}
-            href={import.meta.env.PROD
-              ? "https://liveroom.app/extension"
-              : "http://localhost:4000/extension"}
-          >
-            Log in
-          </a>
-        {/if}
+      {#if !currentUser}
+        <a
+          class="login-btn"
+          target="_blank"
+          on:click={loggedInCallback}
+          href={import.meta.env.PROD
+            ? "https://liveroom.app/extension"
+            : "http://localhost:4000/extension"}
+        >
+          Log in
+        </a>
       {/if}
     </div>
   </div>
@@ -503,7 +511,7 @@
   }
   #liveroom-overlay[data-open="true"][data-started="true"][data-hasvideoel="false"] {
     /* Move the popup down so that it doesn't get it the way of selecting the video element */
-    transform: translateY(4rem);
+    /* transform: translateY(4rem); */
   }
 
   #liveroom-overlay button {
@@ -526,7 +534,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 1.5rem;
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
   }
 
   .footer {
@@ -579,24 +587,23 @@
 
   .instructions {
     margin: auto;
-    padding: 1.5rem 1rem 0 1rem;
+    padding-top: 1rem;
     color: rgb(229, 229, 229); /* Tailwind neutral-200 */
-    font-size: 1.1em;
+    font-size: 1.2em;
     font-weight: 600;
     text-align: center;
   }
   .sub-instructions {
     margin: auto;
-    padding: 1rem 1rem 1.5rem 1rem;
+    padding: 1rem 1rem 0.75rem 1rem;
     color: rgb(163, 163, 163); /* Tailwind neutral-400 */
     font-size: 1em;
     font-weight: 400;
     text-align: center;
   }
   .sub-instructions img {
-    margin-bottom: -0.8rem;
-    width: 2rem;
-    color: white;
+    margin-bottom: -0.7rem;
+    width: 1.8rem;
     color: white;
   }
 
@@ -604,7 +611,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    padding-bottom: 1rem;
+    padding-bottom: 1.5rem;
   }
 
   .buttons-container {
@@ -614,8 +621,15 @@
     gap: 0.5rem;
   }
 
+  .start-buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
   .end-session-button {
-    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
   }
   .end-session-button:hover {
     color: rgb(239, 68, 68) !important; /* Tailwind red-500 */

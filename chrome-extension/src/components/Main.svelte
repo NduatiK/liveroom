@@ -107,14 +107,7 @@
     class="toggle-btn"
     data-open={open}
     data-issessionactive={isSessionActive}
-    on:click={() => {
-      if (!started) {
-        started = true;
-        open = true;
-      } else {
-        open = !open;
-      }
-    }}
+    on:click={() => (open = !open)}
   >
     {#if open}
       <svg
