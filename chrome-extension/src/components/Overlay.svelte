@@ -535,10 +535,10 @@
   #liveroom-overlay[data-open="true"] {
     display: flex;
   }
-  #liveroom-overlay[data-open="true"][data-started="true"][data-hasvideoel="false"] {
-    /* Move the popup down so that it doesn't get it the way of selecting the video element */
-    /* transform: translateY(4rem); */
-  }
+  /* #liveroom-overlay[data-open="true"][data-started="true"][data-hasvideoel="false"] { */
+  /* Move the popup down so that it doesn't get it the way of selecting the video element */
+  /* transform: translateY(4rem); */
+  /* } */
 
   #liveroom-overlay button {
     padding: 0.5rem 2rem;
