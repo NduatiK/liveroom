@@ -2,7 +2,7 @@
   import { createEventDispatcher, onDestroy, onMount } from "svelte";
   import { LiveState } from "phx-live-state";
   import PoweredByLiveroom from "./PoweredByLiveroom.svelte";
-  import CopyInstallationCodeButton from "./CopyInstallationCodeButton.svelte";
+  import CopyButton from "./CopyButton.svelte";
   import UserName from "./UserName.svelte";
   import UsersCursors from "./UsersCursors.svelte";
   import {
@@ -393,7 +393,7 @@
         <button on:click={() => (started = true)}>Start session</button>
 
         {#if currentUser}
-          <CopyInstallationCodeButton
+          <CopyButton
             label="Copy website URL"
             labelCopied="URL copied!"
             textToCopy={`${currentUser.website_url}?_liveroom=${roomId}`}
@@ -433,14 +433,14 @@
         </button>
 
         {#if currentUser}
-          <CopyInstallationCodeButton
+          <CopyButton
             label="Copy website URL"
             labelCopied="URL copied!"
             textToCopy={`${currentUser.website_url}?_liveroom=${roomId}`}
           />
         {/if}
 
-        <CopyInstallationCodeButton
+        <CopyButton
           label="Copy installation code"
           labelCopied="Code copied!"
           textToCopy={`
