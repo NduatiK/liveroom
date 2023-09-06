@@ -1,6 +1,7 @@
 defmodule LiveroomWeb.Components.CheckClientInstallation do
   use LiveroomWeb, :live_component
 
+  alias Liveroom.EventNotifier
   alias LiveroomWeb.Components.Banner
 
   @impl true
@@ -26,8 +27,8 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
 
               <.button
                 id="copy_script_tag"
+                phx-click={JS.push("copy_script_tag", target: @myself)}
                 phx-hook="CopyToClipboardButtonHook"
-                data-tocopy={@script_tag_text}
                 class="flex justify-center items-center group disabled:bg-zinc-900 disabled:hover:bg-zinc-900"
               >
                 <span class="hidden group-data-[copied=true]:block">Copied!</span>
@@ -54,11 +55,16 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
     """
   end
 
+  ### Server
+
   @impl true
   def update(assigns, socket) do
     socket =
       assign(socket,
         version: assigns.version,
+        # NOTE: Needed to send analytic events
+        analytics_data: assigns.analytics_data,
+        current_user_email: assigns.current_user_email,
         script_tag_text:
           """
           <script
@@ -70,5 +76,16 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
       )
 
     {:ok, socket}
+  end
+
+  @impl true
+  def handle_event("copy_script_tag", _payload, socket) do
+    EventNotifier.emit(:copy_script_tag_button_clicked, socket,
+      email: socket.assigns.current_user_email
+    )
+
+    socket = push_event(socket, "copy_to_clipboard", %{text: socket.assigns.script_tag_text})
+
+    {:noreply, socket}
   end
 end

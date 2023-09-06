@@ -3,6 +3,7 @@ defmodule LiveroomWeb.ConnectedLive do
 
   alias Liveroom.Repo
   alias Liveroom.Accounts.User
+  alias Liveroom.EventNotifier
   alias LiveroomWeb.Components
 
   @impl true
@@ -73,6 +74,8 @@ defmodule LiveroomWeb.ConnectedLive do
         module={Components.CheckClientInstallation}
         id="check_client_installation"
         version={@version_client}
+        analytics_data={@analytics_data}
+        current_user_email={@current_user.email}
       />
 
       <h2 class="mt-12 text-lg font-semibold tracking-tight">Liveroom Chrome Extension</h2>
@@ -81,6 +84,8 @@ defmodule LiveroomWeb.ConnectedLive do
         module={Components.CheckExtensionInstallation}
         id="check_extension_installation"
         version={@version_extension}
+        analytics_data={@analytics_data}
+        current_user_email={@current_user.email}
       />
     </div>
     """
@@ -112,6 +117,11 @@ defmodule LiveroomWeb.ConnectedLive do
          |> User.website_url_changeset(%{website_url: user_params["website_url"]})
          |> Repo.update() do
       {:ok, user} ->
+        EventNotifier.emit(:user_website_url_updated, socket,
+          email: user.email,
+          website_url: user.website_url
+        )
+
         fetch_client_version!(user.website_url, true)
 
         {:noreply,
@@ -134,15 +144,18 @@ defmodule LiveroomWeb.ConnectedLive do
     {:noreply, assign_form(socket, Map.put(changeset, :action, :validate))}
   end
 
-  @impl true
   def handle_event("update_version_extension", %{"version" => version} = _payload, socket) do
     {:noreply, assign(socket, version_extension: version)}
   end
 
-  @impl true
   def handle_event("refresh_client_version", _params, socket) do
+    EventNotifier.emit(:refresh_client_version_button_clicked, socket,
+      email: socket.assigns.current_user.email
+    )
+
     # simulate latency for better UX
     fetch_client_version!(socket.assigns.current_user.website_url, true)
+
     {:noreply, assign(socket, version_client: nil)}
   end
 

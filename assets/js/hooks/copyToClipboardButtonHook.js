@@ -1,9 +1,7 @@
 export const CopyToClipboardButtonHook = {
   mounted() {
-    const toCopy = this.el.dataset.tocopy;
-
-    this.el.addEventListener("click", () => {
-      navigator.clipboard.writeText(toCopy);
+    this.handleEvent("copy_to_clipboard", ({ text }) => {
+      navigator.clipboard.writeText(text);
 
       this.el.setAttribute("disabled", "true");
       this.el.setAttribute("data-copied", "true");

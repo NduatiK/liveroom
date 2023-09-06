@@ -186,6 +186,90 @@ defmodule Liveroom.Discord do
     |> send_message(webhook_url_app_notifications())
   end
 
+  def send_notification(:user_website_url_updated, opts) do
+    %{
+      embeds: [
+        %{
+          title: "🕸️ user website url updated",
+          # description: "",
+          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+          color: color(:grey),
+          fields: [
+            %{
+              name: Keyword.fetch!(opts, :email) || "",
+              value: Keyword.fetch!(opts, :website_url) || "",
+              inline: true
+            }
+          ]
+        }
+      ]
+    }
+    |> send_message(webhook_url_app_notifications())
+  end
+
+  def send_notification(:refresh_client_version_button_clicked, opts) do
+    %{
+      embeds: [
+        %{
+          title: "♻︎ refresh client version button clicked",
+          # description: "",
+          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+          color: color(:grey),
+          fields: [
+            %{
+              name: "email",
+              value: Keyword.fetch!(opts, :email) || "",
+              inline: true
+            }
+          ]
+        }
+      ]
+    }
+    |> send_message(webhook_url_app_notifications())
+  end
+
+  def send_notification(:copy_script_tag_button_clicked, opts) do
+    %{
+      embeds: [
+        %{
+          title: "📋 copy script tag button clicked",
+          # description: "",
+          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+          color: color(:grey),
+          fields: [
+            %{
+              name: "email",
+              value: Keyword.fetch!(opts, :email) || "",
+              inline: true
+            }
+          ]
+        }
+      ]
+    }
+    |> send_message(webhook_url_app_notifications())
+  end
+
+  def send_notification(:install_extension_button_clicked, opts) do
+    %{
+      embeds: [
+        %{
+          title: "💾 install extension button clicked",
+          # description: "",
+          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+          color: color(:grey),
+          fields: [
+            %{
+              name: "email",
+              value: Keyword.fetch!(opts, :email) || "",
+              inline: true
+            }
+          ]
+        }
+      ]
+    }
+    |> send_message(webhook_url_app_notifications())
+  end
+
   ### Low-level API
 
   def send_message(message, webhook_url) when is_map(message) do

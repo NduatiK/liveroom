@@ -84,6 +84,47 @@ defmodule Liveroom.Analytics do
     )
   end
 
+  def send_event(:user_website_url_updated, analytics_data, opts) do
+    send_event(
+      "user_website_url_updated",
+      analytics_data,
+      props: %{
+        email: Keyword.fetch!(opts, :email),
+        website_url: Keyword.fetch!(opts, :website_url)
+      }
+    )
+  end
+
+  def send_event(:refresh_client_version_button_clicked, analytics_data, opts) do
+    send_event(
+      "refresh_client_version_button_clicked",
+      analytics_data,
+      props: %{
+        email: Keyword.fetch!(opts, :email)
+      }
+    )
+  end
+
+  def send_event(:copy_script_tag_button_clicked, analytics_data, opts) do
+    send_event(
+      "copy_script_tag_button_clicked",
+      analytics_data,
+      props: %{
+        email: Keyword.fetch!(opts, :email)
+      }
+    )
+  end
+
+  def send_event(:install_extension_button_clicked, analytics_data, opts) do
+    send_event(
+      "install_extension_button_clicked",
+      analytics_data,
+      props: %{
+        email: Keyword.fetch!(opts, :email)
+      }
+    )
+  end
+
   ### Low-level API
 
   @doc """

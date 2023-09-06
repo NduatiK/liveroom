@@ -1,6 +1,7 @@
 defmodule LiveroomWeb.Components.CheckExtensionInstallation do
   use LiveroomWeb, :live_component
 
+  alias Liveroom.EventNotifier
   alias LiveroomWeb.Components.Banner
 
   @impl true
@@ -19,6 +20,7 @@ defmodule LiveroomWeb.Components.CheckExtensionInstallation do
             <a
               href="https://chrome.google.com/webstore/detail/liveroom/famgmncbiedbdkgpkfdnmefhfhbgljhb"
               target="_blank"
+              phx-click={JS.push("install_extension_button_clicked", target: @myself)}
               class="w-fit font-semibold group"
             >
               <.button class="flex justify-center items-center">
@@ -43,15 +45,21 @@ defmodule LiveroomWeb.Components.CheckExtensionInstallation do
     socket =
       assign(socket,
         # version: "0.0.13"
-        version: assigns.version
+        version: assigns.version,
+        # NOTE: Needed to send analytic events
+        analytics_data: assigns.analytics_data,
+        current_user_email: assigns.current_user_email
       )
 
     {:ok, socket}
   end
 
-  ### Helpers
+  @impl true
+  def handle_event("install_extension_button_clicked", _payload, socket) do
+    EventNotifier.emit(:install_extension_button_clicked, socket,
+      email: socket.assigns.current_user_email
+    )
 
-  def fetch_extension_version! do
-    # TODO:
+    {:noreply, socket}
   end
 end

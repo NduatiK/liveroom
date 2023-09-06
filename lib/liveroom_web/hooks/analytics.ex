@@ -70,7 +70,7 @@ defmodule LiveroomWeb.Hooks.Analytics do
         language: get_connect_params(socket)["language"]
       })
     else
-      socket
+      assign(socket, analytics_data: nil)
     end
   end
 

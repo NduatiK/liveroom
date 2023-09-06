@@ -36,7 +36,11 @@ defmodule Liveroom.EventNotifier do
              :user_joined_room,
              :user_left_room,
              :user_registered,
-             :user_logged_in
+             :user_logged_in,
+             :install_extension_button_clicked,
+             :refresh_client_version_button_clicked,
+             :copy_script_tag_button_clicked,
+             :user_website_url_updated
            ] do
     Task.start(fn -> Analytics.send_event(event, analytics_data, opts) end)
 
