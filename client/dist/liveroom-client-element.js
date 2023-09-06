@@ -3005,7 +3005,7 @@ var se;
   });
 })(se || (se = {}));
 function en(s) {
-  Le(s, "svelte-1tmn7wo", '#liveroom-client-element.svelte-1tmn7wo.svelte-1tmn7wo{font-family:Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;line-height:1.5;font-weight:400;font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;-webkit-text-size-adjust:100%}#users-container.svelte-1tmn7wo.svelte-1tmn7wo{z-index:99999;position:fixed;inset:0;overflow:hidden;pointer-events:none}.user.svelte-1tmn7wo.svelte-1tmn7wo{z-index:10;position:absolute;top:0;left:0;user-select:none;transform:translate(var(--x), var(--y))}.user.svelte-1tmn7wo .cursor.svelte-1tmn7wo{position:absolute;top:0;left:0;color:var(--color);transform-origin:top left;transform:rotate(6deg)}.user[data-isself="true"].svelte-1tmn7wo .cursor.svelte-1tmn7wo{display:none}.user-name.svelte-1tmn7wo.svelte-1tmn7wo{padding:4px 10px;font-size:14px;line-height:20px;font-weight:600;color:black;background-color:var(--color);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-radius:9999px;box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05)}.user.svelte-1tmn7wo .user-name.svelte-1tmn7wo{position:absolute;top:20px;left:16px}.user[data-isself="true"].svelte-1tmn7wo .user-name.svelte-1tmn7wo{display:none}.user.svelte-1tmn7wo .halo.svelte-1tmn7wo{transform:scale(0);z-index:-1;position:absolute;top:-60px;left:-60px;width:120px;height:120px;border-radius:9999px;background-color:var(--color);opacity:0.25;transition:transform 100ms ease-out;box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05)}.user.svelte-1tmn7wo .halo[data-show="true"].svelte-1tmn7wo{transform:scale(1)}');
+  Le(s, "svelte-18hw81g", '#liveroom-client-element.svelte-18hw81g.svelte-18hw81g{font-family:Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;line-height:1.5;font-weight:400;font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;-webkit-text-size-adjust:100%}#users-container.svelte-18hw81g.svelte-18hw81g{z-index:99999;position:fixed;inset:0;overflow:hidden;pointer-events:none}.user.svelte-18hw81g.svelte-18hw81g{z-index:10;position:absolute;top:0;left:0;user-select:none;transform:translate(var(--x), var(--y));transition:transform 100ms linear}.user.svelte-18hw81g .cursor.svelte-18hw81g{position:absolute;top:0;left:0;color:var(--color);transform-origin:top left;transform:rotate(6deg)}.user[data-isself="true"].svelte-18hw81g .cursor.svelte-18hw81g{display:none}.user-name.svelte-18hw81g.svelte-18hw81g{padding:4px 10px;font-size:14px;line-height:20px;font-weight:600;color:black;background-color:var(--color);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-radius:9999px;box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05)}.user.svelte-18hw81g .user-name.svelte-18hw81g{position:absolute;top:20px;left:16px}.user[data-isself="true"].svelte-18hw81g .user-name.svelte-18hw81g{display:none}.user.svelte-18hw81g .halo.svelte-18hw81g{transform:scale(0);z-index:-1;position:absolute;top:-60px;left:-60px;width:120px;height:120px;border-radius:9999px;background-color:var(--color);opacity:0.25;transition:transform 100ms ease-out;box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05)}.user.svelte-18hw81g .halo[data-show="true"].svelte-18hw81g{transform:scale(1)}');
 }
 function ne(s, n, t) {
   const e = s.slice();
@@ -3029,7 +3029,7 @@ function re(s) {
       n = Q("div");
       for (let o = 0; o < t.length; o += 1)
         t[o].c();
-      S(n, "id", "users-container"), S(n, "class", "svelte-1tmn7wo");
+      S(n, "id", "users-container"), S(n, "class", "svelte-18hw81g");
     },
     m(o, h) {
       Ct(o, n, h);
@@ -3059,7 +3059,7 @@ function ie(s, n) {
     key: s,
     first: null,
     c() {
-      t = Q("div"), e = Zt("svg"), r = Zt("path"), i = jt(), o = Q("span"), p = he(h), d = jt(), b = Q("div"), A = jt(), S(r, "d", "M2.2706 0.0593359L25.4277 8.05957H25.45926C25.65896 8.13153 25.83096 8.25952 25.95221 8.42653C26.07357 8.59354 26.13851 8.79166 26.13851 8.99459C26.13851 9.19751 26.07357 9.39564 25.95221 9.56265C25.83096 9.72966 25.65896 9.85765 25.45926 9.92962L15.3543 13.7698L11.3124 23.37C11.2344 23.5561 11.0994 23.7156 10.9248 23.828C10.7503 23.9402 10.5443 24.0002 10.3335 24C10.1172 24 9.9061 23.9365 9.7291 23.8184C9.552 23.7004 9.4176 23.5332 9.344 23.34L0.9233 1.33937C0.8555 1.16076 0.8426 0.967504 0.8861 0.782189C0.9297 0.596873 1.0278 0.427163 1.1691 0.292901C1.3105 0.158639 1.4891 0.0653762 1.6841 0.0240151C1.8792 -0.0173461 2.0826 -0.00509504 2.2706 0.0593359Z"), S(e, "width", "23"), S(e, "viewBox", "0 0 27 24"), S(e, "fill", "currentColor"), S(e, "aria-hidden", "true"), S(e, "xmlns", "http://www.w3.org/2000/svg"), S(e, "class", "cursor svelte-1tmn7wo"), S(o, "class", "user-name svelte-1tmn7wo"), S(b, "class", "halo svelte-1tmn7wo"), S(b, "data-show", _ = /*user*/
+      t = Q("div"), e = Zt("svg"), r = Zt("path"), i = jt(), o = Q("span"), p = he(h), d = jt(), b = Q("div"), A = jt(), S(r, "d", "M2.2706 0.0593359L25.4277 8.05957H25.45926C25.65896 8.13153 25.83096 8.25952 25.95221 8.42653C26.07357 8.59354 26.13851 8.79166 26.13851 8.99459C26.13851 9.19751 26.07357 9.39564 25.95221 9.56265C25.83096 9.72966 25.65896 9.85765 25.45926 9.92962L15.3543 13.7698L11.3124 23.37C11.2344 23.5561 11.0994 23.7156 10.9248 23.828C10.7503 23.9402 10.5443 24.0002 10.3335 24C10.1172 24 9.9061 23.9365 9.7291 23.8184C9.552 23.7004 9.4176 23.5332 9.344 23.34L0.9233 1.33937C0.8555 1.16076 0.8426 0.967504 0.8861 0.782189C0.9297 0.596873 1.0278 0.427163 1.1691 0.292901C1.3105 0.158639 1.4891 0.0653762 1.6841 0.0240151C1.8792 -0.0173461 2.0826 -0.00509504 2.2706 0.0593359Z"), S(e, "width", "23"), S(e, "viewBox", "0 0 27 24"), S(e, "fill", "currentColor"), S(e, "aria-hidden", "true"), S(e, "xmlns", "http://www.w3.org/2000/svg"), S(e, "class", "cursor svelte-18hw81g"), S(o, "class", "user-name svelte-18hw81g"), S(b, "class", "halo svelte-18hw81g"), S(b, "data-show", _ = /*user*/
       (n[16].id == /*me*/
       n[1].id && /*user*/
       n[16].is_shift_key_down || /*user*/
@@ -3068,7 +3068,7 @@ function ie(s, n) {
       (n[16].is_shift_key_down || /*user*/
       n[16].is_mouse_down)) && /*users_count*/
       n[2] > 1), S(t, "id", T = "user-" + /*user*/
-      n[16].id), S(t, "class", "user svelte-1tmn7wo"), S(t, "data-isself", j = /*user*/
+      n[16].id), S(t, "class", "user svelte-18hw81g"), S(t, "data-isself", j = /*user*/
       n[16].id == /*me*/
       n[1].id), st(
         t,
@@ -3132,7 +3132,7 @@ function sn(s) {
   );
   return {
     c() {
-      n = Q("div"), t && t.c(), S(n, "id", "liveroom-client-element"), S(n, "class", "svelte-1tmn7wo");
+      n = Q("div"), t && t.c(), S(n, "id", "liveroom-client-element"), S(n, "class", "svelte-18hw81g");
     },
     m(e, r) {
       Ct(e, n, r), t && t.m(n, null);
