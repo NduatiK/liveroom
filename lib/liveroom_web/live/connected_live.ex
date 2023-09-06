@@ -8,7 +8,7 @@ defmodule LiveroomWeb.ConnectedLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <%!-- <p :if={@name} class="text-lg font-bold tracking-tight select-none">Welcome <%= @name %> 👋</p> --%>
+    <%!-- <p :if={@current_user.name} class="text-lg font-bold tracking-tight select-none">Welcome <%= @current_user.name %> 👋</p> --%>
     <div
       id="connected"
       phx-hook="SendExtensionVersionHook"
@@ -16,8 +16,15 @@ defmodule LiveroomWeb.ConnectedLive do
     >
       <div class="w-full flex justify-between items-center gap-32">
         <div class="flex items-center gap-4">
-          <img :if={@picture_url} src={@picture_url} width="44px" class="rounded-full" />
-          <p :if={@email} class="font-semibold select-none"><%= @email %></p>
+          <img
+            :if={@current_user.picture_url}
+            src={@current_user.picture_url}
+            width="44px"
+            class="rounded-full"
+          />
+          <p :if={@current_user.email} class="font-semibold select-none">
+            <%= @current_user.email %>
+          </p>
         </div>
 
         <.link
@@ -32,11 +39,11 @@ defmodule LiveroomWeb.ConnectedLive do
       <div class="flex justify-between items-baseline">
         <h2 class="mt-12 text-lg font-semibold tracking-tight">Liveroom Script</h2>
         <%!-- <a
-          href={@website_url}
+          href={@current_user.website_url}
           target="_blank"
           class="mr-1 block underline font-medium text-zinc-600 text-sm"
         >
-          <%= @website_url %>
+          <%= @current_user.website_url %>
         </a> --%>
       </div>
 
@@ -62,7 +69,7 @@ defmodule LiveroomWeb.ConnectedLive do
       </div>
 
       <.live_component
-        :if={@website_url}
+        :if={@current_user.website_url}
         module={Components.CheckClientInstallation}
         id="check_client_installation"
         version={@version_client}
@@ -87,27 +94,16 @@ defmodule LiveroomWeb.ConnectedLive do
   def mount(_params, _session, socket) do
     socket =
       socket
-      |> assign_user(socket.assigns.current_user)
       |> assign_form()
       |> assign(version_client: nil, version_extension: nil)
 
-    if connected?(socket) do
-      fetch_client_version!(socket.assigns.website_url, false)
+    website_url = socket.assigns.current_user.website_url
+
+    if connected?(socket) && website_url do
+      fetch_client_version!(website_url, false)
     end
 
     {:ok, socket}
-  end
-
-  @impl true
-  def handle_params(params, _uri, socket) do
-    socket =
-      if params != %{} do
-        assign_user(socket, params)
-      else
-        socket
-      end
-
-    {:noreply, socket}
   end
 
   @impl true
@@ -121,7 +117,6 @@ defmodule LiveroomWeb.ConnectedLive do
         {:noreply,
          socket
          |> assign(current_user: user)
-         |> assign_user(user)
          |> assign_form()
          |> assign(version_client: nil)}
 
@@ -166,25 +161,6 @@ defmodule LiveroomWeb.ConnectedLive do
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do
     form = to_form(changeset, as: "user")
     assign(socket, form: form)
-  end
-
-  defp assign_user(socket, %User{} = user) do
-    assign(socket,
-      email: user.email,
-      # name: user.name,
-      name: nil,
-      picture_url: user.picture_url,
-      website_url: user.website_url
-    )
-  end
-
-  defp assign_user(socket, user) do
-    assign(socket,
-      email: user["email"] || user[:email],
-      name: user["name"] || user[:name],
-      picture_url: user["picture_url"] || user[:picture_url],
-      website_url: user["website_url"] || user[:website_url]
-    )
   end
 
   def fetch_client_version!(url, pause \\ false) do
