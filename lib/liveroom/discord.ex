@@ -67,6 +67,48 @@ defmodule Liveroom.Discord do
     |> send_message(webhook_url_app_notifications())
   end
 
+  def send_notification(:user_registered, opts) do
+    %{
+      embeds: [
+        %{
+          title: "⊕ user registered",
+          # description: "",
+          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+          color: color(:purple),
+          fields: [
+            %{
+              name: Keyword.fetch!(opts, :email) || "",
+              value: Keyword.fetch!(opts, :picture_url) || "",
+              inline: true
+            }
+          ]
+        }
+      ]
+    }
+    |> send_message(webhook_url_app_notifications())
+  end
+
+  def send_notification(:user_logged_in, opts) do
+    %{
+      embeds: [
+        %{
+          title: "🧑‍💻 user logged in",
+          # description: "",
+          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+          color: color(:grey),
+          fields: [
+            %{
+              name: Keyword.fetch!(opts, :email) || "",
+              value: Keyword.fetch!(opts, :picture_url) || "",
+              inline: true
+            }
+          ]
+        }
+      ]
+    }
+    |> send_message(webhook_url_app_notifications())
+  end
+
   def send_notification(:user_joined_room, opts) do
     %{
       embeds: [
@@ -159,7 +201,7 @@ defmodule Liveroom.Discord do
   # Colors taken from https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
   defp color(:red), do: 15_548_997
   defp color(:yellow), do: 16_705_372
-  # defp color(:grey), do: 10_070_709
+  defp color(:grey), do: 10_070_709
   defp color(:green), do: 5_763_719
   defp color(:purple), do: 5_793_266
   defp color(:dark_navy), do: 2_899_536

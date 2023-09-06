@@ -1,14 +1,32 @@
 defmodule Liveroom.Analytics do
+  alias Plug.Conn
   alias Phoenix.LiveView.Socket
 
   alias Liveroom.Analytics.Umami
+  alias LiveroomWeb.RemoteIp
 
   ### High-level API
 
-  def send_event(event, socket_or_analytics_data, opts \\ [])
+  def send_event(event, socket_or_conn_or_analytics_data, opts \\ [])
 
   def send_event(event, %Socket{} = socket, opts) when is_atom(event) or is_binary(event) do
     send_event(event, socket.assigns.analytics_data, opts)
+  end
+
+  def send_event(event, %Conn{} = conn, opts) when is_atom(event) or is_binary(event) do
+    send_event(
+      event,
+      %{
+        url: Conn.request_url(conn),
+        user_agent: get_user_agent(conn),
+        user_ip: RemoteIp.get(conn),
+        referrer: get_referrer(conn)
+        # screen_width is not available
+        # screen_height is not available
+        # language is not available
+      },
+      opts
+    )
   end
 
   def send_event(:join_waitlist_clicked, analytics_data, opts) do
@@ -17,6 +35,28 @@ defmodule Liveroom.Analytics do
       analytics_data,
       props: %{
         location: Keyword.fetch!(opts, :location)
+      }
+    )
+  end
+
+  def send_event(:user_registered, analytics_data, opts) do
+    send_event(
+      "user_registered",
+      analytics_data,
+      props: %{
+        email: Keyword.fetch!(opts, :email),
+        picture_url: Keyword.fetch!(opts, :picture_url)
+      }
+    )
+  end
+
+  def send_event(:user_logged_in, analytics_data, opts) do
+    send_event(
+      "user_logged_in",
+      analytics_data,
+      props: %{
+        email: Keyword.fetch!(opts, :email),
+        picture_url: Keyword.fetch!(opts, :picture_url)
       }
     )
   end
@@ -62,5 +102,15 @@ defmodule Liveroom.Analytics do
       props: opts[:props] || %{},
       language: opts[:language] || analytics_data[:language]
     )
+  end
+
+  ### Helpers
+
+  defp get_user_agent(%Conn{} = conn) do
+    conn |> Conn.get_req_header("user-agent") |> List.first()
+  end
+
+  defp get_referrer(%Conn{} = conn) do
+    conn |> Conn.get_req_header("referrer") |> List.first()
   end
 end

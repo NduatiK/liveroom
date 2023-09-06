@@ -3,6 +3,7 @@ defmodule LiveroomWeb.Accounts.UserSessionController do
 
   alias Liveroom.Accounts
   alias Liveroom.Accounts.User
+  alias Liveroom.EventNotifier
   alias LiveroomWeb.Accounts.UserAuth
 
   def create(conn, %{"token" => token} = _params) do
@@ -11,6 +12,12 @@ defmodule LiveroomWeb.Accounts.UserSessionController do
         conn
         |> put_flash(:info, "Welcome back!")
         |> UserAuth.log_in_user(user)
+        |> tap(fn _ ->
+          EventNotifier.emit(:user_logged_in, conn,
+            email: user.email,
+            picture_url: user.picture_url
+          )
+        end)
 
       _ ->
         conn
@@ -28,6 +35,11 @@ defmodule LiveroomWeb.Accounts.UserSessionController do
       else
         case Accounts.register_user(%{"email" => email, "picture_url" => params["picture_url"]}) do
           {:ok, user} ->
+            EventNotifier.emit(:user_registered, conn,
+              email: user.email,
+              picture_url: user.picture_url
+            )
+
             Accounts.deliver_user_confirmation_instructions(
               user,
               &url(~p"/accounts/users/confirm/#{&1}")
@@ -74,6 +86,12 @@ defmodule LiveroomWeb.Accounts.UserSessionController do
       conn
       |> put_flash(:info, info)
       |> UserAuth.log_in_user(user, user_params)
+      |> tap(fn _ ->
+        EventNotifier.emit(:user_logged_in, conn,
+          email: user.email,
+          picture_url: user.picture_url
+        )
+      end)
     else
       # In order to prevent user enumeration attacks, don't disclose whether the email is registered.
       conn

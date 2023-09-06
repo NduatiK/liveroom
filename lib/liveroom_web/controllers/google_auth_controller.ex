@@ -2,6 +2,7 @@ defmodule LiveroomWeb.GoogleAuthController do
   use LiveroomWeb, :controller
 
   alias Liveroom.Accounts
+  alias Liveroom.EventNotifier
   alias LiveroomWeb.Accounts.UserAuth
 
   @doc """
@@ -19,6 +20,11 @@ defmodule LiveroomWeb.GoogleAuthController do
       else
         case Accounts.register_user(%{"email" => email, "picture_url" => profile.picture}) do
           {:ok, user} ->
+            EventNotifier.emit(:user_registered, conn,
+              email: user.email,
+              picture_url: user.picture_url
+            )
+
             Accounts.deliver_user_confirmation_instructions(
               user,
               &url(~p"/accounts/users/confirm/#{&1}")
@@ -44,5 +50,11 @@ defmodule LiveroomWeb.GoogleAuthController do
           nil
       end
     )
+    |> tap(fn _ ->
+      EventNotifier.emit(:user_logged_in, conn,
+        email: user.email,
+        picture_url: user.picture_url
+      )
+    end)
   end
 end
