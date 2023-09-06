@@ -145,6 +145,12 @@
     });
   }
 
+  // Parse the room id if not yet set and overlay is open (if overlay is open, we are sure to be in the call, thus on the right url)
+  $: if (!roomId && open) {
+    const parts = window.location.pathname.split("/");
+    roomId = parts.pop() || parts.pop(); // handle potential trailing slash
+  }
+
   // LIFECYCLE
 
   onMount(() => {
@@ -178,8 +184,6 @@
   }
 
   function startSession() {
-    const parts = window.location.pathname.split("/");
-    roomId = parts.pop() || parts.pop(); // handle potential trailing slash
     console.log(`[Liveroom Extension] Connecting to room '${roomId}'...`);
 
     liveState = new LiveState({
