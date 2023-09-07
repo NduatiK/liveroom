@@ -18,7 +18,7 @@ defmodule LiveroomWeb.Layouts do
     <div class="relative min-h-[100dvh] grid grid-cols-1 grid-rows-[auto_1fr_auto] overflow-hidden">
       <.flash_group flash={@flash} />
 
-      <header class="w-full flex items-center py-4 px-8 mb-8">
+      <header class="w-full flex items-center py-4 px-4 md:px-8 mb-4 md:mb-8">
         <%!-- liveroom logo --%>
         <a
           href="https://liveroom.app"

@@ -13,16 +13,22 @@ defmodule LiveroomWeb.ConnectedLive do
     <div
       id="connected"
       phx-hook="SendExtensionVersionHook"
-      class="w-[min(100%,700px)] flex flex-col items-stretch gap-8"
+      class="w-[min(100%,800px)] flex flex-col items-stretch gap-8 px-4 pb-24"
     >
-      <div class="w-full flex justify-between items-center gap-32">
-        <div class="flex items-center gap-4">
+      <div class="w-full flex flex-wrap justify-between items-center gap-y-4 gap-x-8">
+        <div class="flex items-center gap-2">
           <img
             :if={@current_user.picture_url}
             src={@current_user.picture_url}
             width="44px"
             class="rounded-full"
           />
+          <div
+            :if={!@current_user.picture_url && @current_user.email}
+            class="w-[44px] aspect-square flex justify-center items-center bg-zinc-800 text-white font-semibold rounded-full uppercase"
+          >
+            <%= String.at(@current_user.email, 0) %>
+          </div>
           <p :if={@current_user.email} class="font-semibold select-none">
             <%= @current_user.email %>
           </p>
@@ -33,22 +39,26 @@ defmodule LiveroomWeb.ConnectedLive do
           method="delete"
           class="bg-zinc-100/20 hover:bg-zinc-100/75 py-1 px-2 font-medium rounded transition-colors"
         >
-          Log out
+          Log&nbsp;out
         </.link>
       </div>
 
-      <div class="flex justify-between items-baseline">
-        <h2 class="mt-12 text-lg font-semibold tracking-tight">Liveroom Script</h2>
-        <%!-- <a
-          href={@current_user.website_url}
-          target="_blank"
-          class="mr-1 block underline font-medium text-zinc-600 text-sm"
-        >
-          <%= @current_user.website_url %>
-        </a> --%>
+      <div class="mt-8 md:mt-12">
+        <p class="mb-4">
+          To start collaborating with your users, you need to complete 2 simple steps:
+        </p>
+        <ul class="list-disc list-inside">
+          <li>Install the <b>Liveroom Script</b> on your product</li>
+          <li>Install the <b>Liveroom Chrome Extension</b> on your computer</li>
+        </ul>
+        <p class="mt-4">
+          Then, just click on the Liveroom button in the toolbar during your next Google Meet meeting.
+        </p>
       </div>
 
-      <div class="flex justify-between items-baseline gap-6">
+      <h2 id="script" class="mt-8 md:mt-12 text-lg font-semibold tracking-tight">Liveroom Script</h2>
+
+      <div class="flex justify-between items-baseline flex-wrap gap-y-4 gap-x-6">
         <p>Your product demo page:</p>
 
         <.form
@@ -78,7 +88,9 @@ defmodule LiveroomWeb.ConnectedLive do
         current_user_email={@current_user.email}
       />
 
-      <h2 class="mt-12 text-lg font-semibold tracking-tight">Liveroom Chrome Extension</h2>
+      <h2 id="extension" class="mt-8 md:mt-12 text-lg font-semibold tracking-tight">
+        Liveroom Chrome Extension
+      </h2>
 
       <.live_component
         module={Components.CheckExtensionInstallation}

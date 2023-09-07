@@ -104,9 +104,18 @@ defmodule LiveroomWeb.HomeLive do
         </h3>
       </div>
 
-      <.button_link phx-click={JS.push("join_waitlist_clicked", value: %{location: "hero"})}>
-        Join waitlist
-      </.button_link>
+      <div class="flex flex-col items-center gap-4 mb-8">
+        <%!-- <.button_link phx-click={JS.push("join_waitlist_clicked", value: %{location: "hero"})}> --%>
+        <.button_link navigate={~p"/register"}>
+          Get started
+        </.button_link>
+        <.button_link_secondary
+          href="https://tally.so/r/wQ1EvX"
+          phx-click={JS.push("join_waitlist_clicked", value: %{location: "hero"})}
+        >
+          or tell us more about your usecase
+        </.button_link_secondary>
+      </div>
 
       <.ellipse_1 class="absolute top-0 mx-auto -translate-x-16 -translate-y-8 blur-xl opacity-50 mix-blend-multiply" />
       <.ellipse_2 class="absolute -bottom-[400px] mx-auto -translate-x-28 blur-xl opacity-50" />
@@ -205,19 +214,33 @@ defmodule LiveroomWeb.HomeLive do
     """
   end
 
-  attr :rest, :global
+  attr :rest, :global, include: ~w(href navigate)
   slot :inner_block, required: true
 
   def button_link(assigns) do
     ~H"""
-    <a
-      href="https://tally.so/r/wQ1EvX"
+    <.link
       tabindex="-1"
-      class="rounded-[10px] bg-slate-900 md:hover:bg-slate-900/90 text-white text-lg font-semibold px-6 py-4"
+      class="rounded-[10px] bg-slate-900 md:hover:bg-slate-900/90 text-white text-lg font-semibold px-6 py-4 transition-colors"
       {@rest}
     >
       <%= render_slot(@inner_block) %>
-    </a>
+    </.link>
+    """
+  end
+
+  attr :rest, :global, include: ~w(href navigate)
+  slot :inner_block, required: true
+
+  def button_link_secondary(assigns) do
+    ~H"""
+    <.link
+      tabindex="-1"
+      class="rounded-[10px] bg-zinc-100/20 md:hover:bg-zinc-100/75 font-semibold px-3 py-2 transition-colors"
+      {@rest}
+    >
+      <%= render_slot(@inner_block) %>
+    </.link>
     """
   end
 
@@ -335,9 +358,18 @@ defmodule LiveroomWeb.HomeLive do
       </ul>
     </div>
 
-    <.button_link phx-click={JS.push("join_waitlist_clicked", value: %{location: "bottom"})}>
-      Join waitlist
-    </.button_link>
+    <div class="flex flex-col items-center gap-4 mt-12">
+      <%!-- <.button_link phx-click={JS.push("join_waitlist_clicked", value: %{location: "hero"})}> --%>
+      <.button_link navigate={~p"/register"}>
+        Get started
+      </.button_link>
+      <.button_link_secondary
+        href="https://tally.so/r/wQ1EvX"
+        phx-click={JS.push("join_waitlist_clicked", value: %{location: "bottom"})}
+      >
+        or tell us more about your usecase
+      </.button_link_secondary>
+    </div>
     """
   end
 
