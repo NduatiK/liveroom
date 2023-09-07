@@ -28,7 +28,10 @@ defmodule LiveroomWeb.LiveStateChannel do
     me =
       LiveroomWeb.Presence.create_user(
         room_id,
-        :client,
+        case params["type"] do
+          "admin" -> :admin
+          _ -> :client
+        end,
         analytics_data,
         _user_name =
           case params["user_name"] do
@@ -127,6 +130,16 @@ defmodule LiveroomWeb.LiveStateChannel do
 
   def handle_event("key_up", %{"key" => "Shift"} = _params, state) do
     update_user(state, &put_in(&1.is_shift_key_down, false))
+    {:noreply, state}
+  end
+
+  def handle_event("key_down", %{"key" => " "} = _params, state) do
+    update_user(state, &put_in(&1.is_space_key_down, true))
+    {:noreply, state}
+  end
+
+  def handle_event("key_up", %{"key" => " "} = _params, state) do
+    update_user(state, &put_in(&1.is_space_key_down, false))
     {:noreply, state}
   end
 

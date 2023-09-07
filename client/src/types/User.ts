@@ -17,6 +17,7 @@ export type User<T extends UserType = UserType> = {
   msg: string;
   is_mouse_down: boolean;
   is_shift_key_down: boolean;
+  is_space_key_down: boolean;
   hovered_elements: Record<string, boolean>;
   focused_elements: Record<string, boolean>;
   inputs: Record<string, { type: "text"; value: string }>;

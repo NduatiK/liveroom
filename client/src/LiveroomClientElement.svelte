@@ -3,6 +3,7 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
   import { LiveState } from "phx-live-state";
+  import { createBlockClickStyle } from "./stylesheets";
   import type { User } from "./types/User";
 
   export let url: string;
@@ -10,6 +11,9 @@
   export let user_name: string;
 
   let liveState: LiveState;
+  let isClickBlocked = false;
+
+  let blockClickStyle = createBlockClickStyle();
 
   let me: User<"client">;
   let users: { [key: User["id"]]: User };
@@ -17,6 +21,28 @@
   // computed
   let users_count: number;
   $: users_count = Object.keys(users || {}).length;
+
+  // TODO: check perfs of such thing, how often it is run?
+  $: if (
+    !isClickBlocked &&
+    users &&
+    Object.values(users).some((u) => u.type == "admin" && u.is_space_key_down)
+  ) {
+    document.head.appendChild(blockClickStyle);
+    document.addEventListener("click", blockClick, true);
+    isClickBlocked = true;
+  }
+  $: if (
+    isClickBlocked &&
+    users &&
+    Object.values(users)
+      .filter((u) => u.type == "admin")
+      .every((u) => !u.is_space_key_down)
+  ) {
+    document.removeEventListener("click", blockClick);
+    document.head.removeChild(blockClickStyle);
+    isClickBlocked = false;
+  }
 
   onMount(async () => {
     // NOTE: room_id is read from url query param '_liveroom' if present,
@@ -74,16 +100,16 @@
         detail: {
           from_user_id: string;
           from_user_color: string;
-          x: number;
-          y: number;
+          x: string;
+          y: string;
         };
       }) => {
         const ev = new MouseEvent("click", {
           view: window,
           bubbles: true,
           cancelable: true,
-          clientX: (window.innerWidth * x) / 100,
-          clientY: (window.innerHeight * y) / 100,
+          clientX: (window.innerWidth * parseFloat(x)) / 100,
+          clientY: (window.innerHeight * parseFloat(y)) / 100,
         });
 
         const clickedEl = document.elementFromPoint(ev.clientX, ev.clientY);
@@ -95,9 +121,10 @@
             clickedEl.getAttribute("href") ||
             clickedEl.getAttribute("role") === "button" ||
             clickedEl.getAttribute("type") === "button" ||
-            clickedEl.getAttribute("type") === "submit"
+            clickedEl.getAttribute("type") === "submit" ||
             // clickedEl.getAttribute("type") === "checkbox" ||
             // clickedEl.getAttribute("type") === "radio" ||
+            ["a", "button"].includes(clickedEl.tagName.toLowerCase())
           ) {
             const currentColor = clickedEl.style.color;
             const currentBgColor = clickedEl.style.backgroundColor;
@@ -141,18 +168,6 @@
     window.addEventListener("keydown", dispatchKeyDown);
     window.addEventListener("keyup", dispatchKeyUp);
     window.addEventListener("resize", dispatchWindowResize);
-  }
-
-  function hexToRgbA(hex: string, opacity: number) {
-    let r = parseInt(hex.slice(1, 3), 16),
-      g = parseInt(hex.slice(3, 5), 16),
-      b = parseInt(hex.slice(5, 7), 16);
-
-    if (opacity) {
-      return "rgba(" + r + ", " + g + ", " + b + ", " + opacity + ")";
-    } else {
-      return "rgb(" + r + ", " + g + ", " + b + ")";
-    }
   }
 
   function endSession() {
@@ -273,6 +288,23 @@
   // 		}
   // 	};
   // }
+
+  function blockClick(e: MouseEvent) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
+
+  function hexToRgbA(hex: string, opacity: number) {
+    let r = parseInt(hex.slice(1, 3), 16),
+      g = parseInt(hex.slice(3, 5), 16),
+      b = parseInt(hex.slice(5, 7), 16);
+
+    if (opacity) {
+      return "rgba(" + r + ", " + g + ", " + b + ", " + opacity + ")";
+    } else {
+      return "rgb(" + r + ", " + g + ", " + b + ")";
+    }
+  }
 
   // Types
 

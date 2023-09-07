@@ -195,6 +195,7 @@
       topic: `liveroom-livestate:${roomId}`,
       params: {
         room_id: roomId,
+        type: "admin",
         user_name: getOwnName(),
         participant_user_name: getParticipantName(),
         referrer: document.referrer,
@@ -346,7 +347,7 @@
       );
     }
   }
-  const INTERESTING_KEYS = ["Shift"];
+  const INTERESTING_KEYS = ["Shift", " "];
   function handleKeyDown(e: KeyboardEvent) {
     // NOTE: To avoid sending multiple keydown events when a key is held down.
     const firstTimeKeyIsPressed = !e.repeat;

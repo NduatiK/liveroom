@@ -34,6 +34,7 @@
       id="user-{user.id}"
       class="user"
       data-isself={user.id == me_id}
+      data-isclickblocked={users[me_id].is_space_key_down}
       style="
           --color: {user.color};
           --x: {(screensharingVideoElWidth &&
@@ -84,6 +85,9 @@
     left: 0;
     user-select: none;
     transform: translate(var(--x), var(--y)) scale(0.9);
+  }
+  .user[data-isclickblocked="true"] {
+    opacity: 0.4;
   }
 
   .user .cursor {
