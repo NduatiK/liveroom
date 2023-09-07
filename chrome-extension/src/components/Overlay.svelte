@@ -9,6 +9,7 @@
     createSelectVideoElStyle,
     createPointerEventsOnVideoElStyle,
   } from "./stylesheets";
+  import type { User } from "src/types/User";
   import type { State } from "src/types/State";
 
   export let open = true;
@@ -124,6 +125,7 @@
     document.head.appendChild(pointerEventsOnVideoElStyle);
 
     screensharingVideoEl.addEventListener("mousemove", handleMouseMove);
+    screensharingVideoEl.addEventListener("click", handleMouseClick);
     screensharingVideoEl.addEventListener("mousedown", handleMouseDown);
     screensharingVideoEl.addEventListener("mouseup", handleMouseUp);
     window.addEventListener("keydown", handleKeyDown);
@@ -272,6 +274,7 @@
       resizeObserver = undefined;
     }
     screensharingVideoEl?.removeEventListener("mousemove", handleMouseMove);
+    screensharingVideoEl?.removeEventListener("click", handleMouseClick);
     screensharingVideoEl?.removeEventListener("mousedown", handleMouseDown);
     screensharingVideoEl?.removeEventListener("mouseup", handleMouseUp);
     window.removeEventListener("keydown", handleKeyDown);
@@ -309,6 +312,26 @@
     }
   }
 
+  function handleMouseClick(e: MouseEvent) {
+    // User has to maintain the alt key while clicking
+    if (!e.altKey) return;
+
+    if (liveState && me?.id) {
+      const to_user_id = findScreensharingUser()?.id;
+
+      if (to_user_id) {
+        liveState.dispatchEvent(
+          new CustomEvent("mouse_click", {
+            detail: {
+              from_user_id: me.id,
+              from_user_color: me.color,
+              to_user_id,
+            },
+          })
+        );
+      }
+    }
+  }
   function handleMouseDown(e: MouseEvent) {
     if (liveState && me?.id) {
       liveState.dispatchEvent(
@@ -382,6 +405,28 @@
         authUserToken = undefined;
       }
     });
+  }
+
+  function findScreensharingUser(): User | undefined {
+    if (
+      users &&
+      me &&
+      screensharingVideoElWidth &&
+      screensharingVideoElHeight
+    ) {
+      const videoRatio = screensharingVideoElWidth / screensharingVideoElHeight;
+      const meId = me.id;
+
+      return Object.values(users).find((u) => {
+        // NOTE: Don't want to select the current user
+        if (u.id == meId) return false;
+
+        const ratio = parseFloat(u.inner_width) / parseFloat(u.inner_height);
+
+        // NOTE: Small variations are possible, so we dont check for equality
+        return Math.abs(ratio - videoRatio) < 0.008;
+      });
+    }
   }
 </script>
 

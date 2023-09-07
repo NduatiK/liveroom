@@ -90,6 +90,26 @@ defmodule LiveroomWeb.LiveStateChannel do
     {:noreply, state}
   end
 
+  def handle_event(
+        "mouse_click",
+        %{
+          "from_user_id" => from_user_id,
+          "from_user_color" => from_user_color,
+          "to_user_id" => to_user_id
+        } = _params,
+        state
+      ) do
+    LiveroomWeb.Presence.broadcast(state.room_id, "click", %{
+      from_user_id: from_user_id,
+      from_user_color: from_user_color,
+      to_user_id: to_user_id,
+      x: state.users[state.me.id].x,
+      y: state.users[state.me.id].y
+    })
+
+    {:noreply, state}
+  end
+
   def handle_event("mouse_down", _params, state) do
     update_user(state, &put_in(&1.is_mouse_down, true))
     {:noreply, state}
@@ -191,6 +211,46 @@ defmodule LiveroomWeb.LiveStateChannel do
         %Phoenix.Socket.Broadcast{
           topic: _topic,
           event: "update_user_name",
+          payload: _payload
+        },
+        state
+      ) do
+    {:noreply, state}
+  end
+
+  # NOTE: If current user is concerned, forward click.
+  def handle_message(
+        %Phoenix.Socket.Broadcast{
+          topic: _topic,
+          event: "click",
+          payload: %{
+            from_user_id: from_user_id,
+            from_user_color: from_user_color,
+            to_user_id: user_id,
+            x: x,
+            y: y
+          }
+        },
+        %{me: %{id: user_id}} = state
+      ) do
+    event = %LiveState.Event{
+      name: "click-from-another-user",
+      detail: %{
+        from_user_id: from_user_id,
+        from_user_color: from_user_color,
+        x: x,
+        y: y
+      }
+    }
+
+    {:reply, event, state}
+  end
+
+  # NOTE: If current user is not concerned, it is a no-op.
+  def handle_message(
+        %Phoenix.Socket.Broadcast{
+          topic: _topic,
+          event: "click",
           payload: _payload
         },
         state

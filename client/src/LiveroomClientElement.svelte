@@ -67,6 +67,54 @@
     });
     liveState.connect();
     liveState.addEventListener(
+      "click-from-another-user",
+      ({
+        detail: { from_user_id: _from_user_id, from_user_color, x, y },
+      }: {
+        detail: {
+          from_user_id: string;
+          from_user_color: string;
+          x: number;
+          y: number;
+        };
+      }) => {
+        const ev = new MouseEvent("click", {
+          view: window,
+          bubbles: true,
+          cancelable: true,
+          clientX: (window.innerWidth * x) / 100,
+          clientY: (window.innerHeight * y) / 100,
+        });
+
+        const clickedEl = document.elementFromPoint(ev.clientX, ev.clientY);
+        if (clickedEl instanceof HTMLElement) {
+          if (["A", "BUTTON"].includes(clickedEl.tagName)) {
+            const currentColor = clickedEl.style.color;
+            const currentBgColor = clickedEl.style.backgroundColor;
+
+            if (
+              clickedEl
+                .computedStyleMap()
+                .get("background-color")
+                ?.toString() !== "rgba(0, 0, 0, 0)"
+            ) {
+              clickedEl.style.color = "white";
+              clickedEl.style.backgroundColor = hexToRgbA(from_user_color, 0.6);
+            } else {
+              clickedEl.style.color = hexToRgbA(from_user_color, 0.6);
+            }
+
+            setTimeout(() => {
+              clickedEl.style.color = currentColor;
+              clickedEl.style.backgroundColor = currentBgColor;
+            }, 500);
+          }
+
+          clickedEl.dispatchEvent(ev);
+        }
+      }
+    );
+    liveState.addEventListener(
       "livestate-change",
       ({ detail: { state } }: { detail: { state: State } }) => {
         room_id = state.room_id;
@@ -83,6 +131,18 @@
     window.addEventListener("keydown", dispatchKeyDown);
     window.addEventListener("keyup", dispatchKeyUp);
     window.addEventListener("resize", dispatchWindowResize);
+  }
+
+  function hexToRgbA(hex: string, opacity: number) {
+    let r = parseInt(hex.slice(1, 3), 16),
+      g = parseInt(hex.slice(3, 5), 16),
+      b = parseInt(hex.slice(5, 7), 16);
+
+    if (opacity) {
+      return "rgba(" + r + ", " + g + ", " + b + ", " + opacity + ")";
+    } else {
+      return "rgb(" + r + ", " + g + ", " + b + ")";
+    }
   }
 
   function endSession() {
