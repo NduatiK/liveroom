@@ -70,6 +70,9 @@
 
   onDestroy(() => {
     endSession();
+    if (document.head.contains(blockClickStyle)) {
+      document.head.removeChild(blockClickStyle);
+    }
   });
 
   // HELPERS
