@@ -60,7 +60,7 @@
       <UserName
         user_name={user.name}
         hide={user.id == me_id}
-        style="position: absolute; top: 20px; left: 16px"
+        style="position: absolute; top: 6px; left: 15px"
       />
       <div
         class="halo-small"
