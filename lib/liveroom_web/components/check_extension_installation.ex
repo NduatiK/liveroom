@@ -9,7 +9,7 @@ defmodule LiveroomWeb.Components.CheckExtensionInstallation do
     ~H"""
     <%!-- Super weird, Liveview throws an error if I don't wrap the banner in a span. --%>
     <span>
-      <Banner.render version={@version} latest_version="0.0.13" installed="installed on your computer">
+      <Banner.render version={@version} latest_version="0.0.14" installed="installed on your computer">
         <:when_no_version>
           <div class="flex justify-between items-center">
             <p class="flex items-center gap-1.5 text-amber-600">
@@ -44,7 +44,7 @@ defmodule LiveroomWeb.Components.CheckExtensionInstallation do
   def update(assigns, socket) do
     socket =
       assign(socket,
-        # version: "0.0.13"
+        # version: "0.0.14"
         version: assigns.version,
         # NOTE: Needed to send analytic events
         analytics_data: assigns.analytics_data,
