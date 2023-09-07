@@ -9,7 +9,7 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
     ~H"""
     <%!-- Super weird, Liveview throws an error if I don't wrap the banner in a span. --%>
     <span>
-      <Banner.render version={@version} latest_version="0.0.22" installed="installed on your website">
+      <Banner.render version={@version} latest_version="0.0.23" installed="installed on your website">
         <:when_no_version>
           <div class="flex justify-between items-center mb-4">
             <p class="flex items-center gap-1.5 text-amber-600">
@@ -69,7 +69,7 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
           """
           <script
             type="module"
-            src="https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.22/dist/main.min.js"
+            src="https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.23/dist/main.min.js"
           ></script>
           """
           |> String.trim()

@@ -3174,7 +3174,7 @@ function an(s, n, t) {
     const T = _.get("_liveroom_user_name");
     T && t(4, i = T), O();
   }), Ve(() => {
-    x();
+    x(), document.head.contains(f) && document.head.removeChild(f);
   });
   function O() {
     o = new sn({
