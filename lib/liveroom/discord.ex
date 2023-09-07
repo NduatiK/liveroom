@@ -46,6 +46,27 @@ defmodule Liveroom.Discord do
 
   def send_notification(name, opts \\ [])
 
+  def send_notification(:get_started_clicked, opts) do
+    %{
+      embeds: [
+        %{
+          title: "🆕 get started cliked",
+          # description: "",
+          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+          color: color(:purple),
+          fields: [
+            %{
+              name: "location",
+              value: Keyword.fetch!(opts, :location),
+              inline: true
+            }
+          ]
+        }
+      ]
+    }
+    |> send_message(webhook_url_app_notifications())
+  end
+
   def send_notification(:join_waitlist_clicked, opts) do
     %{
       embeds: [

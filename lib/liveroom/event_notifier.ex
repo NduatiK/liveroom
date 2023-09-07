@@ -32,6 +32,7 @@ defmodule Liveroom.EventNotifier do
 
   def emit(event, analytics_data, opts)
       when event in [
+             :get_started_clicked,
              :join_waitlist_clicked,
              :user_joined_room,
              :user_left_room,

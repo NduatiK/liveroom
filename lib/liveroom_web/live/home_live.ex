@@ -105,8 +105,10 @@ defmodule LiveroomWeb.HomeLive do
       </div>
 
       <div class="flex flex-col items-center gap-4 mb-8">
-        <%!-- <.button_link phx-click={JS.push("join_waitlist_clicked", value: %{location: "hero"})}> --%>
-        <.button_link navigate={~p"/register"}>
+        <.button_link
+          navigate={~p"/register"}
+          phx-click={JS.push("get_started_clicked", value: %{location: "hero"})}
+        >
           Get started
         </.button_link>
         <.button_link_secondary
@@ -359,8 +361,10 @@ defmodule LiveroomWeb.HomeLive do
     </div>
 
     <div class="flex flex-col items-center gap-4 mt-12">
-      <%!-- <.button_link phx-click={JS.push("join_waitlist_clicked", value: %{location: "hero"})}> --%>
-      <.button_link navigate={~p"/register"}>
+      <.button_link
+        navigate={~p"/register"}
+        phx-click={JS.push("get_started_clicked", value: %{location: "bottom"})}
+      >
         Get started
       </.button_link>
       <.button_link_secondary
@@ -420,6 +424,11 @@ defmodule LiveroomWeb.HomeLive do
   end
 
   @impl true
+  def handle_event("get_started_clicked", %{"location" => location} = _params, socket) do
+    EventNotifier.emit(:get_started_clicked, socket, location: location)
+    {:noreply, socket}
+  end
+
   def handle_event("join_waitlist_clicked", %{"location" => location} = _params, socket) do
     EventNotifier.emit(:join_waitlist_clicked, socket, location: location)
     {:noreply, socket}

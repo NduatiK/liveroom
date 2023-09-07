@@ -29,6 +29,16 @@ defmodule Liveroom.Analytics do
     )
   end
 
+  def send_event(:get_started_clicked, analytics_data, opts) do
+    send_event(
+      "get_started_clicked",
+      analytics_data,
+      props: %{
+        location: Keyword.fetch!(opts, :location)
+      }
+    )
+  end
+
   def send_event(:join_waitlist_clicked, analytics_data, opts) do
     send_event(
       "join_waitlist_clicked",
