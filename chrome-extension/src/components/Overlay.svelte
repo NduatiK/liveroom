@@ -439,8 +439,6 @@
   <div class="body">
     {#if !started}
       <div class="start-buttons-container">
-        <button on:click={() => (started = true)}>Start session</button>
-
         {#if currentUser}
           <CopyButton
             label="Copy website URL"
@@ -448,6 +446,8 @@
             textToCopy={`${currentUser.website_url}?_liveroom=${roomId}`}
           />
         {/if}
+
+        <button on:click={() => (started = true)}>Start session</button>
       </div>
     {:else if !screensharingVideoEl}
       <p class="instructions">Click on the screensharing video</p>
@@ -471,16 +471,6 @@
       {/if}
 
       <div class="buttons-container">
-        <button
-          class="end-session-button"
-          on:click={() => {
-            started = false;
-            screensharingVideoEl = undefined;
-          }}
-        >
-          End session
-        </button>
-
         {#if currentUser}
           <CopyButton
             label="Copy website URL"
@@ -505,6 +495,16 @@
           document.head.appendChild(script);
           `}
         />
+
+        <button
+          class="end-session-button"
+          on:click={() => {
+            started = false;
+            screensharingVideoEl = undefined;
+          }}
+        >
+          End session
+        </button>
       </div>
     {/if}
   </div>
@@ -577,6 +577,7 @@
     border-radius: 4px;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Tailwind shadow-md */
     overflow: auto;
+    border: 1px solid rgb(79, 70, 229, 0.3); /* Tailwind indigo-600 */
   }
   #liveroom-overlay[data-open="false"] {
     display: none;
@@ -609,7 +610,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    padding: 1rem;
   }
 
   .footer {
@@ -686,7 +687,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    padding-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
   }
 
   .buttons-container {
@@ -704,7 +705,7 @@
   }
 
   .end-session-button {
-    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
   }
   .end-session-button:hover {
     color: rgb(239, 68, 68) !important; /* Tailwind red-500 */
