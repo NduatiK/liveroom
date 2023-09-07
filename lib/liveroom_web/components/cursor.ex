@@ -60,7 +60,8 @@ defmodule LiveroomWeb.Components.Cursor do
       class={[
         "translate-x-[var(--x)] translate-y-[var(--y)]",
         "z-[1000] absolute top-0 left-0",
-        "pointer-events-none select-none group"
+        "pointer-events-none select-none group",
+        "transition-transform duration-100 ease-linear"
       ]}
     >
       <%!-- Cursor --%>
