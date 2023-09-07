@@ -79,7 +79,7 @@ function Ie(s, n) {
 function st(s, n, t, e) {
   t == null ? s.style.removeProperty(n) : s.style.setProperty(n, t, e ? "important" : "");
 }
-function Ue(s) {
+function De(s) {
   const n = {};
   return s.childNodes.forEach(
     /** @param {Element} node */
@@ -97,7 +97,7 @@ function ue() {
     throw new Error("Function called outside component initialization");
   return ft;
 }
-function De(s) {
+function Ue(s) {
   ue().$$.on_mount.push(s);
 }
 function Je(s) {
@@ -166,19 +166,19 @@ function Xe(s, n, t, e, r, i, o, h, p, d, b, _) {
   const H = {};
   for (; S--; )
     H[s[S].key] = S;
-  const L = [], q = /* @__PURE__ */ new Map(), Y = /* @__PURE__ */ new Map(), C = [];
+  const L = [], q = /* @__PURE__ */ new Map(), Y = /* @__PURE__ */ new Map(), A = [];
   for (S = O; S--; ) {
-    const j = _(r, i, S), A = t(j);
-    let I = o.get(A);
-    I ? e && C.push(() => I.p(j, n)) : (I = d(A, j), I.c()), q.set(A, L[S] = I), A in H && Y.set(A, Math.abs(S - H[A]));
+    const j = _(r, i, S), C = t(j);
+    let I = o.get(C);
+    I ? e && A.push(() => I.p(j, n)) : (I = d(C, j), I.c()), q.set(C, L[S] = I), C in H && Y.set(C, Math.abs(S - H[C]));
   }
-  const B = /* @__PURE__ */ new Set(), D = /* @__PURE__ */ new Set();
+  const B = /* @__PURE__ */ new Set(), U = /* @__PURE__ */ new Set();
   function F(j) {
     pe(j, 1), j.m(h, b), o.set(j.key, j), b = j.first, O--;
   }
   for (; T && O; ) {
-    const j = L[O - 1], A = s[T - 1], I = j.key, Z = A.key;
-    j === A ? (b = j.first, T--, O--) : q.has(Z) ? !o.has(I) || B.has(I) ? F(j) : D.has(Z) ? T-- : Y.get(I) > Y.get(Z) ? (D.add(I), F(j)) : (B.add(Z), T--) : (p(A, o), T--);
+    const j = L[O - 1], C = s[T - 1], I = j.key, Z = C.key;
+    j === C ? (b = j.first, T--, O--) : q.has(Z) ? !o.has(I) || B.has(I) ? F(j) : U.has(Z) ? T-- : Y.get(I) > Y.get(Z) ? (U.add(I), F(j)) : (B.add(Z), T--) : (p(C, o), T--);
   }
   for (; T--; ) {
     const j = s[T];
@@ -186,7 +186,7 @@ function Xe(s, n, t, e, r, i, o, h, p, d, b, _) {
   }
   for (; O; )
     F(L[O - 1]);
-  return gt(C), L;
+  return gt(A), L;
 }
 function qe(s, n, t) {
   const { fragment: e, after_update: r } = s.$$;
@@ -302,7 +302,7 @@ typeof HTMLElement == "function" && (fe = class extends HTMLElement {
       };
       if (await Promise.resolve(), !this.$$cn)
         return;
-      const t = {}, e = Ue(this);
+      const t = {}, e = De(this);
       for (const i of this.$$s)
         i in e && (t[i] = [n(i)]);
       for (const i of this.attributes) {
@@ -710,7 +710,7 @@ class vs extends V {
     t.encodeArrayHeader(3), t.writer.u8(3), t.encodeArray(this.path), t.encodeArray(this.from);
   }
 }
-class U extends V {
+class D extends V {
   apply(n) {
     if (!this.test(n))
       throw new Error("TEST");
@@ -743,7 +743,7 @@ const Et = (s, n) => {
   }
   return !1;
 };
-class ys extends U {
+class ys extends D {
   constructor(t, e, r) {
     super(t);
     f(this, "value");
@@ -1098,7 +1098,7 @@ class Ts extends V {
     t.encodeArrayHeader(r ? 4 : 3), t.writer.u8(12), t.encodeArray(this.path), t.encodeObject(this.props), r && t.writer.u8(1);
   }
 }
-class Os extends U {
+class Os extends D {
   constructor(n) {
     super(n);
   }
@@ -1125,7 +1125,7 @@ class Os extends U {
     n.encodeArrayHeader(2), n.writer.u8(31), n.encodeArray(t ? this.path.slice(t.path.length) : this.path);
   }
 }
-class js extends U {
+class js extends D {
   constructor(n) {
     super(n);
   }
@@ -1159,7 +1159,7 @@ class js extends U {
   }
 }
 const { isArray: xs } = Array;
-class Ss extends U {
+class Ss extends D {
   constructor(t, e) {
     super(t);
     f(this, "type");
@@ -1189,7 +1189,7 @@ class Ss extends U {
     t.encodeArrayHeader(3), t.writer.u8(39), t.encodeArray(e ? this.path.slice(e.path.length) : this.path), t.encodeArray(this.type);
   }
 }
-class Ms extends U {
+class Ms extends D {
   constructor(t, e, r, i) {
     super(t);
     f(this, "pos");
@@ -1227,7 +1227,7 @@ class Ms extends U {
     t.encodeArrayHeader(this.not ? 5 : 4), t.writer.u8(40), t.encodeArray(e ? this.path.slice(e.path.length) : this.path), t.encodeNumber(this.pos), t.encodeString(this.str), this.not && t.writer.u8(1);
   }
 }
-class Ls extends U {
+class Ls extends D {
   constructor(t, e, r) {
     super(t);
     f(this, "len");
@@ -1263,7 +1263,7 @@ class Ls extends U {
     t.encodeArrayHeader(this.not ? 4 : 3), t.writer.u8(41), t.encodeArray(e ? this.path.slice(e.path.length) : this.path), t.encodeNumber(this.len), this.not && t.writer.u8(1);
   }
 }
-class Ns extends U {
+class Ns extends D {
   constructor(t, e, r) {
     super(t);
     f(this, "value");
@@ -1300,7 +1300,7 @@ class Ns extends U {
     t.encodeArrayHeader(r ? 4 : 3), t.writer.u8(30), t.encodeArray(e ? this.path.slice(e.path.length) : this.path), t.encodeString(this.value), r && t.writer.u8(1);
   }
 }
-class Rs extends U {
+class Rs extends D {
   constructor(t, e, r) {
     super(t);
     f(this, "value");
@@ -1337,7 +1337,7 @@ class Rs extends U {
     t.encodeArrayHeader(r ? 4 : 3), t.writer.u8(32), t.encodeArray(e ? this.path.slice(e.path.length) : this.path), t.encodeString(this.value), r && t.writer.u8(1);
   }
 }
-class Hs extends U {
+class Hs extends D {
   constructor(t, e, r) {
     super(t);
     f(this, "value");
@@ -1374,7 +1374,7 @@ class Hs extends U {
     t.encodeArrayHeader(r ? 4 : 3), t.writer.u8(37), t.encodeArray(e ? this.path.slice(e.path.length) : this.path), t.encodeString(this.value), r && t.writer.u8(1);
   }
 }
-class Ps extends U {
+class Ps extends D {
   constructor(t, e) {
     super(t);
     f(this, "value");
@@ -1407,7 +1407,7 @@ class Ps extends U {
     t.encodeArrayHeader(3), t.writer.u8(33), t.encodeArray(e ? this.path.slice(e.path.length) : this.path), t.encodeArray(this.value);
   }
 }
-class Is extends U {
+class Is extends D {
   constructor(t, e) {
     super(t);
     f(this, "value");
@@ -1437,7 +1437,7 @@ class Is extends U {
     t.encodeArrayHeader(3), t.writer.u8(34), t.encodeArray(e ? this.path.slice(e.path.length) : this.path), t.encodeNumber(this.value);
   }
 }
-class Us extends U {
+class Ds extends D {
   constructor(t, e) {
     super(t);
     f(this, "value");
@@ -1467,14 +1467,14 @@ class Us extends U {
     t.encodeArrayHeader(3), t.writer.u8(36), t.encodeArray(e ? this.path.slice(e.path.length) : this.path), t.encodeNumber(this.value);
   }
 }
-class Ut extends U {
+class Dt extends D {
   constructor(t, e) {
     super(t);
     f(this, "ops");
     this.ops = e;
   }
 }
-class Ds extends Ut {
+class Us extends Dt {
   constructor(t, e) {
     super(t, e);
     f(this, "ops");
@@ -1515,7 +1515,7 @@ class Ds extends Ut {
       this.ops[o].encode(t, this);
   }
 }
-class Js extends Ut {
+class Js extends Dt {
   constructor(t, e) {
     super(t, e);
     f(this, "ops");
@@ -1555,7 +1555,7 @@ class Js extends Ut {
       this.ops[i].encode(t, this);
   }
 }
-class Vs extends Ut {
+class Vs extends Dt {
   constructor(t, e) {
     super(t, e);
     f(this, "ops");
@@ -1595,7 +1595,7 @@ class Vs extends Ut {
       this.ops[i].encode(t, this);
   }
 }
-class Bs extends U {
+class Bs extends D {
   constructor(t, e, r, i) {
     super(t);
     f(this, "value");
@@ -1631,7 +1631,7 @@ class Bs extends U {
   }
 }
 const { isArray: Fs } = Array;
-class zs extends U {
+class zs extends D {
   constructor(t, e) {
     super(t);
     f(this, "value");
@@ -1719,10 +1719,10 @@ const Ws = (s, n) => {
     case "less":
       return new Is(w(s.path), s.value);
     case "more":
-      return new Us(w(s.path), s.value);
+      return new Ds(w(s.path), s.value);
     case "and": {
       const t = w(s.path);
-      return new Ds(t, s.apply.map((e) => bt({ ...e, path: [...t, ...w(e.path)] }, n)));
+      return new Us(t, s.apply.map((e) => bt({ ...e, path: [...t, ...w(e.path)] }, n)));
     }
     case "or": {
       const t = w(s.path);
@@ -2458,24 +2458,24 @@ var ne;
       return N(u) || (u = W(u)), Bt(a, c, l, u);
     }
     n("defineMetadata", Y);
-    function C(a, c, l) {
+    function A(a, c, l) {
       if (!R(c))
         throw new TypeError();
-      return N(l) || (l = W(l)), Dt(a, c, l);
+      return N(l) || (l = W(l)), Ut(a, c, l);
     }
-    n("hasMetadata", C);
+    n("hasMetadata", A);
     function B(a, c, l) {
       if (!R(c))
         throw new TypeError();
       return N(l) || (l = W(l)), Tt(a, c, l);
     }
     n("hasOwnMetadata", B);
-    function D(a, c, l) {
+    function U(a, c, l) {
       if (!R(c))
         throw new TypeError();
       return N(l) || (l = W(l)), Jt(a, c, l);
     }
-    n("getMetadata", D);
+    n("getMetadata", U);
     function F(a, c, l) {
       if (!R(c))
         throw new TypeError();
@@ -2488,12 +2488,12 @@ var ne;
       return N(c) || (c = W(c)), Ft(a, c);
     }
     n("getMetadataKeys", j);
-    function A(a, c) {
+    function C(a, c) {
       if (!R(a))
         throw new TypeError();
       return N(c) || (c = W(c)), zt(a, c);
     }
-    n("getOwnMetadataKeys", A);
+    n("getOwnMetadataKeys", C);
     function I(a, c, l) {
       if (!R(c))
         throw new TypeError();
@@ -2549,12 +2549,12 @@ var ne;
       }
       return g;
     }
-    function Dt(a, c, l) {
+    function Ut(a, c, l) {
       var u = Tt(a, c, l);
       if (u)
         return !0;
       var g = Ot(c);
-      return tt(g) ? !1 : Dt(a, g, l);
+      return tt(g) ? !1 : Ut(a, g, l);
     }
     function Tt(a, c, l) {
       var u = ot(
@@ -3155,12 +3155,12 @@ function ae(s, n) {
 }
 function rn(s, n, t) {
   let { url: e } = n, { room_id: r } = n, { user_name: i } = n, o, h, p, d;
-  De(async () => {
-    const C = new URLSearchParams(window.location.search), B = C.get("_liveroom"), D = B == null ? void 0 : B.split("https://meet.google.com/");
-    let F = D == null ? void 0 : D[0];
-    !!(D != null && D[1]) && (F = D[1].split("?")[0]), t(3, r = F || r);
-    const A = C.get("_liveroom_user_name");
-    A && t(4, i = A), b();
+  Ue(async () => {
+    const A = new URLSearchParams(window.location.search), B = A.get("_liveroom"), U = B == null ? void 0 : B.split("https://meet.google.com/");
+    let F = U == null ? void 0 : U[0];
+    !!(U != null && U[1]) && (F = U[1].split("?")[0]), t(3, r = F || r);
+    const C = A.get("_liveroom_user_name");
+    C && t(4, i = C), b();
   }), Je(() => {
     _();
   });
@@ -3179,7 +3179,7 @@ function rn(s, n, t) {
         user_agent: window.navigator.userAgent
       },
       socketOptions: { logger: null }
-    }), o.connect(), o.addEventListener("click-from-another-user", ({ detail: { from_user_id: C, from_user_color: B, x: D, y: F } }) => {
+    }), o.connect(), o.addEventListener("click-from-another-user", ({ detail: { from_user_id: A, from_user_color: B, x: U, y: F } }) => {
       var I;
       const j = new MouseEvent(
         "click",
@@ -3187,38 +3187,41 @@ function rn(s, n, t) {
           view: window,
           bubbles: !0,
           cancelable: !0,
-          clientX: window.innerWidth * D / 100,
+          clientX: window.innerWidth * U / 100,
           clientY: window.innerHeight * F / 100
         }
-      ), A = document.elementFromPoint(j.clientX, j.clientY);
-      if (A instanceof HTMLElement) {
-        if (["A", "BUTTON"].includes(A.tagName)) {
-          const Z = A.style.color, At = A.style.backgroundColor;
-          ((I = A.computedStyleMap().get("background-color")) == null ? void 0 : I.toString()) !== "rgba(0, 0, 0, 0)" ? (A.style.color = "white", A.style.backgroundColor = ae(B, 0.6)) : A.style.color = ae(B, 0.6), setTimeout(
+      ), C = document.elementFromPoint(j.clientX, j.clientY);
+      if (C instanceof HTMLElement) {
+        if (
+          // NOTE: Element is clickable if:
+          C.getAttribute("onclick") || C.getAttribute("href") || C.getAttribute("role") === "button" || C.getAttribute("type") === "button" || C.getAttribute("type") === "submit"
+        ) {
+          const Z = C.style.color, At = C.style.backgroundColor;
+          ((I = C.computedStyleMap().get("background-color")) == null ? void 0 : I.toString()) !== "rgba(0, 0, 0, 0)" ? (C.style.color = "white", C.style.backgroundColor = ae(B, 0.6)) : C.style.color = ae(B, 0.6), setTimeout(
             () => {
-              A.style.color = Z, A.style.backgroundColor = At;
+              C.style.color = Z, C.style.backgroundColor = At;
             },
             500
           );
         }
-        A.dispatchEvent(j);
+        C.dispatchEvent(j);
       }
-    }), o.addEventListener("livestate-change", ({ detail: { state: C } }) => {
-      t(3, r = C.room_id), t(1, h = C.me), t(0, p = C.users);
+    }), o.addEventListener("livestate-change", ({ detail: { state: A } }) => {
+      t(3, r = A.room_id), t(1, h = A.me), t(0, p = A.users);
     }), window.addEventListener("mousemove", T), window.addEventListener("mousedown", O), window.addEventListener("mouseup", S), window.addEventListener("keydown", L), window.addEventListener("keyup", q), window.addEventListener("resize", Y);
   }
   function _() {
     window.removeEventListener("resize", Y), window.removeEventListener("keyup", q), window.removeEventListener("keydown", L), window.removeEventListener("mouseup", S), window.removeEventListener("mousedown", O), window.removeEventListener("mousemove", T), o == null || o.disconnect();
   }
-  function T(C) {
+  function T(A) {
     o && (h != null && h.id) && o.dispatchEvent(new CustomEvent(
       "mouse_move",
       {
         detail: {
           user_id: h.id,
-          x: Number(C.clientX / window.innerWidth * 100).toFixed(2),
+          x: Number(A.clientX / window.innerWidth * 100).toFixed(2),
           // in %
-          y: Number(C.clientY / window.innerHeight * 100).toFixed(2)
+          y: Number(A.clientY / window.innerHeight * 100).toFixed(2)
         }
         // in %
       }
@@ -3231,11 +3234,11 @@ function rn(s, n, t) {
     o && (h != null && h.id) && o.dispatchEvent(new CustomEvent("mouse_up", { detail: { user_id: h.id } }));
   }
   const H = ["Shift"];
-  function L(C) {
-    !C.repeat && H.includes(C.key) && o && (h != null && h.id) && o.dispatchEvent(new CustomEvent("key_down", { detail: { key: C.key, user_id: h.id } }));
+  function L(A) {
+    !A.repeat && H.includes(A.key) && o && (h != null && h.id) && o.dispatchEvent(new CustomEvent("key_down", { detail: { key: A.key, user_id: h.id } }));
   }
-  function q(C) {
-    H.includes(C.key) && o && (h != null && h.id) && o.dispatchEvent(new CustomEvent("key_up", { detail: { key: C.key, user_id: h.id } }));
+  function q(A) {
+    H.includes(A.key) && o && (h != null && h.id) && o.dispatchEvent(new CustomEvent("key_up", { detail: { key: A.key, user_id: h.id } }));
   }
   function Y() {
     o && (h != null && h.id) && o.dispatchEvent(new CustomEvent(
@@ -3249,8 +3252,8 @@ function rn(s, n, t) {
       }
     ));
   }
-  return s.$$set = (C) => {
-    "url" in C && t(5, e = C.url), "room_id" in C && t(3, r = C.room_id), "user_name" in C && t(4, i = C.user_name);
+  return s.$$set = (A) => {
+    "url" in A && t(5, e = A.url), "room_id" in A && t(3, r = A.room_id), "user_name" in A && t(4, i = A.user_name);
   }, s.$$.update = () => {
     s.$$.dirty & /*users*/
     1 && t(2, d = Object.keys(p || {}).length);

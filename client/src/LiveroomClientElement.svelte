@@ -87,8 +87,18 @@
         });
 
         const clickedEl = document.elementFromPoint(ev.clientX, ev.clientY);
+
         if (clickedEl instanceof HTMLElement) {
-          if (["A", "BUTTON"].includes(clickedEl.tagName)) {
+          if (
+            // NOTE: Element is clickable if:
+            clickedEl.getAttribute("onclick") ||
+            clickedEl.getAttribute("href") ||
+            clickedEl.getAttribute("role") === "button" ||
+            clickedEl.getAttribute("type") === "button" ||
+            clickedEl.getAttribute("type") === "submit"
+            // clickedEl.getAttribute("type") === "checkbox" ||
+            // clickedEl.getAttribute("type") === "radio" ||
+          ) {
             const currentColor = clickedEl.style.color;
             const currentBgColor = clickedEl.style.backgroundColor;
 
