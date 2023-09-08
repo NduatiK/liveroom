@@ -47,247 +47,277 @@ defmodule Liveroom.Discord do
   def send_notification(name, opts \\ [])
 
   def send_notification(:get_started_clicked, opts) do
-    %{
-      embeds: [
-        %{
-          title: "🆕 get started cliked",
-          # description: "",
-          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
-          color: color(:purple),
-          fields: [
-            %{
-              name: "location",
-              value: Keyword.fetch!(opts, :location),
-              inline: true
-            }
-          ]
-        }
-      ]
-    }
+    # %{
+    #   embeds: [
+    #     %{
+    #       title: "🆕 get started cliked",
+    #       # description: "",
+    #       # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+    #       color: color(:purple),
+    #       fields: [
+    #         %{
+    #           name: "location",
+    #           value: Keyword.fetch!(opts, :location),
+    #           inline: true
+    #         }
+    #       ]
+    #     }
+    #   ]
+    # }
+    """
+    🆕   get started cliked     |     location: **#{opts[:location]}**
+    """
     |> send_message(webhook_url_app_notifications())
   end
 
   def send_notification(:join_waitlist_clicked, opts) do
-    %{
-      embeds: [
-        %{
-          title: "💌 join waitlist cliked",
-          # description: "",
-          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
-          color: color(:purple),
-          fields: [
-            %{
-              name: "location",
-              value: Keyword.fetch!(opts, :location),
-              inline: true
-            }
-          ]
-        }
-      ]
-    }
+    # %{
+    #   embeds: [
+    #     %{
+    #       title: "💌 join waitlist cliked",
+    #       # description: "",
+    #       # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+    #       color: color(:purple),
+    #       fields: [
+    #         %{
+    #           name: "location",
+    #           value: Keyword.fetch!(opts, :location),
+    #           inline: true
+    #         }
+    #       ]
+    #     }
+    #   ]
+    # }
+    """
+    💌   join waitlist cliked     |     location: **#{opts[:location]}**
+    """
     |> send_message(webhook_url_app_notifications())
   end
 
   def send_notification(:user_registered, opts) do
-    %{
-      embeds: [
-        %{
-          title: "⊕ user registered",
-          # description: "",
-          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
-          color: color(:purple),
-          fields: [
-            %{
-              name: Keyword.fetch!(opts, :email) || "",
-              value: Keyword.fetch!(opts, :picture_url) || "",
-              inline: true
-            }
-          ]
-        }
-      ]
-    }
+    # %{
+    #   embeds: [
+    #     %{
+    #       title: "⊕ user registered",
+    #       # description: "",
+    #       # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+    #       color: color(:purple),
+    #       fields: [
+    #         %{
+    #           name: Keyword.fetch!(opts, :email) || "",
+    #           value: Keyword.fetch!(opts, :picture_url) || "",
+    #           inline: true
+    #         }
+    #       ]
+    #     }
+    #   ]
+    # }
+    """
+    ⊕   user registered     |     email: **#{opts[:email]}**     |     picture_url: **#{opts[:picture_url]}**
+    """
     |> send_message(webhook_url_app_notifications())
   end
 
   def send_notification(:user_logged_in, opts) do
-    %{
-      embeds: [
-        %{
-          title: "🧑‍💻 user logged in",
-          # description: "",
-          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
-          color: color(:grey),
-          fields: [
-            %{
-              name: Keyword.fetch!(opts, :email) || "",
-              value: Keyword.fetch!(opts, :picture_url) || "",
-              inline: true
-            }
-          ]
-        }
-      ]
-    }
+    # %{
+    #   embeds: [
+    #     %{
+    #       title: "🧑‍💻 user logged in",
+    #       # description: "",
+    #       # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+    #       color: color(:grey),
+    #       fields: [
+    #         %{
+    #           name: Keyword.fetch!(opts, :email) || "",
+    #           value: Keyword.fetch!(opts, :picture_url) || "",
+    #           inline: true
+    #         }
+    #       ]
+    #     }
+    #   ]
+    # }
+    """
+    🧑‍💻   user logged in     |     email: **#{opts[:email]}**     |     picture_url: **#{opts[:picture_url]}**
+    """
     |> send_message(webhook_url_app_notifications())
   end
 
   def send_notification(:user_joined_room, opts) do
-    %{
-      embeds: [
-        %{
-          title: "👋 user joined room",
-          # description: "",
-          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
-          color: color(:green),
-          fields: [
-            %{
-              name: "room",
-              value: Keyword.fetch!(opts, :room_id) || "",
-              inline: true
-            },
-            %{
-              name: "client url",
-              value: opts[:analytics_data][:url] || "",
-              inline: true
-            },
-            %{
-              name: "# of users in the room",
-              value: Keyword.fetch!(opts, :n_of_users) || "",
-              inline: true
-            },
-            %{
-              name: "analytics data",
-              value:
-                %{
-                  referrer: opts[:analytics_data][:referrer],
-                  # user_ip: opts[:analytics_data][:user_ip],
-                  screen:
-                    "#{opts[:analytics_data][:inner_width]}x#{opts[:analytics_data][:inner_height]}",
-                  language: opts[:analytics_data][:language]
-                  # user_agent: opts[:analytics_data][:user_agent]
-                }
-                |> Enum.map(fn {k, v} -> "#{k}: #{v}" end)
-                |> Enum.join("\n"),
-              inline: false
-            }
-          ]
-        }
-      ]
-    }
+    # %{
+    #   embeds: [
+    #     %{
+    #       title: "👋 user joined room",
+    #       # description: "",
+    #       # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+    #       color: color(:green),
+    #       fields: [
+    #         %{
+    #           name: "room",
+    #           value: Keyword.fetch!(opts, :room_id) || "",
+    #           inline: true
+    #         },
+    #         %{
+    #           name: "client url",
+    #           value: opts[:analytics_data][:url] || "",
+    #           inline: true
+    #         },
+    #         %{
+    #           name: "# of users in the room",
+    #           value: Keyword.fetch!(opts, :n_of_users) || "",
+    #           inline: true
+    #         },
+    #         %{
+    #           name: "analytics data",
+    #           value:
+    #             %{
+    #               referrer: opts[:analytics_data][:referrer],
+    #               # user_ip: opts[:analytics_data][:user_ip],
+    #               screen:
+    #                 "#{opts[:analytics_data][:inner_width]}x#{opts[:analytics_data][:inner_height]}",
+    #               language: opts[:analytics_data][:language]
+    #               # user_agent: opts[:analytics_data][:user_agent]
+    #             }
+    #             |> Enum.map(fn {k, v} -> "#{k}: #{v}" end)
+    #             |> Enum.join("\n"),
+    #           inline: false
+    #         }
+    #       ]
+    #     }
+    #   ]
+    # }
+    """
+    👋   user joined room     |     room: **#{opts[:room_id]}**     |     url: **#{opts[:analytics_data][:url]}**     |     **#{opts[:n_of_users]} users** in room     |     language: **#{opts[:analytics_data][:language]}**     |     referrer: **#{opts[:analytics_data][:referrer]}**     |     screen: **#{opts[:analytics_data][:inner_width]}x#{opts[:analytics_data][:inner_height]}**
+    """
     |> send_message(webhook_url_app_notifications())
   end
 
   def send_notification(:user_left_room, opts) do
-    %{
-      embeds: [
-        %{
-          title: "🤝 user left room",
-          # description: "",
-          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
-          color: color(:dark_navy),
-          fields: [
-            %{
-              name: "room",
-              value: Keyword.fetch!(opts, :room_id) || "",
-              inline: true
-            },
-            %{
-              name: "client url",
-              value: opts[:analytics_data][:url] || "",
-              inline: true
-            },
-            %{
-              name: "# of users in the room",
-              value: Keyword.fetch!(opts, :n_of_users) || "",
-              inline: true
-            }
-          ]
-        }
-      ]
-    }
+    # %{
+    #   embeds: [
+    #     %{
+    #       title: "🤝 user left room",
+    #       # description: "",
+    #       # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+    #       color: color(:dark_navy),
+    #       fields: [
+    #         %{
+    #           name: "room",
+    #           value: Keyword.fetch!(opts, :room_id) || "",
+    #           inline: true
+    #         },
+    #         %{
+    #           name: "client url",
+    #           value: opts[:analytics_data][:url] || "",
+    #           inline: true
+    #         },
+    #         %{
+    #           name: "# of users in the room",
+    #           value: Keyword.fetch!(opts, :n_of_users) || "",
+    #           inline: true
+    #         }
+    #       ]
+    #     }
+    #   ]
+    # }
+    """
+    🏁   user left room          |     room: **#{opts[:room_id]}**     |     url: **#{opts[:analytics_data][:url]}**     |     **#{opts[:n_of_users]} users** in room
+    """
     |> send_message(webhook_url_app_notifications())
   end
 
   def send_notification(:user_website_url_updated, opts) do
-    %{
-      embeds: [
-        %{
-          title: "🕸️ user website url updated",
-          # description: "",
-          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
-          color: color(:grey),
-          fields: [
-            %{
-              name: Keyword.fetch!(opts, :email) || "",
-              value: Keyword.fetch!(opts, :website_url) || "",
-              inline: true
-            }
-          ]
-        }
-      ]
-    }
+    # %{
+    #   embeds: [
+    #     %{
+    #       title: "🕸️ user website url updated",
+    #       # description: "",
+    #       # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+    #       color: color(:grey),
+    #       fields: [
+    #         %{
+    #           name: Keyword.fetch!(opts, :email) || "",
+    #           value: Keyword.fetch!(opts, :website_url) || "",
+    #           inline: true
+    #         }
+    #       ]
+    #     }
+    #   ]
+    # }
+    """
+    🕸️   user website url updated     |     email: **#{opts[:email]}**     |     website_url: **#{opts[:website_url]}**
+    """
     |> send_message(webhook_url_app_notifications())
   end
 
   def send_notification(:refresh_client_version_button_clicked, opts) do
-    %{
-      embeds: [
-        %{
-          title: "♻︎ refresh client version button clicked",
-          # description: "",
-          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
-          color: color(:grey),
-          fields: [
-            %{
-              name: "email",
-              value: Keyword.fetch!(opts, :email) || "",
-              inline: true
-            }
-          ]
-        }
-      ]
-    }
+    # %{
+    #   embeds: [
+    #     %{
+    #       title: "♻︎ refresh client version button clicked",
+    #       # description: "",
+    #       # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+    #       color: color(:grey),
+    #       fields: [
+    #         %{
+    #           name: "email",
+    #           value: Keyword.fetch!(opts, :email) || "",
+    #           inline: true
+    #         }
+    #       ]
+    #     }
+    #   ]
+    # }
+    """
+    🔄   refresh client version button clicked     |     email: **#{opts[:email]}**
+    """
     |> send_message(webhook_url_app_notifications())
   end
 
   def send_notification(:copy_script_tag_button_clicked, opts) do
-    %{
-      embeds: [
-        %{
-          title: "📋 copy script tag button clicked",
-          # description: "",
-          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
-          color: color(:grey),
-          fields: [
-            %{
-              name: "email",
-              value: Keyword.fetch!(opts, :email) || "",
-              inline: true
-            }
-          ]
-        }
-      ]
-    }
+    # %{
+    #   embeds: [
+    #     %{
+    #       title: "📋 copy script tag button clicked",
+    #       # description: "",
+    #       # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+    #       color: color(:grey),
+    #       fields: [
+    #         %{
+    #           name: "email",
+    #           value: Keyword.fetch!(opts, :email) || "",
+    #           inline: true
+    #         }
+    #       ]
+    #     }
+    #   ]
+    # }
+    """
+    📋   copy script tag button clicked     |     email: **#{opts[:email]}**
+    """
     |> send_message(webhook_url_app_notifications())
   end
 
   def send_notification(:install_extension_button_clicked, opts) do
-    %{
-      embeds: [
-        %{
-          title: "💾 install extension button clicked",
-          # description: "",
-          # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
-          color: color(:grey),
-          fields: [
-            %{
-              name: "email",
-              value: Keyword.fetch!(opts, :email) || "",
-              inline: true
-            }
-          ]
-        }
-      ]
-    }
+    # %{
+    #   embeds: [
+    #     %{
+    #       title: "💾 install extension button clicked",
+    #       # description: "",
+    #       # timestamp: DateTime.to_iso8601(DateTime.utc_now()),
+    #       color: color(:grey),
+    #       fields: [
+    #         %{
+    #           name: "email",
+    #           value: Keyword.fetch!(opts, :email) || "",
+    #           inline: true
+    #         }
+    #       ]
+    #     }
+    #   ]
+    # }
+    """
+    💾   install extension button clicked     |     email: **#{opts[:email]}**
+    """
     |> send_message(webhook_url_app_notifications())
   end
 
