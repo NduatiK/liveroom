@@ -113,7 +113,7 @@ defmodule Liveroom.Discord do
     #   ]
     # }
     """
-    ⊕   user registered     |     email: **#{opts[:email]}**     |     picture_url: **#{opts[:picture_url]}**
+    💜   user registered   |     email: **#{opts[:email]}**     |     picture_url: **#{opts[:picture_url]}**
     """
     |> send_message(webhook_url_app_notifications())
   end
@@ -186,7 +186,7 @@ defmodule Liveroom.Discord do
     #   ]
     # }
     """
-    👋   user joined room     |     room: **#{opts[:room_id]}**     |     url: **#{opts[:analytics_data][:url]}**     |     **#{opts[:n_of_users]} users** in room     |     language: **#{opts[:analytics_data][:language]}**     |     referrer: **#{opts[:analytics_data][:referrer]}**     |     screen: **#{opts[:analytics_data][:inner_width]}x#{opts[:analytics_data][:inner_height]}**
+    👋   user joined room     |     room: **#{opts[:room_id]}**     |     url: **#{opts[:analytics_data][:url]}**     |     **#{opts[:n_of_users]} users** in room     |     language: **#{opts[:analytics_data][:language]}**     |     referrer: #{(r = opts[:analytics_data][:referrer]) && r != "" && "**#{r}**"}     |     screen: **#{opts[:analytics_data][:inner_width]}x#{opts[:analytics_data][:inner_height]}**
     """
     |> send_message(webhook_url_app_notifications())
   end
