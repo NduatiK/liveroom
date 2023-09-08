@@ -22,6 +22,8 @@ defmodule Liveroom.Analytics.Umami do
           "content-type" => ["application/json"]
         }
       )
+    else
+      Logger.info("Mock-sending Umami event '#{event}': #{inspect(opts)}")
     end
   end
 

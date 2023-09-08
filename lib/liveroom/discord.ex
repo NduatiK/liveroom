@@ -294,11 +294,15 @@ defmodule Liveroom.Discord do
   ### Low-level API
 
   def send_message(message, webhook_url) when is_map(message) do
-    if is_discord_enabled?(), do: Req.post!(webhook_url, json: message)
+    if is_discord_enabled?(),
+      do: Req.post!(webhook_url, json: message),
+      else: Logger.info("Mock-sending Discord message: #{inspect(message)}")
   end
 
   def send_message(message, webhook_url) when is_binary(message) do
-    if is_discord_enabled?(), do: Req.post!(webhook_url, json: %{content: message})
+    if is_discord_enabled?(),
+      do: Req.post!(webhook_url, json: %{content: message}),
+      else: Logger.info("Mock-sending Discord message: #{inspect(message)}")
   end
 
   ### Helpers
