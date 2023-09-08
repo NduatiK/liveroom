@@ -11,7 +11,7 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
     <span>
       <Banner.render version={@version} latest_version="0.0.23" installed="installed on your website">
         <:when_no_version>
-          <div class="flex justify-between items-center flex-wrap gap-y-6 mb-4">
+          <div class="flex justify-between items-center flex-wrap gap-y-6">
             <p class="flex items-center gap-1.5 text-amber-600">
               <.icon name="hero-exclamation-triangle-mini" class="mt-0.5 h-5 w-5" />
               <span class="font-semibold">not installed</span>
@@ -20,9 +20,10 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
             <div class="flex items-center gap-4">
               <.button
                 phx-click="refresh_client_version"
-                class="flex justify-center items-center group !text-zinc-800 !bg-amber-50 hover:!bg-amber-200/30"
+                class="flex justify-center items-center group !text-zinc-800 !bg-amber-50 hover:!bg-amber-400/20"
               >
-                Check again <.icon name="hero-arrow-path-mini" class="inline-block ml-2 h-4 w-4" />
+                <span>Check again</span>
+                <.icon name="hero-arrow-path-mini" class="inline-block ml-2 h-4 w-4" />
               </.button>
 
               <.button

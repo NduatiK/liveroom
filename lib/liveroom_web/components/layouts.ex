@@ -18,7 +18,7 @@ defmodule LiveroomWeb.Layouts do
     <div class="relative min-h-[100dvh] grid grid-cols-1 grid-rows-[auto_1fr_auto] overflow-hidden">
       <.flash_group flash={@flash} />
 
-      <header class="w-full flex items-center py-4 px-4 md:px-8 mb-4 md:mb-8">
+      <header class="w-full flex justify-between items-center gap-4 py-4 px-4 md:px-8 mb-4 md:mb-8">
         <%!-- liveroom logo --%>
         <a
           href="https://liveroom.app"
@@ -31,6 +31,41 @@ defmodule LiveroomWeb.Layouts do
           />
           <span class="text-xl font-bold text-accent">Liveroom</span>
         </a>
+
+        <div
+          :if={@current_user}
+          class="flex flex-wrap justify-between items-center gap-y-4 gap-x-2 md:gap-x-8"
+        >
+          <.link
+            href={~p"/accounts/users/log_out"}
+            method="delete"
+            class="hover:bg-slate-200/60 py-1 px-2 font-medium rounded transition-colors"
+          >
+            Log&nbsp;out
+          </.link>
+
+          <.link
+            navigate={~p"/connected"}
+            class="flex items-center gap-2 hover:bg-slate-200/60 py-0.5 pl-2 pr-0.5 rounded transition-colors group"
+          >
+            <p :if={@current_user.email} class="hidden md:block font-medium select-none">
+              <%= @current_user.email %>
+            </p>
+
+            <img
+              :if={@current_user.picture_url}
+              src={@current_user.picture_url}
+              width="30px"
+              class="rounded-sm group-hover:opacity-95 transition-opacity"
+            />
+            <div
+              :if={!@current_user.picture_url && @current_user.email}
+              class="w-[30px] aspect-square flex justify-center items-center bg-zinc-800 text-white font-semibold rounded-sm uppercase group-hover:opacity-95 transition-opacity"
+            >
+              <%= String.at(@current_user.email, 0) %>
+            </div>
+          </.link>
+        </div>
       </header>
 
       <main class="h-full flex flex-col items-center overflow-x-hidden">

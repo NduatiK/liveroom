@@ -8,9 +8,10 @@ defmodule LiveroomWeb.ExtensionLive do
       phx-hook="PutAuthUserTokenHook"
       data-usertoken={@user_token}
       data-extensionid={Application.fetch_env!(:liveroom, :chrome_extension_id)}
-      class="mx-auto w-full max-w-md flex flex-col items-stretch font-semibold py-16"
+      class="w-full max-w-lg flex flex-col justify-center items-center gap-4 text-lg font-semibold py-32 px-4"
     >
-      You can now close this tab and go back to Google Meet
+      <p class="text-center">Login successful 🎉</p>
+      <p class="text-center">You can now close this tab and go back to Google Meet</p>
     </div>
     """
   end

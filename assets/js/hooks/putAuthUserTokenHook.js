@@ -2,7 +2,7 @@ export const PutAuthUserTokenHook = {
   mounted() {
     const userToken = this.el.dataset.usertoken;
 
-    chrome.runtime.sendMessage(
+    chrome?.runtime?.sendMessage(
       this.el.dataset.extensionid,
       { type: "setAuthUserToken", userToken }
       // function (response) {
