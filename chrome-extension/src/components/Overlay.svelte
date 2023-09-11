@@ -211,16 +211,24 @@
       socketOptions: import.meta.env.PROD ? { logger: null } : undefined,
     });
 
-    liveState.connect();
     liveState.addEventListener(
       "livestate-change",
       ({ detail: { state } }: { detail: { state: State } }) => {
+        // first time we get the state
+        if (!users && state.users) {
+          // NOTE: Auto-close overlay if just connected and already 2+ users are connected,
+          //       because probably no need to copy install code or website url.
+          if (open && Object.keys(state.users).length >= 2) open = false;
+        }
+
         roomId = state.room_id;
         me = state.me;
         users = state.users;
         currentUser = state.current_user;
       }
     );
+    liveState.connect();
+
     dispatch("session_started");
   }
 
@@ -280,6 +288,10 @@
     screensharingVideoEl?.removeEventListener("mouseup", handleMouseUp);
     window.removeEventListener("keydown", handleKeyDown);
     window.removeEventListener("keyup", handleKeyUp);
+    roomId = undefined;
+    me = undefined;
+    users = undefined;
+    currentUser = undefined;
   }
 
   function cleanStyles() {
