@@ -5,6 +5,7 @@
   import CopyButton from "./CopyButton.svelte";
   import UserName from "./UserName.svelte";
   import UsersCursors from "./UsersCursors.svelte";
+  import Kbd from "./Kbd.svelte";
   import {
     createSelectVideoElStyle,
     createPointerEventsOnVideoElStyle,
@@ -464,12 +465,7 @@
       </div>
     {:else if !screensharingVideoEl}
       <p class="instructions">Click on the screensharing video</p>
-      <p class="sub-instructions">
-        press <img
-          alt="Escape key"
-          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAClElEQVR4nO1ZPYsUQRAdUVFBRQ3kzs9ITAyMTDX3RFQOA3N/gN6dGPvBgYkbKC4s9PZ7PbMyIiaCqKybiCJGfqAImqgcCip6XuDHeiPF1cAyYLC7N3230g86mOmunnpdr2eqpqMoICAgIGAxwjk3QrJJcoZk5rMB+K7P3t8XCQBnfTvPf7cz/URCJvgBYIzkcOQZJIdJjosP6kv3kQFwT8M7VoqX3fkyoUSavRiLPjNjzFC0wDDGDCmR6a6Nc21GiwTs1Z9ApCQwRIRhj5QCBmkxSGuwpJVl2RKSJ0i+APAbwBTJyUqlsqIjT7ouX2OSvwA8tdYezO3TNN1AEgDeSmYN4D7Jfd6JADitudg7AHWSr/T6ivbf1jksyfM5IWvtNu1vaf9rkncAzGpatMU3kQ8A2s657Tp+LYDPck9XW+qXP865o3IN4ACAUyR3AtilpKdqtdoatb8M4I219rA3InEcr1dH2vLwvOXpdhzHewBc6yiQ2iQfADimi3BE79+cD396NlT9iyNfZZWLrdFobE3TdCmAUQBXAXzpIDUqUSoSSdN0lSyQMWalNyKy0VVas8653erIagDnZMPHcbyD5F0AifS1Wq1lJC/onJO5tEh+FNkV9swhb0T0wcd1zIzW1e/zza2OP9dVfyQyE+KyZ/I3k0RDx3/Kx5J8Uq1Wl3slIrDW7iV5A8BLAA+dcydFUtKXJMkmAJdIPpZ+krc6S1VjzDoAF0k+k1c4ySqAjf34M7+GJYGBCENESgGDtBikVQoYpMX/R1rTauz953UR9Xp9s6Y736JuofmTEBmPFhiYq2N6+4kteVHHscKE5E6RZyRz+ZqUBj97PlYQyOHKwB/0FCLTzI8ZBvLoLSAgICAgKgl/Aeu7ynZWblLrAAAAAElFTkSuQmCC"
-        /> to exit
-      </p>
+      <p class="sub-instructions">press <Kbd label="Esc" /> to exit</p>
     {:else}
       {#if users}
         <div class="users-names-list">
