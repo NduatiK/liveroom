@@ -327,6 +327,9 @@
   }
 
   function handleMouseClick(e: MouseEvent) {
+    // NOTE: To avoid triggering the full screen mode when double clicking.
+    e.stopPropagation();
+
     // User has to maintain the alt key while clicking (or enabled the "Allow my clicks" toggle)
     if (!(e.altKey || me?.is_alt_key_down)) return;
 
@@ -347,6 +350,9 @@
     }
   }
   function handleMouseDown(e: MouseEvent) {
+    // NOTE: To avoid triggering the full screen mode when double clicking.
+    e.stopPropagation();
+
     if (liveState && me?.id) {
       liveState.dispatchEvent(
         new CustomEvent("mouse_down", { detail: { user_id: me.id } })
