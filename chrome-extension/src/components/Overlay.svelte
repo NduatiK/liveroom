@@ -648,7 +648,7 @@
     align-items: center;
   }
   a.profilepic:hover {
-    background-color: rgb(161, 161, 170, 0.2) /* Tailwind neutral-400 */;
+    background-color: rgb(64, 64, 64); /* Tailwind neutral-700 */
   }
   img.profilepic {
     height: 1.5rem;
@@ -674,29 +674,23 @@
     margin: auto;
     padding-top: 1rem;
     color: rgb(229, 229, 229); /* Tailwind neutral-200 */
-    font-size: 1.2em;
     font-weight: 600;
     text-align: center;
   }
   .sub-instructions {
     margin: auto;
     padding: 1rem 1rem 0.75rem 1rem;
-    color: rgb(163, 163, 163); /* Tailwind neutral-400 */
-    font-size: 1em;
+    color: rgb(163, 163, 163, 0.5); /* Tailwind neutral-400 */
     font-weight: 400;
     text-align: center;
-  }
-  .sub-instructions img {
-    margin-bottom: -0.7rem;
-    width: 1.8rem;
-    color: white;
   }
 
   .users-names-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    padding-bottom: 0.5rem;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.3rem 0 0 0;
   }
 
   .buttons-container {
@@ -713,9 +707,6 @@
     gap: 1rem;
   }
 
-  .end-session-button {
-    margin-top: 0.5rem;
-  }
   .end-session-button:hover {
     color: rgb(239, 68, 68) !important; /* Tailwind red-500 */
     background-color: rgb(220, 38, 38, 0.1) !important; /* Tailwind red-600 */

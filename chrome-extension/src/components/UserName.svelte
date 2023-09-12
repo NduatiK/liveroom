@@ -53,10 +53,14 @@
 </p>
 
 <style>
+  /* unset */
+  p {
+    margin: 0;
+  }
+
   .user-name {
-    padding: 4px 10px;
-    font-size: 14px;
-    line-height: 20px;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.8rem;
     font-weight: 600;
     color: black;
     background-color: var(--color);
