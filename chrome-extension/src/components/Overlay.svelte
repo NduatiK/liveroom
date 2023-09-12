@@ -3,6 +3,7 @@
   import { LiveState } from "phx-live-state";
   import PoweredByLiveroom from "./PoweredByLiveroom.svelte";
   import CopyButton from "./CopyButton.svelte";
+  import ToggleInput from "./ToggleInput.svelte";
   import UserName from "./UserName.svelte";
   import UsersCursors from "./UsersCursors.svelte";
   import Kbd from "./Kbd.svelte";
@@ -479,6 +480,41 @@
         </div>
       {/if}
 
+      <div class="toggles-container">
+        <ToggleInput
+          label="Allow my clicks"
+          keyHint="Option"
+          checked={me?.is_alt_key_down}
+          handleChange={(e) => {
+            if (liveState && me?.id) {
+              liveState.dispatchEvent(
+                new CustomEvent(
+                  e.currentTarget?.checked ? "key_down" : "key_up",
+                  { detail: { user_id: me.id, key: "Alt" } }
+                )
+              );
+            }
+          }}
+        />
+
+        <!-- TODO: replace with "Block [client_name] clicks"? -->
+        <ToggleInput
+          label="Block their clicks"
+          keyHint="Space"
+          checked={me?.is_space_key_down}
+          handleChange={(e) => {
+            if (liveState && me?.id) {
+              liveState.dispatchEvent(
+                new CustomEvent(
+                  e.currentTarget?.checked ? "key_down" : "key_up",
+                  { detail: { user_id: me.id, key: " " } }
+                )
+              );
+            }
+          }}
+        />
+      </div>
+
       <div class="buttons-container">
         {#if currentUser}
           <CopyButton
@@ -691,6 +727,15 @@
     justify-content: center;
     gap: 1rem;
     padding: 0.3rem 0 0 0;
+  }
+
+  .toggles-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    font-weight: 600;
+    padding: 2rem 0.5rem;
   }
 
   .buttons-container {
