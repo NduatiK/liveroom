@@ -1,7 +1,7 @@
 {
   "name": "Liveroom",
   "description": "Real-time collaboration with live cursors over Google Meet screensharing",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "manifest_version": 3,
   "icons": {
     "16": "src/assets/liveroom_logo16.png",
