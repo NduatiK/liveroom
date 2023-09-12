@@ -7,6 +7,7 @@
   import UserName from "./UserName.svelte";
   import UsersCursors from "./UsersCursors.svelte";
   import Kbd from "./Kbd.svelte";
+  import { installationCode } from "./installationCode";
   import {
     createSelectVideoElStyle,
     createPointerEventsOnVideoElStyle,
@@ -191,9 +192,7 @@
     console.log(`[Liveroom Extension] Connecting to room '${roomId}'...`);
 
     liveState = new LiveState({
-      url: import.meta.env.PROD
-        ? "wss://liveroom.app/client_socket"
-        : "ws://localhost:4000/client_socket",
+      url: LIVESTATE_URL,
       topic: `liveroom-livestate:${roomId}`,
       params: {
         room_id: roomId,
@@ -443,6 +442,12 @@
       });
     }
   }
+
+  // CONSTANTS
+
+  const LIVESTATE_URL = import.meta.env.PROD
+    ? "wss://liveroom.app/client_socket"
+    : "ws://localhost:4000/client_socket";
 </script>
 
 <div
@@ -462,7 +467,18 @@
           />
         {/if}
 
-        <button on:click={() => (started = true)}>Start session</button>
+        <CopyButton
+          label="Copy installation code"
+          labelCopied="Code copied!"
+          textToCopy={installationCode(LIVESTATE_URL, roomId)}
+        />
+
+        <button
+          class="primary-button start-session-button"
+          on:click={() => (started = true)}
+        >
+          Start session
+        </button>
       </div>
     {:else if !screensharingVideoEl}
       <p class="instructions">Click on the screensharing video</p>
@@ -527,18 +543,7 @@
         <CopyButton
           label="Copy installation code"
           labelCopied="Code copied!"
-          textToCopy={`
-          const script = document.createElement("script");
-          script.type = "module";
-          script.src = "${
-            import.meta.env.PROD
-              ? "https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.23/dist/main.min.js"
-              : "http://localhost:5173/src/main.ts"
-          }";
-          script.setAttribute("data-url", "${liveState?.config.url}");
-          script.setAttribute("data-roomid", "${roomId}");
-          document.head.appendChild(script);
-          `}
+          textToCopy={installationCode(liveState?.config.url, roomId)}
         />
 
         <button
