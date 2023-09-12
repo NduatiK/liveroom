@@ -96,7 +96,7 @@
     liveState.addEventListener(
       "click-from-another-user",
       ({
-        detail: { from_user_id: _from_user_id, from_user_color, x, y },
+        detail: { x, y },
       }: {
         detail: {
           from_user_id: string;
@@ -112,10 +112,6 @@
           clientX: (window.innerWidth * parseFloat(x)) / 100,
           clientY: (window.innerHeight * parseFloat(y)) / 100,
         });
-        // to not be blocked if we are currently blocking client clicks
-        // @ts-ignore-next-line
-        ev.isOtherUser = true;
-
         // NOTE: elementFromPoint() is not working correctly if pointer-events is set to none.
         //       So we remove it temporarly if set, and set it back after the function call.
 
@@ -133,42 +129,11 @@
           document.head.appendChild(blockClickPointerEventsStyle);
         }
 
+        // NOTE: Not sure it is needed, but keeping it for now.
         if (
           clickedEl instanceof HTMLElement ||
           clickedEl instanceof SVGElement
         ) {
-          if (
-            // NOTE: Element is clickable if:
-            clickedEl.getAttribute("onclick") ||
-            clickedEl.getAttribute("href") ||
-            clickedEl.getAttribute("role") === "button" ||
-            clickedEl.getAttribute("type") === "button" ||
-            clickedEl.getAttribute("type") === "submit" ||
-            // clickedEl.getAttribute("type") === "checkbox" ||
-            // clickedEl.getAttribute("type") === "radio" ||
-            ["a", "button"].includes(clickedEl.tagName.toLowerCase())
-          ) {
-            const currentColor = clickedEl.style.color;
-            const currentBgColor = clickedEl.style.backgroundColor;
-
-            if (
-              clickedEl
-                .computedStyleMap()
-                .get("background-color")
-                ?.toString() !== "rgba(0, 0, 0, 0)"
-            ) {
-              clickedEl.style.color = "white";
-              clickedEl.style.backgroundColor = hexToRgbA(from_user_color, 0.6);
-            } else {
-              clickedEl.style.color = hexToRgbA(from_user_color, 0.6);
-            }
-
-            setTimeout(() => {
-              clickedEl.style.color = currentColor;
-              clickedEl.style.backgroundColor = currentBgColor;
-            }, 500);
-          }
-
           clickedEl.dispatchEvent(ev);
         }
       }
@@ -313,37 +278,14 @@
   // }
 
   function enableBlockClick() {
-    document.addEventListener("click", blockClick, true);
     document.head.appendChild(blockClickMouseStyle);
     document.head.appendChild(blockClickPointerEventsStyle);
     isClickBlocked = true;
   }
   function disableBlockClick() {
-    document.removeEventListener("click", blockClick, true);
     document.head.removeChild(blockClickMouseStyle);
     document.head.removeChild(blockClickPointerEventsStyle);
     isClickBlocked = false;
-  }
-
-  function blockClick(e: MouseEvent) {
-    // @ts-ignore-next-line
-    if (!e.isOtherUser) {
-      console.log("[Liveroom] Click blocked");
-      e.stopPropagation();
-      e.preventDefault();
-    }
-  }
-
-  function hexToRgbA(hex: string, opacity: number) {
-    let r = parseInt(hex.slice(1, 3), 16),
-      g = parseInt(hex.slice(3, 5), 16),
-      b = parseInt(hex.slice(5, 7), 16);
-
-    if (opacity) {
-      return "rgba(" + r + ", " + g + ", " + b + ", " + opacity + ")";
-    } else {
-      return "rgb(" + r + ", " + g + ", " + b + ")";
-    }
   }
 
   // Types
@@ -474,8 +416,7 @@
     background-color: var(--color);
     opacity: 0.25;
     transition: transform 100ms ease-out;
-    /* Tailwind 'shadow-sm' */
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); /* Tailwind 'shadow-sm' */
   }
   .user .halo[data-show="true"] {
     transform: scale(1);
