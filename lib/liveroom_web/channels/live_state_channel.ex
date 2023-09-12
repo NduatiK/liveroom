@@ -133,6 +133,16 @@ defmodule LiveroomWeb.LiveStateChannel do
     {:noreply, state}
   end
 
+  def handle_event("key_down", %{"key" => "Alt"} = _params, state) do
+    update_user(state, &put_in(&1.is_alt_key_down, true))
+    {:noreply, state}
+  end
+
+  def handle_event("key_up", %{"key" => "Alt"} = _params, state) do
+    update_user(state, &put_in(&1.is_alt_key_down, false))
+    {:noreply, state}
+  end
+
   def handle_event("key_down", %{"key" => " "} = _params, state) do
     update_user(state, &put_in(&1.is_space_key_down, true))
     {:noreply, state}

@@ -48,6 +48,7 @@ defmodule LiveroomWeb.Presence do
       msg: "",
       is_mouse_down: false,
       is_shift_key_down: false,
+      is_alt_key_down: false,
       is_space_key_down: false,
       hovered_elements: %{},
       focused_elements: %{},

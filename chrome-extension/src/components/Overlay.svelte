@@ -360,7 +360,7 @@
       );
     }
   }
-  const INTERESTING_KEYS = ["Shift", " "];
+  const INTERESTING_KEYS = ["Shift", "Alt", " "];
   function handleKeyDown(e: KeyboardEvent) {
     // NOTE: To avoid sending multiple keydown events when a key is held down.
     const firstTimeKeyIsPressed = !e.repeat;
