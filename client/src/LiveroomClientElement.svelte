@@ -3,7 +3,10 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
   import { LiveState } from "phx-live-state";
-  import { createBlockClickStyle } from "./stylesheets";
+  import {
+    createBlockClickMouseStyle,
+    createBlockClickPointerEventsStyle,
+  } from "./stylesheets";
   import type { User } from "./types/User";
 
   export let url: string;
@@ -11,9 +14,10 @@
   export let user_name: string;
 
   let liveState: LiveState;
-  let isClickBlocked = false;
+  let isClickBlocked: boolean = false;
 
-  let blockClickStyle = createBlockClickStyle();
+  let blockClickMouseStyle = createBlockClickMouseStyle();
+  let blockClickPointerEventsStyle = createBlockClickPointerEventsStyle();
 
   let me: User<"client">;
   let users: { [key: User["id"]]: User };
@@ -28,9 +32,7 @@
     users &&
     Object.values(users).some((u) => u.type == "admin" && u.is_space_key_down)
   ) {
-    document.head.appendChild(blockClickStyle);
-    document.addEventListener("click", blockClick, true);
-    isClickBlocked = true;
+    enableBlockClick();
   }
   $: if (
     isClickBlocked &&
@@ -39,9 +41,7 @@
       .filter((u) => u.type == "admin")
       .every((u) => !u.is_space_key_down)
   ) {
-    document.removeEventListener("click", blockClick);
-    document.head.removeChild(blockClickStyle);
-    isClickBlocked = false;
+    disableBlockClick();
   }
 
   onMount(async () => {
@@ -70,9 +70,7 @@
 
   onDestroy(() => {
     endSession();
-    if (document.head.contains(blockClickStyle)) {
-      document.head.removeChild(blockClickStyle);
-    }
+    disableBlockClick();
   });
 
   // HELPERS
@@ -94,7 +92,7 @@
       },
       socketOptions: import.meta.env.PROD ? { logger: null } : undefined,
     });
-    liveState.connect();
+
     liveState.addEventListener(
       "click-from-another-user",
       ({
@@ -114,10 +112,31 @@
           clientX: (window.innerWidth * parseFloat(x)) / 100,
           clientY: (window.innerHeight * parseFloat(y)) / 100,
         });
+        // to not be blocked if we are currently blocking client clicks
+        // @ts-ignore-next-line
+        ev.isOtherUser = true;
+
+        // NOTE: elementFromPoint() is not working correctly if pointer-events is set to none.
+        //       So we remove it temporarly if set, and set it back after the function call.
+
+        const pointerEventsNoneIsSet = document.head.contains(
+          blockClickPointerEventsStyle
+        );
+
+        if (pointerEventsNoneIsSet) {
+          document.head.removeChild(blockClickPointerEventsStyle);
+        }
 
         const clickedEl = document.elementFromPoint(ev.clientX, ev.clientY);
 
-        if (clickedEl instanceof HTMLElement) {
+        if (pointerEventsNoneIsSet) {
+          document.head.appendChild(blockClickPointerEventsStyle);
+        }
+
+        if (
+          clickedEl instanceof HTMLElement ||
+          clickedEl instanceof SVGElement
+        ) {
           if (
             // NOTE: Element is clickable if:
             clickedEl.getAttribute("onclick") ||
@@ -162,6 +181,7 @@
         users = state.users;
       }
     );
+    liveState.connect();
 
     // Setup event listeners
     // window.addEventListener('mousemove', throttledDispatchMouseMove);
@@ -292,9 +312,26 @@
   // 	};
   // }
 
+  function enableBlockClick() {
+    document.addEventListener("click", blockClick, true);
+    document.head.appendChild(blockClickMouseStyle);
+    document.head.appendChild(blockClickPointerEventsStyle);
+    isClickBlocked = true;
+  }
+  function disableBlockClick() {
+    document.removeEventListener("click", blockClick, true);
+    document.head.removeChild(blockClickMouseStyle);
+    document.head.removeChild(blockClickPointerEventsStyle);
+    isClickBlocked = false;
+  }
+
   function blockClick(e: MouseEvent) {
-    e.stopPropagation();
-    e.preventDefault();
+    // @ts-ignore-next-line
+    if (!e.isOtherUser) {
+      console.log("[Liveroom] Click blocked");
+      e.stopPropagation();
+      e.preventDefault();
+    }
   }
 
   function hexToRgbA(hex: string, opacity: number) {

@@ -327,8 +327,8 @@
   }
 
   function handleMouseClick(e: MouseEvent) {
-    // User has to maintain the alt key while clicking
-    if (!e.altKey) return;
+    // User has to maintain the alt key while clicking (or enabled the "Allow my clicks" toggle)
+    if (!(e.altKey || me?.is_alt_key_down)) return;
 
     if (liveState && me?.id) {
       const to_user_id = findScreensharingUser()?.id;
