@@ -426,6 +426,7 @@
     user-select: none;
     transform: translate(var(--x), var(--y));
     transition: transform 100ms linear;
+    will-change: transform;
   }
 
   .user .cursor {
