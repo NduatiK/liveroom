@@ -28,6 +28,9 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    color: rgb(250, 250, 250); /* Tailwind neutral-50 */
+    font-weight: 600;
+    font-size: 0.8rem;
   }
 
   .label-container {
@@ -61,7 +64,7 @@
     position: absolute;
     top: 0.125rem;
     left: 0.125rem;
-    background-color: white;
+    background-color: rgb(250, 250, 250); /* Tailwind neutral-50 */
     width: 0.95rem;
     height: 0.95rem;
     border-radius: 50%;

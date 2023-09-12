@@ -453,7 +453,7 @@
 >
   <div class="body">
     {#if !started}
-      <div class="start-buttons-container">
+      <div class="buttons-container">
         {#if currentUser}
           <CopyButton
             label="Copy website URL"
@@ -542,7 +542,7 @@
         />
 
         <button
-          class="end-session-button"
+          class="primary-button end-session-button"
           on:click={() => {
             started = false;
             screensharingVideoEl = undefined;
@@ -618,11 +618,13 @@
     display: flex;
     flex-direction: column;
     background-color: rgb(38, 38, 38); /* Tailwind neutral-800 */
-    border: 1px solid rgb(82, 82, 82, 0.2); /* Tailwind neutral-600 */
+    border: 1px solid rgb(163, 163, 163, 0.1); /* Tailwind neutral-400 */
     border-radius: 4px;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Tailwind shadow-md */
     overflow: auto;
-    border: 1px solid rgb(79, 70, 229, 0.3); /* Tailwind indigo-600 */
+  }
+  #liveroom-overlay[data-started="true"][data-hasvideoel="true"] {
+    border: 1px solid rgb(79, 70, 229, 0.2); /* Tailwind indigo-600 */
   }
   #liveroom-overlay[data-open="false"] {
     display: none;
@@ -634,22 +636,6 @@
   /* Move the popup down so that it doesn't get it the way of selecting the video element */
   /* transform: translateY(4rem); */
   /* } */
-
-  #liveroom-overlay button {
-    padding: 0.5rem 2rem;
-    border-radius: 4px;
-    border: 1px solid rgb(82, 82, 82); /* Tailwind neutral-600 */
-    background-color: rgb(38, 38, 38); /* Tailwind neutral-800 */
-    color: white;
-    font-weight: 700;
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Tailwind shadow-md */
-    cursor: pointer;
-    transition: color 100ms ease-out, background-color 100ms ease-out,
-      border-color 100ms ease-out;
-  }
-  #liveroom-overlay button:hover {
-    border-color: white;
-  }
 
   .body {
     flex: 1;
@@ -709,15 +695,14 @@
   .instructions {
     margin: auto;
     padding-top: 1rem;
-    color: rgb(229, 229, 229); /* Tailwind neutral-200 */
+    color: rgb(250, 250, 250); /* Tailwind neutral-50 */
     font-weight: 600;
     text-align: center;
   }
   .sub-instructions {
     margin: auto;
     padding: 1rem 1rem 0.75rem 1rem;
-    color: rgb(163, 163, 163, 0.5); /* Tailwind neutral-400 */
-    font-weight: 400;
+    color: rgb(163, 163, 163, 0.7); /* Tailwind neutral-400 */
     text-align: center;
   }
 
@@ -734,7 +719,6 @@
     flex-direction: column;
     align-items: stretch;
     gap: 1rem;
-    font-weight: 600;
     padding: 2rem 0.5rem;
   }
 
@@ -745,13 +729,28 @@
     gap: 0.5rem;
   }
 
-  .start-buttons-container {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1rem;
+  .primary-button {
+    padding: 0.5rem 2rem;
+    border-radius: 4px;
+    border: 1px solid rgb(82, 82, 82); /* Tailwind neutral-600 */
+    background-color: rgb(38, 38, 38); /* Tailwind neutral-800 */
+    color: rgb(250, 250, 250); /* Tailwind neutral-50 */
+    font-weight: 600;
+    font-size: 0.8rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Tailwind shadow-md */
+    cursor: pointer;
+    transition: color 100ms ease-out, background-color 100ms ease-out,
+      border-color 100ms ease-out;
+  }
+  .primary-button:hover {
+    border-color: rgb(250, 250, 250, 0.5); /* Tailwind neutral-50 */
   }
 
+  .start-session-button,
+  .end-session-button {
+    margin-top: 0.1rem;
+    font-size: 0.8rem;
+  }
   .end-session-button:hover {
     color: rgb(239, 68, 68) !important; /* Tailwind red-500 */
     background-color: rgb(220, 38, 38, 0.1) !important; /* Tailwind red-600 */

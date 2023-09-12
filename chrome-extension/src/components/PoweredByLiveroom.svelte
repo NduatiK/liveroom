@@ -15,15 +15,15 @@
     align-items: center;
     margin: unset;
     font-size: 0.6rem;
-    color: rgb(163, 163, 163, 0.7); /* Tailwind neutral-400 */
+    color: rgb(163, 163, 163, 0.5); /* Tailwind neutral-400 */
   }
 
   .powered-by a {
     display: flex;
     align-items: center;
-    gap: 0.1em;
-    margin-left: 0.4em;
-    color: rgb(163, 163, 163, 0.7); /* Tailwind neutral-400 */
+    gap: 0.1rem;
+    margin-left: 0.3rem;
+    color: rgb(163, 163, 163, 0.5); /* Tailwind neutral-400 */
     font-weight: 500;
     transition: color 100ms ease-out;
     text-decoration: none;

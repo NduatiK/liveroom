@@ -134,7 +134,7 @@
   .toggle-btn {
     color: white;
     background-color: rgb(38, 38, 38); /* Tailwind neutral-800 */
-    border: 1px solid rgb(163, 163, 163, 0.2); /* Tailwind neutral-400 */
+    border: 1px solid rgb(163, 163, 163, 0.1); /* Tailwind neutral-400 */
     border-radius: 100%;
     height: 39px; /* same as Google Meet toolbar buttons */
     width: 39px; /* same as Google Meet toolbar buttons */
@@ -145,14 +145,14 @@
     cursor: pointer;
     transition: color 100ms ease-out, border-color 100ms ease-out;
   }
-  .toggle-btn[data-issessionactive="true"] {
-    color: rgb(79, 70, 229, 0.9); /* Tailwind indigo-600 */
-    /* background-color: rgb(38, 38, 38, 0.3); Tailwind neutral-800 */
-    border-color: rgb(79, 70, 229, 0.3); /* Tailwind indigo-600 */
-  }
-  /* .toggle-btn[data-issessionactive="true"]:hover { */
   .toggle-btn:hover {
+    border-color: rgb(163, 163, 163, 0.3); /* Tailwind neutral-400 */
+  }
+  .toggle-btn[data-issessionactive="true"] {
     color: rgb(79, 70, 229); /* Tailwind indigo-600 */
+    border-color: rgb(79, 70, 229, 0.2); /* Tailwind indigo-600 */
+  }
+  .toggle-btn[data-issessionactive="true"]:hover {
     border-color: rgb(79, 70, 229, 0.8); /* Tailwind indigo-600 */
   }
 

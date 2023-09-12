@@ -79,16 +79,16 @@
     align-items: center;
     gap: 0.3rem;
     padding: 0.5rem;
-    color: white;
+    color: rgb(250, 250, 250); /* Tailwind neutral-50 */
     background-color: rgb(38, 38, 38); /* Tailwind neutral-800 */
     border: none;
     border-radius: 4px;
-    font-weight: 600;
+    font-size: 0.8rem;
     cursor: pointer;
     transition: color 100ms ease-out, background-color 100ms ease-out;
   }
   button:hover {
-    background-color: rgb(64, 64, 64); /* Tailwind neutral-700 */
+    background-color: rgb(64, 64, 64, 0.8); /* Tailwind neutral-700 */
   }
   button[data-copied="true"] {
     width: fit-content;
@@ -99,6 +99,6 @@
   }
 
   button svg {
-    color: rgb(245, 245, 245); /* Tailwind neutral-100 */
+    color: rgb(229, 229, 229); /* Tailwind neutral-200 */
   }
 </style>
