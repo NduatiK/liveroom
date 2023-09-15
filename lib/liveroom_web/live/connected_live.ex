@@ -15,11 +15,11 @@ defmodule LiveroomWeb.ConnectedLive do
       phx-hook="SendExtensionVersionHook"
       class="w-[min(100%,800px)] flex flex-col items-stretch gap-8 px-4 pb-24"
     >
-      <div class="border border-zinc-600/30 bg-zinc-200/25 rounded shadow p-8">
+      <div class="mb-12 border border-zinc-600/30 bg-zinc-200/10 rounded-xl shadow p-4 md:p-8">
         <p class="mb-4">
-          To start collaborating with your customers, you need to complete 2 simple steps:
+          To start collaborating with your customers, you need to <span class="font-semibold">complete 2 simple steps</span>:
         </p>
-        <ul class="list-disc list-inside">
+        <ul class="list-decimal list-inside">
           <li>Install the <b>Liveroom Script</b> on your product</li>
           <li>Install the <b>Liveroom Chrome Extension</b> on your computer</li>
         </ul>
@@ -28,7 +28,9 @@ defmodule LiveroomWeb.ConnectedLive do
         </p>
       </div>
 
-      <h2 id="script" class="mt-8 text-lg font-semibold tracking-tight">1. Liveroom Script</h2>
+      <h2 id="script" class="text-zinc-500 text-lg font-extrabold uppercase tracking-tight">
+        Liveroom Script
+      </h2>
 
       <div class="flex items-baseline flex-wrap gap-y-4 gap-x-6">
         <p>Fill in the URL of your product:</p>
@@ -38,7 +40,7 @@ defmodule LiveroomWeb.ConnectedLive do
           id="website_form"
           phx-submit="save"
           phx-change="validate"
-          class="w-[min(100%,320px)] flex [&>*]:w-full items-start gap-4"
+          class="w-[min(100%,320px)] flex [&>*]:w-full items-center gap-4"
         >
           <.input
             field={@form[:website_url]}
@@ -60,8 +62,8 @@ defmodule LiveroomWeb.ConnectedLive do
         current_user_email={@current_user.email}
       />
 
-      <h2 id="extension" class="mt-8 text-lg font-semibold tracking-tight">
-        2. Liveroom Chrome Extension
+      <h2 id="extension" class="mt-20 text-zinc-500 text-lg font-extrabold uppercase tracking-tight">
+        Liveroom Chrome Extension
       </h2>
 
       <.live_component

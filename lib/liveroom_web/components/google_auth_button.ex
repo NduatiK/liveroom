@@ -9,13 +9,13 @@ defmodule LiveroomWeb.Components.GoogleAuthButton do
     <a
       href={@url}
       class={[
-        "mt-4 inline-flex justify-center items-center phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 p-2 pr-3",
-        "text-sm font-semibold leading-6 text-white active:text-white/80 transition-colors"
+        "inline-flex justify-center items-center phx-submit-loading:opacity-75 rounded bg-zinc-900 hover:bg-zinc-700 py-2.5 px-2",
+        "text-sm font-semibold text-white active:text-white/80 transition-colors"
       ]}
     >
       <div class="flex justify-center items-center">
         <svg
-          width="20"
+          width="18"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 533.5 544.3"
           class="inline-flex items-center"
@@ -39,7 +39,7 @@ defmodule LiveroomWeb.Components.GoogleAuthButton do
         </svg>
       </div>
 
-      <div class="ml-3">
+      <div class="ml-2">
         <%= @label %>
       </div>
     </a>

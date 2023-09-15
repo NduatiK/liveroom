@@ -106,7 +106,7 @@ defmodule LiveroomWeb.HomeLive do
 
       <div class="flex flex-col items-center gap-4 mb-8">
         <.button_link phx-click={JS.push("get_started_clicked", value: %{location: "hero"})}>
-          Get started
+          Get started for free
         </.button_link>
         <.button_link_secondary
           href="https://tally.so/r/wQ1EvX"
@@ -220,7 +220,7 @@ defmodule LiveroomWeb.HomeLive do
     ~H"""
     <.link
       tabindex="-1"
-      class="rounded-[10px] bg-slate-900 md:hover:bg-slate-900/90 text-white text-lg font-semibold px-6 py-4 transition-colors"
+      class="rounded bg-slate-900 md:hover:bg-slate-900/90 text-white font-semibold px-6 py-2.5 transition-colors"
       {@rest}
     >
       <%= render_slot(@inner_block) %>
@@ -235,7 +235,7 @@ defmodule LiveroomWeb.HomeLive do
     ~H"""
     <.link
       tabindex="-1"
-      class="rounded-[10px] bg-zinc-100/20 md:hover:bg-zinc-100/75 font-semibold px-3 py-2 transition-colors"
+      class="rounded md:hover:bg-zinc-100 text-sm font-semibold px-2 py-1 transition-colors"
       {@rest}
     >
       <%= render_slot(@inner_block) %>
@@ -359,7 +359,7 @@ defmodule LiveroomWeb.HomeLive do
 
     <div class="flex flex-col items-center gap-4 mt-12">
       <.button_link phx-click={JS.push("get_started_clicked", value: %{location: "bottom"})}>
-        Get started
+        Get started for free
       </.button_link>
       <.button_link_secondary
         href="https://tally.so/r/wQ1EvX"

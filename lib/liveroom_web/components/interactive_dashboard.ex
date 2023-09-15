@@ -297,7 +297,7 @@ defmodule LiveroomWeb.Components.InteractiveDashboard do
       id={@id}
       phx-hook="BroadcastHoveredHook"
       data-hovered-by={@hovered_by[:name]}
-      class="py-3 px-8 bg-black md:hover:bg-zinc-600 rounded-md transition-colors duration-300"
+      class="py-3 px-8 bg-slate-400 md:hover:bg-slate-600 rounded-md transition-colors duration-300"
       style={@hovered_by && "background-color: #{@hovered_by.color};"}
       tabindex="-1"
     >

@@ -36,9 +36,9 @@ defmodule LiveroomWeb.Components.Banner do
           <%= render_slot(@when_no_version) %>
         <% version -> %>
           <div class="flex justify-between items-center flex-wrap gap-4">
-            <p class="flex items-center gap-1.5 text-green-600">
-              <.icon name="hero-check-circle-mini" class="mt-0.5 h-5 w-5" />
-              <span class="font-semibold"><%= @installed %></span>
+            <p class="flex items-center gap-1.5">
+              <.icon name="hero-check-circle-mini" class="h-5 w-5 text-green-600" />
+              <span class="font-semibold text-zinc-800"><%= @installed %></span>
             </p>
 
             <p class="relative">

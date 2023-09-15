@@ -55,8 +55,8 @@ defmodule LiveroomWeb.Accounts.UserRegistrationLive do
       >
         <.input field={@form[:email]} type="email" label="Email" required />
         <:actions>
-          <.button class="w-full flex justify-center items-center">
-            <.icon name="hero-envelope" class="mr-3" />Send me a link
+          <.button class="w-full flex justify-center items-center py-2.5">
+            <.icon name="hero-envelope" class="mr-2" />Sign up with email
           </.button>
         </:actions>
       </.simple_form>

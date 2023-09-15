@@ -23,7 +23,7 @@ defmodule LiveroomWeb.Layouts do
         <a
           href="https://liveroom.app"
           target="_blank"
-          class="flex items-center py-1 pl-1 pr-3 font-semibold rounded-md hover:bg-slate-200/60 transition-colors"
+          class="flex items-center pr-2 font-semibold rounded-md hover:bg-slate-200/60 transition-colors"
         >
           <img
             src={LiveroomWeb.Endpoint.static_url() <> ~p"/images/liveroom_logo.png"}
@@ -46,7 +46,7 @@ defmodule LiveroomWeb.Layouts do
 
           <.link
             navigate={~p"/connected"}
-            class="flex items-center gap-2 hover:bg-slate-200/60 py-0.5 pl-2 pr-0.5 rounded transition-colors group"
+            class="flex items-center gap-2 hover:bg-slate-200/60 py-1 pl-2 pr-1 rounded transition-colors group"
           >
             <p :if={@current_user.email} class="hidden md:block font-medium select-none">
               <%= @current_user.email %>
@@ -55,12 +55,12 @@ defmodule LiveroomWeb.Layouts do
             <img
               :if={@current_user.picture_url}
               src={@current_user.picture_url}
-              width="30px"
+              width="25px"
               class="rounded-sm group-hover:opacity-95 transition-opacity"
             />
             <div
               :if={!@current_user.picture_url && @current_user.email}
-              class="w-[30px] aspect-square flex justify-center items-center bg-zinc-800 text-white font-semibold rounded-sm uppercase group-hover:opacity-95 transition-opacity"
+              class="w-[25px] aspect-square flex justify-center items-center bg-zinc-800 text-white text-sm font-semibold rounded-sm uppercase group-hover:opacity-95 transition-opacity"
             >
               <%= String.at(@current_user.email, 0) %>
             </div>
