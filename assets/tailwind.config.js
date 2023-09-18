@@ -14,6 +14,7 @@ module.exports = {
     extend: {
       colors: {
         brand: colors.slate[900],
+        dark: colors.zinc,
         gray: colors.neutral,
         muted: colors.slate[500],
         background: colors.white,

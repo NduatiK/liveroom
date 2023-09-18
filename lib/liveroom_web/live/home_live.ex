@@ -64,7 +64,7 @@ defmodule LiveroomWeb.HomeLive do
       <.features />
     </.section>
 
-    <.section class="bg-zinc-50 border-4 border-t-0 border-black rounded-b-3xl w-[calc(100%+8px)] self-center">
+    <.section class="bg-dark-50 border-4 border-t-0 border-black rounded-b-3xl w-[calc(100%+8px)] self-center">
       <.call_to_action />
     </.section>
 
@@ -220,7 +220,7 @@ defmodule LiveroomWeb.HomeLive do
     ~H"""
     <.link
       tabindex="-1"
-      class="rounded bg-slate-900 md:hover:bg-slate-900/90 text-white font-semibold px-6 py-2.5 transition-colors"
+      class="rounded bg-dark-900 md:hover:bg-dark-900/90 text-white font-semibold px-6 py-2.5 transition-colors"
       {@rest}
     >
       <%= render_slot(@inner_block) %>
@@ -235,7 +235,7 @@ defmodule LiveroomWeb.HomeLive do
     ~H"""
     <.link
       tabindex="-1"
-      class="rounded md:hover:bg-zinc-100 text-sm font-semibold px-2 py-1 transition-colors"
+      class="rounded md:hover:bg-dark-100 text-sm font-semibold px-2 py-1 transition-colors"
       {@rest}
     >
       <%= render_slot(@inner_block) %>

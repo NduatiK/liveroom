@@ -9,7 +9,7 @@ defmodule LiveroomWeb.Components.GoogleAuthButton do
     <a
       href={@url}
       class={[
-        "inline-flex justify-center items-center phx-submit-loading:opacity-75 rounded bg-zinc-900 hover:bg-zinc-700 py-2.5 px-2",
+        "inline-flex justify-center items-center phx-submit-loading:opacity-75 rounded bg-dark-900 hover:bg-dark-700 py-2.5 px-2",
         "text-sm font-semibold text-white active:text-white/80 transition-colors"
       ]}
     >

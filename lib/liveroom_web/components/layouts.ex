@@ -22,7 +22,7 @@ defmodule LiveroomWeb.Layouts do
         <%!-- liveroom logo --%>
         <.link
           navigate={~p"/"}
-          class="flex items-center pr-2 font-semibold rounded-md hover:bg-slate-200/60 transition-colors"
+          class="flex items-center pr-2 font-semibold rounded-md hover:bg-dark-200/60 transition-colors"
         >
           <img
             src={LiveroomWeb.Endpoint.static_url() <> ~p"/images/liveroom_logo.png"}
@@ -39,14 +39,14 @@ defmodule LiveroomWeb.Layouts do
           <.link
             href={~p"/accounts/users/log_out"}
             method="delete"
-            class="hover:bg-slate-200/60 py-1 px-2 font-medium rounded transition-colors"
+            class="hover:bg-dark-200/60 py-1 px-2 font-medium rounded transition-colors"
           >
             Log&nbsp;out
           </.link>
 
           <.link
             navigate={~p"/connected"}
-            class="flex items-center gap-2 hover:bg-slate-200/60 py-1 pl-2 pr-1 rounded transition-colors group"
+            class="flex items-center gap-2 hover:bg-dark-200/60 py-1 pl-2 pr-1 rounded transition-colors group"
           >
             <%!-- user email --%>
             <p :if={@current_user.email} class="hidden md:block font-medium select-none">
@@ -63,7 +63,7 @@ defmodule LiveroomWeb.Layouts do
             />
             <div
               :if={!@current_user.picture_url && @current_user.email}
-              class="w-[25px] aspect-square flex justify-center items-center bg-zinc-800 text-white text-sm font-semibold rounded-sm uppercase group-hover:opacity-95 transition-opacity"
+              class="w-[25px] aspect-square flex justify-center items-center bg-dark-800 text-white text-sm font-semibold rounded-sm uppercase group-hover:opacity-95 transition-opacity"
             >
               <%= String.at(@current_user.email, 0) %>
             </div>

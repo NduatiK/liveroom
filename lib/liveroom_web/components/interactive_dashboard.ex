@@ -12,7 +12,7 @@ defmodule LiveroomWeb.Components.InteractiveDashboard do
     ~H"""
     <div class={[
       "relative grid grid-cols-[minmax(150px,_25%)_1fr]",
-      "bg-zinc-50 border-4 border-accent shadow-lg rounded-xl overflow-hidden",
+      "bg-dark-50 border-4 border-accent shadow-lg rounded-xl overflow-hidden",
       @class
     ]}>
       <nav class="bg-background px-4 py-6 border-r-gray-200 border-r">
@@ -72,7 +72,7 @@ defmodule LiveroomWeb.Components.InteractiveDashboard do
 
           <div class="bg-white border border-gray-200 w-full rounded-md shadow-md flex h-full p-6">
             <div class="flex flex-col gap-4">
-              <.squeleton class="bg-slate-300 w-12" />
+              <.squeleton class="bg-gray-300 w-12" />
               <.interactive_text_input
                 id="interactive_form"
                 input_id="search_input_1"
@@ -281,7 +281,7 @@ defmodule LiveroomWeb.Components.InteractiveDashboard do
         "cursor-pointer transition-colors duration-300 before:transition-colors before:duration-300"
       ]}
     >
-      <.squeleton class="bg-slate-300" />
+      <.squeleton class="bg-gray-300" />
     </li>
     """
   end
@@ -297,7 +297,7 @@ defmodule LiveroomWeb.Components.InteractiveDashboard do
       id={@id}
       phx-hook="BroadcastHoveredHook"
       data-hovered-by={@hovered_by[:name]}
-      class="py-3 px-8 bg-slate-400 md:hover:bg-slate-600 rounded-md transition-colors duration-300"
+      class="py-3 px-8 bg-gray-400 md:hover:bg-gray-600 rounded-md transition-colors duration-300"
       style={@hovered_by && "background-color: #{@hovered_by.color};"}
       tabindex="-1"
     >
@@ -322,8 +322,8 @@ defmodule LiveroomWeb.Components.InteractiveDashboard do
       }
       class={[
         "relative cursor-pointer",
-        "bg-white border border-gray-200 md:hover:border-slate-500 focus:border-slate-500 focus-visible:border-slate-500",
-        "ring-inset ring-slate-500 md:hover:ring-[3px] focus:ring-0 focus-visible:ring-0",
+        "bg-white border border-gray-200 md:hover:border-gray-500 focus:border-gray-500 focus-visible:border-gray-500",
+        "ring-inset ring-gray-500 md:hover:ring-[3px] focus:ring-0 focus-visible:ring-0",
         "outline-none focus:outline-none focus-visible:outline-none",
         "rounded-md shadow-md",
         "flex flex-col p-6 items-start gap-4",
@@ -333,7 +333,7 @@ defmodule LiveroomWeb.Components.InteractiveDashboard do
       {@rest}
     >
       <.squeleton class="bg-gray-200 w-10" />
-      <.squeleton class="bg-slate-300 w-24" />
+      <.squeleton class="bg-gray-300 w-24" />
 
       <div
         data-hovered-by={@hovered_by[:name]}
@@ -389,8 +389,8 @@ defmodule LiveroomWeb.Components.InteractiveDashboard do
           "py-1 px-2",
           "text-xs text-gray-500 font-medium placeholder:text-gray-300 rounded",
           "outline-none focus:outline-none focus:ring-0",
-          "border border-gray-200 md:hover:border-slate-500 focus:border-slate-500",
-          "ring-inset focus:ring-[3px] ring-slate-500 focus:ring-slate-500",
+          "border border-gray-200 md:hover:border-gray-500 focus:border-gray-500",
+          "ring-inset focus:ring-[3px] ring-gray-500 focus:ring-gray-500",
           "data-[focused-by]:ring-[3px]"
         ]}
         style={

@@ -10,7 +10,7 @@ defmodule LiveroomWeb.Components.UserBanner do
     <div class={[
       "fixed bottom-0 inset-x-0",
       "flex justify-center items-center py-6 px-6",
-      "bg-white border-t border-slate-200",
+      "bg-white border-t border-dark-200",
       "shadow-2xl",
       @class
     ]}>
@@ -32,7 +32,7 @@ defmodule LiveroomWeb.Components.UserBanner do
         <a
           href="https://liveroom.app"
           target="_blank"
-          class="flex items-center py-1 pl-1 pr-3 font-semibold rounded-md hover:bg-slate-200/60 transition-colors"
+          class="flex items-center py-1 pl-1 pr-3 font-semibold rounded-md hover:bg-dark-200/60 transition-colors"
         >
           <img
             src={LiveroomWeb.Endpoint.static_url() <> ~p"/images/liveroom_logo.png"}

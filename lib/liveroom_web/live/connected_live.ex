@@ -15,7 +15,7 @@ defmodule LiveroomWeb.ConnectedLive do
       phx-hook="SendExtensionVersionHook"
       class="w-[min(100%,800px)] flex flex-col items-stretch gap-8 px-4 pb-24"
     >
-      <div class="mb-12 border border-zinc-600/30 bg-zinc-200/10 rounded-xl shadow p-4 md:p-8">
+      <div class="mb-12 border border-dark-600/30 bg-dark-200/10 rounded-xl shadow p-4 md:p-8">
         <p class="mb-4">
           To start collaborating with your customers, you need to <span class="font-semibold">complete 2 simple steps</span>:
         </p>
@@ -28,7 +28,7 @@ defmodule LiveroomWeb.ConnectedLive do
         </p>
       </div>
 
-      <h2 id="script" class="text-zinc-500 text-lg font-extrabold uppercase tracking-tight">
+      <h2 id="script" class="text-dark-500 text-lg font-extrabold uppercase tracking-tight">
         Liveroom Script
       </h2>
 
@@ -47,7 +47,7 @@ defmodule LiveroomWeb.ConnectedLive do
             type="text"
             placeholder="https://mysaas.com"
             required
-            input_class="!mt-[-1px] placeholder:text-zinc-400/50"
+            input_class="!mt-[-1px] placeholder:text-dark-400/50"
           />
           <.button class="!w-fit flex justify-center items-center px-4">Save</.button>
         </.form>
@@ -62,7 +62,7 @@ defmodule LiveroomWeb.ConnectedLive do
         current_user_email={@current_user.email}
       />
 
-      <h2 id="extension" class="mt-20 text-zinc-500 text-lg font-extrabold uppercase tracking-tight">
+      <h2 id="extension" class="mt-20 text-dark-500 text-lg font-extrabold uppercase tracking-tight">
         Liveroom Chrome Extension
       </h2>
 

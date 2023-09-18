@@ -6,7 +6,7 @@ defmodule LiveroomWeb.AdminLive do
 
   def render(assigns) do
     ~H"""
-    <div id="admin_live" class="min-h-[100dvh] flex flex-col items-stretch space-y-8 bg-slate-100">
+    <div id="admin_live" class="min-h-[100dvh] flex flex-col items-stretch space-y-8 bg-dark-100">
       <SignInWithGoogleButton.render oauth_google_url={@oauth_google_url} />
 
       <div class="flex flex-wrap items-start gap-8 mt-8 mb-32 px-8">
@@ -114,7 +114,7 @@ defmodule LiveroomWeb.AdminLive do
                 <span
                   :if={@users[@card_user_id].type == :admin}
                   name="hero-shield-check-solid"
-                  class="text-xs text-neutral-800 bg-neutral-800/10 rounded-full py-0.5 px-2"
+                  class="text-xs text-gray-800 bg-gray-800/10 rounded-full py-0.5 px-2"
                 >
                   admin
                 </span>
@@ -124,7 +124,7 @@ defmodule LiveroomWeb.AdminLive do
               </p>
             </div>
 
-            <table class="w-fit my-1 mx-2 text-xs text-neutral-800/75">
+            <table class="w-fit my-1 mx-2 text-xs text-gray-800/75">
               <%!-- user_id --%>
               <tr class="[&_td]:px-2">
                 <td class="select-none">user_id</td>

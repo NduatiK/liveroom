@@ -34,11 +34,11 @@ defmodule LiveroomWeb.Accounts.UserLoginLive do
         </:actions>
       </.simple_form>
 
-      <div class="flex justify-center mt-12 mb-8 mx-16 border-b border-zinc-800/10" /> --%>
+      <div class="flex justify-center mt-12 mb-8 mx-16 border-b border-dark-800/10" /> --%>
 
       <Components.GoogleAuthButton.render url={@oauth_google_url} label="Sign in with Google" />
 
-      <div class="flex justify-center mt-12 mb-8 mx-16 border-b border-zinc-800/10" />
+      <div class="flex justify-center mt-12 mb-8 mx-16 border-b border-dark-800/10" />
 
       <.simple_form
         for={@form}

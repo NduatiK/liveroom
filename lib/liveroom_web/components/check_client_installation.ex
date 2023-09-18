@@ -20,7 +20,7 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
             <div class="flex items-center gap-4">
               <.button
                 phx-click="refresh_client_version"
-                class="flex justify-center items-center group !text-zinc-800 !bg-amber-50 hover:!bg-amber-400/20"
+                class="flex justify-center items-center group !text-dark-800 !bg-amber-50 hover:!bg-amber-400/20"
               >
                 <span>Check again</span>
                 <.icon name="hero-arrow-path-mini" class="inline-block ml-2 h-4 w-4" />
@@ -30,7 +30,7 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
                 id="copy_script_tag"
                 phx-click={JS.push("copy_script_tag", target: @myself)}
                 phx-hook="CopyToClipboardButtonHook"
-                class="flex justify-center items-center group disabled:bg-zinc-900 disabled:hover:bg-zinc-900"
+                class="flex justify-center items-center group disabled:bg-dark-900 disabled:hover:bg-dark-900"
               >
                 <span class="hidden group-data-[copied=true]:block">Copied!</span>
                 <span class="group-data-[copied=true]:hidden">Copy</span>

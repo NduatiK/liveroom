@@ -22,23 +22,23 @@ defmodule LiveroomWeb.Components.Banner do
         "data-[hasversion=false]:shadow-amber-950/5",
         "data-[hasversion=false]:outline-amber-600/10",
         "data-[hasversion=false]:from-amber-400/5 data-[hasversion=false]:via-amber-400/10 data-[hasversion=false]:to-amber-400/20",
-        "data-[isloading=true]:shadow-zinc-950/5",
-        "data-[isloading=true]:outline-zinc-600/10",
-        "data-[isloading=true]:from-zinc-200/5 data-[isloading=true]:via-zinc-200/10 data-[isloading=true]:to-zinc-200/20",
+        "data-[isloading=true]:shadow-dark-950/5",
+        "data-[isloading=true]:outline-dark-600/10",
+        "data-[isloading=true]:from-dark-200/5 data-[isloading=true]:via-dark-200/10 data-[isloading=true]:to-dark-200/20",
         "data-[hasversion=false]:shadow-md",
         @class
       ]}
     >
       <%= case @version do %>
         <% nil -> %>
-          <p class="mx-auto text-zinc-950/25 font-semibold">checking...</p>
+          <p class="mx-auto text-dark-950/25 font-semibold">checking...</p>
         <% "noversion" -> %>
           <%= render_slot(@when_no_version) %>
         <% version -> %>
           <div class="flex justify-between items-center flex-wrap gap-4">
             <p class="flex items-center gap-1.5">
               <.icon name="hero-check-circle-mini" class="h-5 w-5 text-green-600" />
-              <span class="font-semibold text-zinc-800"><%= @installed %></span>
+              <span class="font-semibold text-dark-800"><%= @installed %></span>
             </p>
 
             <p class="relative">

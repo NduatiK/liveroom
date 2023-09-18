@@ -8,11 +8,11 @@ defmodule LiveroomWeb.ClientLive do
     ~H"""
     <CursorsPlayground.render current_user_id={@_liveroom_user_id} users={@_liveroom_users} />
 
-    <div id="client_live" class="min-h-[100dvh] flex flex-col bg-slate-50">
+    <div id="client_live" class="min-h-[100dvh] flex flex-col bg-dark-50">
       <%!-- Current user --%>
       <div class="space-y-8 mt-8 px-8">
         <h2 class="font-semibold">You</h2>
-        <ul id="current_user" class="space-y-8 text-sm text-neutral-800/75">
+        <ul id="current_user" class="space-y-8 text-sm text-gray-800/75">
           <.live_component
             :if={current_user = @_liveroom_users[@_liveroom_user_id]}
             module={__MODULE__.User}
@@ -29,7 +29,7 @@ defmodule LiveroomWeb.ClientLive do
       <%!-- Other users --%>
       <div class="space-y-8 mt-16 mb-32 px-8">
         <h2 class="font-semibold">Other users in the session</h2>
-        <ul id="other_users" class="space-y-8 text-sm text-neutral-800/75">
+        <ul id="other_users" class="space-y-8 text-sm text-gray-800/75">
           <.live_component
             :for={{user_id, user} <- @_liveroom_users}
             :if={_is_other_user = user_id != @_liveroom_user_id}
