@@ -57,6 +57,7 @@ defmodule LiveroomWeb.Layouts do
               src={@current_user.picture_url}
               width="25px"
               class="rounded-sm group-hover:opacity-95 transition-opacity"
+              referrer-policy="no-referrer"
             />
             <div
               :if={!@current_user.picture_url && @current_user.email}
