@@ -54,5 +54,11 @@ services:
       HASH_SALT: gsXU6goHkGClTgDdrot7p+gpV687P6U1/H6MLbewfNDY2n+PeUpqQvDExyFbu7lU
       CLIENT_IP_HEADER: "umami-client-ip"
 
+  examples-mysaas:
+    build:
+      context: examples/mysaas
+    ports:
+      - "3001:8043"
+
 volumes:
   postgres-data:

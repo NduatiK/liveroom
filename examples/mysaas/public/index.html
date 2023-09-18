@@ -1,143 +1,61 @@
 <!--
-  This is an example of a simple HTML document using Liveroom HTML Custom Element.
+This is an example of a React app using the Liveroom HTML Custom Element.
 
-  The Liveroom HTML Custom Element is loaded from the JSDeliver CDN,
-  and uses the Liveroom production environment (on https://liveroom.app).
--->
-
+The Liveroom HTML Custom Element is loaded from the JSDeliver CDN,
+and uses the Liveroom production environment (on https://liveroom.app).
+--->
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="This is a fake SaaS product" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
 
-    <title>MySaas</title>
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>MySaaS</title>
 
     <!-- Load Liveroom HTML Custom Element here: -->
     <script
       type="module"
       src="https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.25/dist/main.min.js"
     ></script>
+    <!-- <script
+      type="module"
+      src="http://localhost:5173/src/main.ts"
+      data-url="ws://localhost:4000/client_socket"
+    ></script> -->
   </head>
 
-  <body class="h-screen w-screen flex flex-col items-stretch">
-    <header class="bg-white shadow-sm">
-      <div
-        class="container mx-auto flex justify-between items-center py-4 px-6"
-      >
-        <h1 class="text-lg font-medium text-gray-900">MySaas</h1>
-        <nav class="hidden md:block">
-          <ul class="flex">
-            <li>
-              <a
-                href="#"
-                class="px-4 text-sm font-medium text-gray-500 hover:text-gray-900"
-                >Features</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="px-4 text-sm font-medium text-gray-500 hover:text-gray-900"
-                >Pricing</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="px-4 text-sm font-medium text-gray-500 hover:text-gray-900"
-                >Contact</a
-              >
-            </li>
-          </ul>
-        </nav>
-        <button class="md:hidden">
-          <svg class="w-6 h-6 fill-current text-gray-500" viewBox="0 0 24 24">
-            <path d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
-        </button>
-      </div>
-      <nav class="hidden md:hidden bg-gray-900">
-        <ul class="flex flex-col">
-          <li>
-            <a
-              href="#"
-              class="px-6 py-4 text-sm font-medium text-white hover:text-blue-500"
-              >Features</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="px-6 py-4 text-sm font-medium text-white hover:text-blue-500"
-              >Pricing</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="px-6 py-4 text-sm font-medium text-white hover:text-blue-500"
-              >Contact</a
-            >
-          </li>
-        </ul>
-      </nav>
-    </header>
+  <body class="font-inter antialiased bg-gray-100 text-gray-600">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script>
+      if (localStorage.getItem("sidebar-expanded") == "true") {
+        document.querySelector("body").classList.add("sidebar-expanded");
+      } else {
+        document.querySelector("body").classList.remove("sidebar-expanded");
+      }
+    </script>
 
-    <main class="flex-1 bg-gray-100 py-12">
-      <div class="container mx-auto px-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div>
-            <h2 class="text-4xl font-medium text-gray-900 mb-4">
-              Welcome to MySaas
-            </h2>
-            <p class="text-lg text-gray-500 mb-8">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              euismod, velit a euismod posuere, tellus metus tristique velit,
-              non tincidunt quam lacus vel nisi.
-            </p>
-            <a
-              href="#"
-              class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg shadow-md"
-              >Get Started</a
-            >
-          </div>
-          <img
-            src="./600x400.png"
-            alt="Product Image"
-            class="rounded-lg shadow-lg"
-          />
-          <img
-            src="./200x300.png"
-            alt="Product Image"
-            class="rounded-lg shadow-lg"
-          />
-          <img
-            src="./400x500.png"
-            alt="Product Image"
-            class="rounded-lg shadow-lg"
-          />
-          <img
-            src="./600x400.png"
-            alt="Product Image"
-            class="rounded-lg shadow-lg"
-          />
-          <img
-            src="./300x200.png"
-            alt="Product Image"
-            class="rounded-lg shadow-lg"
-          />
-        </div>
-      </div>
-    </main>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
 
-    <footer class="bg-gray-900 text-gray-500 py-8">
-      <div class="container mx-auto px-6">
-        <p class="text-sm">&copy; 2023 MySaas. All rights reserved.</p>
-      </div>
-    </footer>
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
   </body>
 </html>
