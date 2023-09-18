@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 function AnalyticsCard06() {
   return (
@@ -19,7 +19,11 @@ function AnalyticsCard06() {
             <ul className="space-y-1 text-sm text-gray-800 mt-3 mb-4">
               {/* Item */}
               <li className="relative px-2 py-1">
-                <div className="absolute inset-0 bg-green-100" aria-hidden="true" style={{width: '82%'}}></div>
+                <div
+                  className="absolute inset-0 bg-green-100"
+                  aria-hidden="true"
+                  style={{ width: "82%" }}
+                ></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>cruip.com/</div>
                   <div className="font-medium">28K</div>
@@ -27,7 +31,11 @@ function AnalyticsCard06() {
               </li>
               {/* Item */}
               <li className="relative px-2 py-1">
-                <div className="absolute inset-0 bg-green-100" aria-hidden="true" style={{width: '70%'}}></div>
+                <div
+                  className="absolute inset-0 bg-green-100"
+                  aria-hidden="true"
+                  style={{ width: "70%" }}
+                ></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>preview.cruip.com/open-pro/</div>
                   <div className="font-medium">12K</div>
@@ -35,7 +43,11 @@ function AnalyticsCard06() {
               </li>
               {/* Item */}
               <li className="relative px-2 py-1">
-                <div className="absolute inset-0 bg-green-100" aria-hidden="true" style={{width: '60%'}}></div>
+                <div
+                  className="absolute inset-0 bg-green-100"
+                  aria-hidden="true"
+                  style={{ width: "60%" }}
+                ></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>preview.cruip.com/appy/</div>
                   <div className="font-medium">9.7K</div>
@@ -43,7 +55,11 @@ function AnalyticsCard06() {
               </li>
               {/* Item */}
               <li className="relative px-2 py-1">
-                <div className="absolute inset-0 bg-green-100" aria-hidden="true" style={{width: '44%'}}></div>
+                <div
+                  className="absolute inset-0 bg-green-100"
+                  aria-hidden="true"
+                  style={{ width: "44%" }}
+                ></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>cruip.com/unlimited/</div>
                   <div className="font-medium">9.2K</div>
@@ -51,7 +67,11 @@ function AnalyticsCard06() {
               </li>
               {/* Item */}
               <li className="relative px-2 py-1">
-                <div className="absolute inset-0 bg-green-100" aria-hidden="true" style={{width: '40%'}}></div>
+                <div
+                  className="absolute inset-0 bg-green-100"
+                  aria-hidden="true"
+                  style={{ width: "40%" }}
+                ></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>preview.cruip.com/simple/</div>
                   <div className="font-medium">7K</div>
@@ -59,7 +79,11 @@ function AnalyticsCard06() {
               </li>
               {/* Item */}
               <li className="relative px-2 py-1">
-                <div className="absolute inset-0 bg-green-100" aria-hidden="true" style={{width: '30%'}}></div>
+                <div
+                  className="absolute inset-0 bg-green-100"
+                  aria-hidden="true"
+                  style={{ width: "30%" }}
+                ></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>cruip.com/about-us/</div>
                   <div className="font-medium">6.4K</div>
@@ -67,7 +91,11 @@ function AnalyticsCard06() {
               </li>
               {/* Item */}
               <li className="relative px-2 py-1">
-                <div className="absolute inset-0 bg-green-100" aria-hidden="true" style={{width: '22%'}}></div>
+                <div
+                  className="absolute inset-0 bg-green-100"
+                  aria-hidden="true"
+                  style={{ width: "22%" }}
+                ></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>docs.cruip.com/</div>
                   <div className="font-medium">5.4K</div>
@@ -75,7 +103,11 @@ function AnalyticsCard06() {
               </li>
               {/* Item */}
               <li className="relative px-2 py-1">
-                <div className="absolute inset-0 bg-green-100" aria-hidden="true" style={{width: '12%'}}></div>
+                <div
+                  className="absolute inset-0 bg-green-100"
+                  aria-hidden="true"
+                  style={{ width: "12%" }}
+                ></div>
                 <div className="relative flex justify-between space-x-2">
                   <div>preview.cruip.com/twist/</div>
                   <div className="font-medium">2.2K</div>
@@ -85,7 +117,12 @@ function AnalyticsCard06() {
           </div>
           {/* Card footer */}
           <div className="text-center pt-4 pb-1 border-t border-gray-100">
-            <Link className="text-sm font-medium text-indigo-500 hover:text-indigo-600" to="#0">Page Report -&gt;</Link>
+            <Link
+              className="text-sm font-medium text-indigo-500 hover:text-indigo-600"
+              to="#0"
+            >
+              Page Report -&gt;
+            </Link>
           </div>
         </div>
       </div>

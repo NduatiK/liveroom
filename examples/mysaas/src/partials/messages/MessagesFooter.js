@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 function MessagesFooter() {
   return (
@@ -14,10 +14,22 @@ function MessagesFooter() {
         {/* Message input */}
         <form className="flex-grow flex">
           <div className="flex-grow mr-3">
-            <label htmlFor="message-input" className="sr-only">Type a message</label>
-            <input id="message-input" className="form-input w-full bg-gray-100 border-transparent focus:bg-white focus:border-gray-300" type="text" placeholder="Aa" />
+            <label htmlFor="message-input" className="sr-only">
+              Type a message
+            </label>
+            <input
+              id="message-input"
+              className="form-input w-full bg-gray-100 border-transparent focus:bg-white focus:border-gray-300"
+              type="text"
+              placeholder="Aa"
+            />
           </div>
-          <button type="submit" className="btn bg-indigo-500 hover:bg-indigo-600 text-white whitespace-nowrap">Send -&gt;</button>
+          <button
+            type="submit"
+            className="btn bg-indigo-500 hover:bg-indigo-600 text-white whitespace-nowrap"
+          >
+            Send -&gt;
+          </button>
         </form>
       </div>
     </div>

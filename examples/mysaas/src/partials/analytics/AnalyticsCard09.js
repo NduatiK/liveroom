@@ -1,28 +1,25 @@
-import React from 'react';
-import DoughnutChart from '../../charts/DoughnutChart';
+import React from "react";
+import DoughnutChart from "../../charts/DoughnutChart";
 
 // Import utilities
-import { tailwindConfig } from '../../utils/Utils';
+import { tailwindConfig } from "../../utils/Utils";
 
 function AnalyticsCard09() {
-
   const chartData = {
-    labels: ['<18', '18-24', '24-36', '>35'],
+    labels: ["<18", "18-24", "24-36", ">35"],
     datasets: [
       {
-        label: 'Visit By Age Category',
-        data: [
-          30, 50, 5, 15,
-        ],
+        label: "Visit By Age Category",
+        data: [30, 50, 5, 15],
         backgroundColor: [
           tailwindConfig().theme.colors.indigo[500],
-          tailwindConfig().theme.colors['light-blue'][400],
+          tailwindConfig().theme.colors["light-blue"][400],
           tailwindConfig().theme.colors.red[500],
           tailwindConfig().theme.colors.green[500],
         ],
         hoverBackgroundColor: [
           tailwindConfig().theme.colors.indigo[600],
-          tailwindConfig().theme.colors['light-blue'][500],
+          tailwindConfig().theme.colors["light-blue"][500],
           tailwindConfig().theme.colors.red[600],
           tailwindConfig().theme.colors.green[600],
         ],

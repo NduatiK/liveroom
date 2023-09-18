@@ -1,12 +1,7 @@
-import React, { useState } from 'react';
-import Transition from '../utils/Transition.js';
+import React, { useState } from "react";
+import Transition from "../utils/Transition.js";
 
-function Info({
-  children,
-  className,
-  containerClassName
-}) {
-
+function Info({ children, className, containerClassName }) {
   const [infoOpen, setInfoOpen] = useState(false);
 
   return (

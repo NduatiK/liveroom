@@ -1,27 +1,28 @@
-import React from 'react';
-import PolarChart from '../../charts/PolarChart';
+import React from "react";
+import PolarChart from "../../charts/PolarChart";
 
 // Import utilities
-import { tailwindConfig, hexToRGB } from '../../utils/Utils';
+import { tailwindConfig, hexToRGB } from "../../utils/Utils";
 
 function AnalyticsCard10() {
-
   const chartData = {
-    labels: ['Males', 'Females', 'Unknown'],
+    labels: ["Males", "Females", "Unknown"],
     datasets: [
       {
-        label: 'Sessions By Gender',
-        data: [
-          500, 326, 242,
-        ],
+        label: "Sessions By Gender",
+        data: [500, 326, 242],
         backgroundColor: [
           `rgba(${hexToRGB(tailwindConfig().theme.colors.indigo[500])}, 0.8)`,
-          `rgba(${hexToRGB(tailwindConfig().theme.colors['light-blue'][400])}, 0.8)`,
+          `rgba(${hexToRGB(
+            tailwindConfig().theme.colors["light-blue"][400],
+          )}, 0.8)`,
           `rgba(${hexToRGB(tailwindConfig().theme.colors.green[500])}, 0.8)`,
         ],
         hoverBackgroundColor: [
           `rgba(${hexToRGB(tailwindConfig().theme.colors.indigo[600])}, 0.8)`,
-          `rgba(${hexToRGB(tailwindConfig().theme.colors['light-blue'][500])}, 0.8)`,
+          `rgba(${hexToRGB(
+            tailwindConfig().theme.colors["light-blue"][500],
+          )}, 0.8)`,
           `rgba(${hexToRGB(tailwindConfig().theme.colors.green[600])}, 0.8)`,
         ],
         hoverBorderColor: tailwindConfig().theme.colors.white,

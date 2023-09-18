@@ -1,13 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Transition from '../../utils/Transition';
+import React, { useState, useRef, useEffect } from "react";
+import Transition from "../../utils/Transition";
 
-import ChannelImage from '../../images/user-avatar-32.png';
-import ChannelImage01 from '../../images/channel-01.png';
-import ChannelImage02 from '../../images/channel-02.png';
-import ChannelImage03 from '../../images/channel-03.png';
+import ChannelImage from "../../images/user-avatar-32.png";
+import ChannelImage01 from "../../images/channel-01.png";
+import ChannelImage02 from "../../images/channel-02.png";
+import ChannelImage03 from "../../images/channel-03.png";
 
 function ChannelMenu() {
-
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef(null);
@@ -17,11 +16,16 @@ function ChannelMenu() {
   useEffect(() => {
     const clickHandler = ({ target }) => {
       if (!dropdown.current) return;
-      if (!dropdownOpen || dropdown.current.contains(target) || trigger.current.contains(target)) return;
+      if (
+        !dropdownOpen ||
+        dropdown.current.contains(target) ||
+        trigger.current.contains(target)
+      )
+        return;
       setDropdownOpen(false);
     };
-    document.addEventListener('click', clickHandler);
-    return () => document.removeEventListener('click', clickHandler);
+    document.addEventListener("click", clickHandler);
+    return () => document.removeEventListener("click", clickHandler);
   });
 
   // close if the esc key is pressed
@@ -30,8 +34,8 @@ function ChannelMenu() {
       if (!dropdownOpen || keyCode !== 27) return;
       setDropdownOpen(false);
     };
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
   });
 
   return (
@@ -43,11 +47,20 @@ function ChannelMenu() {
         onClick={() => setDropdownOpen(!dropdownOpen)}
         aria-expanded={dropdownOpen}
       >
-        <img className="w-8 h-8 rounded-full mr-2" src={ChannelImage} width="32" height="32" alt="Group 01" />
+        <img
+          className="w-8 h-8 rounded-full mr-2"
+          src={ChannelImage}
+          width="32"
+          height="32"
+          alt="Group 01"
+        />
         <div className="truncate">
           <span className="font-semibold text-gray-800">#Marketing</span>
         </div>
-        <svg className="w-3 h-3 flex-shrink-0 ml-1 fill-current text-gray-400" viewBox="0 0 12 12">
+        <svg
+          className="w-3 h-3 flex-shrink-0 ml-1 fill-current text-gray-400"
+          viewBox="0 0 12 12"
+        >
           <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
         </svg>
       </button>
@@ -67,33 +80,66 @@ function ChannelMenu() {
           onBlur={() => setDropdownOpen(false)}
         >
           <li>
-            <a className="font-medium text-sm text-gray-600 hover:text-gray-800 block py-1.5 px-3" href="#0" onClick={() => setDropdownOpen(false)}>
+            <a
+              className="font-medium text-sm text-gray-600 hover:text-gray-800 block py-1.5 px-3"
+              href="#0"
+              onClick={() => setDropdownOpen(false)}
+            >
               <div className="flex items-center justify-between">
                 <div className="flex-grow flex items-center truncate">
-                  <img className="w-7 h-7 rounded-full mr-2" src={ChannelImage01} width="28" height="28" alt="Channel 01" />
+                  <img
+                    className="w-7 h-7 rounded-full mr-2"
+                    src={ChannelImage01}
+                    width="28"
+                    height="28"
+                    alt="Channel 01"
+                  />
                   <div className="truncate">#Marketing</div>
                 </div>
-                <svg className="w-3 h-3 flex-shrink-0 fill-current text-indigo-500 ml-1" viewBox="0 0 12 12">
+                <svg
+                  className="w-3 h-3 flex-shrink-0 fill-current text-indigo-500 ml-1"
+                  viewBox="0 0 12 12"
+                >
                   <path d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z" />
                 </svg>
               </div>
             </a>
           </li>
           <li>
-            <a className="font-medium text-sm text-gray-600 hover:text-gray-800 block py-1.5 px-3" href="#0" onClick={() => setDropdownOpen(false)}>
+            <a
+              className="font-medium text-sm text-gray-600 hover:text-gray-800 block py-1.5 px-3"
+              href="#0"
+              onClick={() => setDropdownOpen(false)}
+            >
               <div className="flex items-center justify-between">
                 <div className="flex-grow flex items-center truncate">
-                  <img className="w-7 h-7 rounded-full mr-2" src={ChannelImage02} width="28" height="28" alt="Channel 02" />
+                  <img
+                    className="w-7 h-7 rounded-full mr-2"
+                    src={ChannelImage02}
+                    width="28"
+                    height="28"
+                    alt="Channel 02"
+                  />
                   <div className="truncate">#Developing</div>
                 </div>
               </div>
             </a>
           </li>
           <li>
-            <a className="font-medium text-sm text-gray-600 hover:text-gray-800 block py-1.5 px-3" href="#0" onClick={() => setDropdownOpen(false)}>
+            <a
+              className="font-medium text-sm text-gray-600 hover:text-gray-800 block py-1.5 px-3"
+              href="#0"
+              onClick={() => setDropdownOpen(false)}
+            >
               <div className="flex items-center justify-between">
                 <div className="flex-grow flex items-center truncate">
-                  <img className="w-7 h-7 rounded-full mr-2" src={ChannelImage03} width="28" height="28" alt="Channel 03" />
+                  <img
+                    className="w-7 h-7 rounded-full mr-2"
+                    src={ChannelImage03}
+                    width="28"
+                    height="28"
+                    alt="Channel 03"
+                  />
                   <div className="truncate">#ProductSupport</div>
                 </div>
               </div>
@@ -102,7 +148,7 @@ function ChannelMenu() {
         </ul>
       </Transition>
     </div>
-  )
+  );
 }
 
 export default ChannelMenu;

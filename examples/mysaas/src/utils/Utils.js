@@ -1,10 +1,10 @@
-import resolveConfig from 'tailwindcss/resolveConfig';
-import tailwindConfigFile from '../css/tailwind.config.js';
+import resolveConfig from "tailwindcss/resolveConfig";
+import tailwindConfigFile from "../css/tailwind.config.js";
 
 export const tailwindConfig = () => {
   // Tailwind config
   return resolveConfig(tailwindConfigFile);
-}
+};
 
 export const hexToRGB = (h) => {
   let r = 0;
@@ -22,14 +22,16 @@ export const hexToRGB = (h) => {
   return `${+r},${+g},${+b}`;
 };
 
-export const formatValue = (value) => Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-  maximumSignificantDigits: 3,
-  notation: 'compact',
-}).format(value);
+export const formatValue = (value) =>
+  Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumSignificantDigits: 3,
+    notation: "compact",
+  }).format(value);
 
-export const formatThousands = (value) => Intl.NumberFormat('en-US', {
-  maximumSignificantDigits: 3,
-  notation: 'compact',
-}).format(value);
+export const formatThousands = (value) =>
+  Intl.NumberFormat("en-US", {
+    maximumSignificantDigits: 3,
+    notation: "compact",
+  }).format(value);
