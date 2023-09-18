@@ -20,9 +20,8 @@ defmodule LiveroomWeb.Layouts do
 
       <header class="w-full flex justify-between items-center gap-4 py-4 px-4 md:px-8 mb-4 md:mb-8">
         <%!-- liveroom logo --%>
-        <a
-          href="https://liveroom.app"
-          target="_blank"
+        <.link
+          navigate={~p"/"}
           class="flex items-center pr-2 font-semibold rounded-md hover:bg-slate-200/60 transition-colors"
         >
           <img
@@ -30,12 +29,13 @@ defmodule LiveroomWeb.Layouts do
             class="w-10 h-10 pt-1"
           />
           <span class="text-xl font-bold text-accent">Liveroom</span>
-        </a>
+        </.link>
 
         <div
           :if={@current_user}
           class="flex flex-wrap justify-between items-center gap-y-4 gap-x-2 md:gap-x-8"
         >
+          <%!-- log out --%>
           <.link
             href={~p"/accounts/users/log_out"}
             method="delete"
@@ -48,10 +48,12 @@ defmodule LiveroomWeb.Layouts do
             navigate={~p"/connected"}
             class="flex items-center gap-2 hover:bg-slate-200/60 py-1 pl-2 pr-1 rounded transition-colors group"
           >
+            <%!-- user email --%>
             <p :if={@current_user.email} class="hidden md:block font-medium select-none">
               <%= @current_user.email %>
             </p>
 
+            <%!-- user picture --%>
             <img
               :if={@current_user.picture_url}
               src={@current_user.picture_url}
