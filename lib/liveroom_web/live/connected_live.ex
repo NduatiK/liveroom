@@ -40,16 +40,16 @@ defmodule LiveroomWeb.ConnectedLive do
           id="website_form"
           phx-submit="save"
           phx-change="validate"
-          class="w-[min(100%,320px)] flex [&>*]:w-full items-center gap-4"
+          class="w-[min(100%,320px)] flex [&>*]:w-full items-start gap-4"
         >
           <.input
             field={@form[:website_url]}
             type="text"
             placeholder="https://mysaas.com"
             required
-            input_class="!mt-0 placeholder:text-zinc-400/50"
+            input_class="!mt-[-1px] placeholder:text-zinc-400/50"
           />
-          <.button class="!w-fit ml-auto flex justify-center items-center px-4">Save</.button>
+          <.button class="!w-fit flex justify-center items-center px-4">Save</.button>
         </.form>
       </div>
 
