@@ -4,7 +4,7 @@ export const PutAuthUserTokenHook = {
 
     chrome?.runtime?.sendMessage(
       this.el.dataset.extensionid,
-      { type: "setAuthUserToken", userToken }
+      { type: "setAuthUserToken", userToken },
       // function (response) {
       //   if (chrome.runtime.lastError) {
       //     // handle error - the extension is probably not installed/found

@@ -28,7 +28,7 @@ inputs:
   build-flags:
     required: false
     type: string
-    default: '--all-warnings'
+    default: "--all-warnings"
     description: Flags to pass to mix compile
 
   install-rebar:
@@ -46,7 +46,7 @@ inputs:
   cache-key:
     required: false
     type: string
-    default: 'v1'
+    default: "v1"
     description: If you need to reset the cache for some reason, you can change this key.
 
 runs:
@@ -82,7 +82,7 @@ runs:
     # I force a full recompile only on builds that we retry.
     - name: Clean to rule out incremental build as a source of flakiness
       if: github.run_attempt != '1'
-      run: | 
+      run: |
         mix deps.clean --all
         mix clean
       shell: sh
