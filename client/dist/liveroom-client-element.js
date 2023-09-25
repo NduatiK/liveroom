@@ -202,7 +202,7 @@ function qe(s, n) {
 function Ye(s, n) {
   s.$$.dirty[0] === -1 && (ot.push(s), Ve(), s.$$.dirty.fill(0)), s.$$.dirty[n / 31 | 0] |= 1 << n % 31;
 }
-function Ze(s, n, t, e, r, i, o, h = [-1]) {
+function Ze(s, n, t, e, r, i, o = null, h = [-1]) {
   const p = gt;
   lt(s);
   const f = s.$$ = {
@@ -329,7 +329,7 @@ typeof HTMLElement == "function" && (pe = class extends HTMLElement {
               this.$$p_d,
               "toAttribute"
             );
-            o == null ? this.removeAttribute(i) : this.setAttribute(this.$$p_d[i].attribute || i, o);
+            o == null ? this.removeAttribute(this.$$p_d[i].attribute || i) : this.setAttribute(this.$$p_d[i].attribute || i, o);
           }
         this.$$r = !1;
       };
@@ -503,7 +503,7 @@ function hs(s) {
 function cs(s) {
   return s ? s.slice(1).split("/").map(as) : [];
 }
-function $(s) {
+function C(s) {
   return ls(s) ? "" : "/" + s.map((n) => hs(String(n))).join("/");
 }
 const E = (s) => typeof s == "string" ? cs(s) : s, ls = (s) => !s.length, us = Object.prototype.hasOwnProperty;
@@ -567,7 +567,7 @@ class Dt extends J {
   toJson(t) {
     return {
       op: "add",
-      path: $(this.path),
+      path: C(this.path),
       value: this.value
     };
   }
@@ -599,7 +599,7 @@ class de extends J {
   toJson(t) {
     const e = {
       op: "remove",
-      path: $(this.path)
+      path: C(this.path)
     };
     return this.oldValue !== void 0 && (e.oldValue = this.oldValue), e;
   }
@@ -634,7 +634,7 @@ class fs extends J {
   toJson(t) {
     const e = {
       op: "replace",
-      path: $(this.path),
+      path: C(this.path),
       value: this.value
     };
     return this.oldValue !== void 0 && (e.oldValue = this.oldValue), e;
@@ -667,8 +667,8 @@ class ds extends J {
   toJson(t) {
     return {
       op: "move",
-      path: $(this.path),
-      from: $(this.from)
+      path: C(this.path),
+      from: C(this.from)
     };
   }
   toCompact(t, e) {
@@ -699,8 +699,8 @@ class gs extends J {
   toJson(t) {
     return {
       op: "copy",
-      path: $(this.path),
-      from: $(this.from)
+      path: C(this.path),
+      from: C(this.from)
     };
   }
   toCompact(t, e) {
@@ -717,7 +717,7 @@ class D extends J {
     return { doc: n };
   }
 }
-const Ct = (s, n) => {
+const $t = (s, n) => {
   if (s === n)
     return !0;
   if (s && n && typeof s == "object" && typeof n == "object") {
@@ -728,7 +728,7 @@ const Ct = (s, n) => {
       if (t = s.length, t !== n.length)
         return !1;
       for (e = t; e-- !== 0; )
-        if (!Ct(s[e], n[e]))
+        if (!$t(s[e], n[e]))
           return !1;
       return !0;
     }
@@ -736,7 +736,7 @@ const Ct = (s, n) => {
       return !1;
     for (e = t; e-- !== 0; ) {
       const i = r[e];
-      if (!Ct(s[i], n[i]))
+      if (!$t(s[i], n[i]))
         return !1;
     }
     return !0;
@@ -760,13 +760,13 @@ class vs extends D {
     const { val: e } = j(t, this.path);
     if (e === void 0)
       return !!this.not;
-    const r = Ct(e, this.value);
+    const r = $t(e, this.value);
     return this.not ? !r : r;
   }
   toJson(t) {
     const e = {
       op: "test",
-      path: $(t ? this.path.slice(t.path.length) : this.path),
+      path: C(t ? this.path.slice(t.path.length) : this.path),
       value: this.value
     };
     return this.not && (e.not = this.not), e;
@@ -796,7 +796,7 @@ class ys extends J {
   toJson(n) {
     return {
       op: "flip",
-      path: $(this.path)
+      path: C(this.path)
     };
   }
   toCompact(n, t) {
@@ -825,7 +825,7 @@ class ms extends J {
   toJson(t) {
     return {
       op: "inc",
-      path: $(this.path),
+      path: C(this.path),
       inc: this.inc
     };
   }
@@ -863,7 +863,7 @@ class ws extends J {
   toJson(t) {
     return {
       op: "str_ins",
-      path: $(this.path),
+      path: C(this.path),
       pos: this.pos,
       str: this.str
     };
@@ -902,12 +902,12 @@ class _s extends J {
   toJson(t) {
     return typeof this.str == "string" ? {
       op: "str_del",
-      path: $(this.path),
+      path: C(this.path),
       pos: this.pos,
       str: this.str
     } : {
       op: "str_del",
-      path: $(this.path),
+      path: C(this.path),
       pos: this.pos,
       len: this.len
     };
@@ -995,7 +995,7 @@ class ks extends J {
   toJson(t) {
     const e = {
       op: "split",
-      path: $(this.path),
+      path: C(this.path),
       pos: this.pos
     };
     return this.props && (e.props = this.props), e;
@@ -1008,7 +1008,7 @@ class ks extends J {
     t.encodeArrayHeader(this.props ? 4 : 3), t.writer.u8(10), t.encodeArray(this.path), t.encodeNumber(this.pos), this.props && t.encodeObject(this.props);
   }
 }
-class Cs extends J {
+class $s extends J {
   constructor(t, e, r) {
     super(t);
     g(this, "pos");
@@ -1036,7 +1036,7 @@ class Cs extends J {
   toJson(t) {
     const e = {
       op: "merge",
-      path: $(this.path),
+      path: C(this.path),
       pos: this.pos
     };
     return this.props && (e.props = this.props), e;
@@ -1049,7 +1049,7 @@ class Cs extends J {
     t.encodeArrayHeader(this.props ? 4 : 3), t.writer.u8(11), t.encodeArray(this.path), t.encodeNumber(this.pos), this.props && t.encodeAny(this.props);
   }
 }
-const { isArray: $s } = Array;
+const { isArray: Cs } = Array;
 class As extends J {
   constructor(t, e, r) {
     super(t);
@@ -1068,7 +1068,7 @@ class As extends J {
     return wt(e) ? e.val !== void 0 && (e.obj[e.key] = this.extend(e.val)) : jt(e) ? e.obj[e.key] = this.extend(e.val) : t = this.extend(t), { doc: t };
   }
   extend(t) {
-    if ($s(t) || typeof t != "object" || !t)
+    if (Cs(t) || typeof t != "object" || !t)
       return t;
     for (const [e, r] of Object.entries(this.props)) {
       if (e === "__proto__")
@@ -1084,7 +1084,7 @@ class As extends J {
   toJson(t) {
     const e = {
       op: "extend",
-      path: $(this.path),
+      path: C(this.path),
       props: this.props
     };
     return this.deleteNull && (e.deleteNull = this.deleteNull), e;
@@ -1115,7 +1115,7 @@ class js extends D {
   toJson(n) {
     return {
       op: "defined",
-      path: $(n ? this.path.slice(n.path.length) : this.path)
+      path: C(n ? this.path.slice(n.path.length) : this.path)
     };
   }
   toCompact(n, t) {
@@ -1148,7 +1148,7 @@ class Ts extends D {
   toJson(n) {
     return {
       op: "undefined",
-      path: $(n ? this.path.slice(n.path.length) : this.path)
+      path: C(n ? this.path.slice(n.path.length) : this.path)
     };
   }
   toCompact(n, t) {
@@ -1178,7 +1178,7 @@ class Ss extends D {
   toJson(t) {
     return {
       op: "test_type",
-      path: $(t ? this.path.slice(t.path.length) : this.path),
+      path: C(t ? this.path.slice(t.path.length) : this.path),
       type: this.type
     };
   }
@@ -1213,7 +1213,7 @@ class xs extends D {
   toJson(t) {
     const e = {
       op: "test_string",
-      path: $(t ? this.path.slice(t.path.length) : this.path),
+      path: C(t ? this.path.slice(t.path.length) : this.path),
       pos: this.pos,
       str: this.str
     };
@@ -1250,7 +1250,7 @@ class Ms extends D {
   toJson(t) {
     const e = {
       op: "test_string_len",
-      path: $(t ? this.path.slice(t.path.length) : this.path),
+      path: C(t ? this.path.slice(t.path.length) : this.path),
       len: this.len
     };
     return this.not && (e.not = this.not), e;
@@ -1286,7 +1286,7 @@ class Ls extends D {
   toJson(t) {
     const e = {
       op: "contains",
-      path: $(t ? this.path.slice(t.path.length) : this.path),
+      path: C(t ? this.path.slice(t.path.length) : this.path),
       value: this.value
     };
     return this.ignore_case && (e.ignore_case = this.ignore_case), e;
@@ -1323,7 +1323,7 @@ class Ns extends D {
   toJson(t) {
     const e = {
       op: "ends",
-      path: $(t ? this.path.slice(t.path.length) : this.path),
+      path: C(t ? this.path.slice(t.path.length) : this.path),
       value: this.value
     };
     return this.ignore_case && (e.ignore_case = this.ignore_case), e;
@@ -1360,7 +1360,7 @@ class Rs extends D {
   toJson(t) {
     const e = {
       op: "starts",
-      path: $(t ? this.path.slice(t.path.length) : this.path),
+      path: C(t ? this.path.slice(t.path.length) : this.path),
       value: this.value
     };
     return this.ignore_case && (e.ignore_case = this.ignore_case), e;
@@ -1389,14 +1389,14 @@ class Ps extends D {
   test(t) {
     const { val: e } = j(t, this.path);
     for (const r of this.value)
-      if (Ct(e, r))
+      if ($t(e, r))
         return !0;
     return !1;
   }
   toJson(t) {
     return {
       op: "in",
-      path: $(t ? this.path.slice(t.path.length) : this.path),
+      path: C(t ? this.path.slice(t.path.length) : this.path),
       value: this.value
     };
   }
@@ -1426,7 +1426,7 @@ class Hs extends D {
   toJson(t) {
     return {
       op: "less",
-      path: $(t ? this.path.slice(t.path.length) : this.path),
+      path: C(t ? this.path.slice(t.path.length) : this.path),
       value: this.value
     };
   }
@@ -1456,7 +1456,7 @@ class Is extends D {
   toJson(t) {
     return {
       op: "more",
-      path: $(t ? this.path.slice(t.path.length) : this.path),
+      path: C(t ? this.path.slice(t.path.length) : this.path),
       value: this.value
     };
   }
@@ -1495,7 +1495,7 @@ class Ds extends Ut {
   toJson(t) {
     return {
       op: "and",
-      path: $(t ? this.path.slice(t.path.length) : this.path),
+      path: C(t ? this.path.slice(t.path.length) : this.path),
       apply: this.ops.map((r) => r.toJson(this))
     };
   }
@@ -1536,7 +1536,7 @@ class Us extends Ut {
   toJson(t) {
     return {
       op: "or",
-      path: $(t ? this.path.slice(t.path.length) : this.path),
+      path: C(t ? this.path.slice(t.path.length) : this.path),
       apply: this.ops.map((r) => r.toJson(this))
     };
   }
@@ -1576,7 +1576,7 @@ class Js extends Ut {
   toJson(t) {
     return {
       op: "not",
-      path: $(t ? this.path.slice(t.path.length) : this.path),
+      path: C(t ? this.path.slice(t.path.length) : this.path),
       apply: this.ops.map((r) => r.toJson(this))
     };
   }
@@ -1616,7 +1616,7 @@ class Vs extends D {
   toJson(t) {
     const e = {
       op: "matches",
-      path: $(t ? this.path.slice(t.path.length) : this.path),
+      path: C(t ? this.path.slice(t.path.length) : this.path),
       value: this.value
     };
     return this.ignore_case && (e.ignore_case = this.ignore_case), e;
@@ -1650,7 +1650,7 @@ class Fs extends D {
   toJson(t) {
     return {
       op: "type",
-      path: $(t ? this.path.slice(t.path.length) : this.path),
+      path: C(t ? this.path.slice(t.path.length) : this.path),
       value: this.value
     };
   }
@@ -1684,7 +1684,7 @@ const zs = (s, n) => {
     case "split":
       return new ks(E(s.path), s.pos, s.props || null);
     case "merge":
-      return new Cs(E(s.path), s.pos, s.props || null);
+      return new $s(E(s.path), s.pos, s.props || null);
     case "extend":
       return new As(E(s.path), s.props, !!s.deleteNull);
     default:
@@ -1916,7 +1916,7 @@ var pt = (s) => typeof s == "function" ? s : function() {
   isLeaving() {
     return this.state === U.leaving;
   }
-}, $t = class {
+}, Ct = class {
   static request(s, n, t, e, r, i, o) {
     if (ft.XDomainRequest) {
       let h = new ft.XDomainRequest();
@@ -1978,7 +1978,7 @@ var pt = (s) => typeof s == "function" ? s : function() {
     return s.replace("ws://", "http://").replace("wss://", "https://").replace(new RegExp("(.*)/" + It.websocket), "$1/" + It.longpoll);
   }
   endpointURL() {
-    return $t.appendParams(this.pollEndpoint, { token: this.token });
+    return Ct.appendParams(this.pollEndpoint, { token: this.token });
   }
   closeAndRetry(s, n, t) {
     this.close(s, n, t), this.readyState = B.connecting;
@@ -2036,7 +2036,7 @@ var pt = (s) => typeof s == "function" ? s : function() {
     let r, i = () => {
       this.reqs.delete(r), t();
     };
-    r = $t.request(s, this.endpointURL(), "application/json", n, this.timeout, i, (o) => {
+    r = Ct.request(s, this.endpointURL(), "application/json", n, this.timeout, i, (o) => {
       this.reqs.delete(r), this.isActive() && e(o);
     }), this.reqs.add(r);
   }
@@ -2129,7 +2129,7 @@ var pt = (s) => typeof s == "function" ? s : function() {
     return location.protocol.match(/^https/) ? "wss" : "ws";
   }
   endPointURL() {
-    let s = $t.appendParams($t.appendParams(this.endPoint, this.params()), { vsn: this.vsn });
+    let s = Ct.appendParams(Ct.appendParams(this.endPoint, this.params()), { vsn: this.vsn });
     return s.charAt(0) !== "/" ? s : s.charAt(1) === "/" ? `${this.protocol()}:${s}` : `${this.protocol()}://${location.host}${s}`;
   }
   disconnect(s, n, t) {
@@ -2294,13 +2294,13 @@ var pt = (s) => typeof s == "function" ? s : function() {
 class tn {
   constructor(n) {
     this.connected = !1, this.config = n, this.socket = new Ks(this.config.url, this.config.socketOptions || { logger: (t, e, r) => {
-      console.log(`${t}: ${e}`, r);
+      console.debug(`${t}: ${e}`, r);
     } }), this.channel = this.socket.channel(this.config.topic, this.config.params), this.eventTarget = new EventTarget();
   }
   /** connect to socket and join channel. will do nothing if already connected */
   connect() {
-    this.connected || (this.socket.onError((n) => this.emitError("socket error", n)), this.socket.connect(), this.channel.onError((n) => console.log("channel error", n)), this.channel.join().receive("ok", () => {
-      console.log("joined");
+    this.connected || (this.socket.onError((n) => this.emitError("socket error", n)), this.socket.connect(), this.channel.onError((n) => this.emitError("channel error", n)), this.channel.join().receive("ok", (n) => {
+      console.debug("channel joined", n);
     }).receive("error", (n) => {
       this.emitError("channel join error", n);
     }), this.channel.on("state:change", (n) => this.handleChange(n)), this.channel.on("state:patch", (n) => this.handlePatch(n)), this.connected = !0);
@@ -2602,12 +2602,12 @@ var ne;
       if (l.length <= 0)
         return v;
       for (var I = new T(), w = [], b = 0, y = l; b < y.length; b++) {
-        var k = y[b], C = I.has(k);
-        C || (I.add(k), w.push(k));
+        var k = y[b], $ = I.has(k);
+        $ || (I.add(k), w.push(k));
       }
       for (var q = 0, Yt = v; q < Yt.length; q++) {
-        var k = Yt[q], C = I.has(k);
-        C || (I.add(k), w.push(k));
+        var k = Yt[q], $ = I.has(k);
+        $ || (I.add(k), w.push(k));
       }
       return w;
     }
@@ -2621,7 +2621,7 @@ var ne;
       if (N(u))
         return l;
       for (var v = u.keys(), I = Ee(v), w = 0; ; ) {
-        var b = Ce(I);
+        var b = $e(I);
         if (!b)
           return l.length = w, l;
         var y = ke(b);
@@ -2629,7 +2629,7 @@ var ne;
           l[w] = y;
         } catch (k) {
           try {
-            $e(I);
+            Ce(I);
           } finally {
             throw k;
           }
@@ -2776,11 +2776,11 @@ var ne;
     function ke(a) {
       return a.value;
     }
-    function Ce(a) {
+    function $e(a) {
       var c = a.next();
       return c.done ? !1 : c;
     }
-    function $e(a) {
+    function Ce(a) {
       var c = a.return;
       c && c.call(a);
     }
@@ -2858,8 +2858,8 @@ var ne;
               !1
             );
             if (y >= 0) {
-              for (var k = this._keys.length, C = y + 1; C < k; C++)
-                this._keys[C - 1] = this._keys[C], this._values[C - 1] = this._values[C];
+              for (var k = this._keys.length, $ = y + 1; $ < k; $++)
+                this._keys[$ - 1] = this._keys[$], this._values[$ - 1] = this._values[$];
               return this._keys.length--, this._values.length--, b === this._cacheKey && (this._cacheKey = a, this._cacheIndex = -2), !0;
             }
             return !1;
@@ -2934,33 +2934,33 @@ var ne;
             this._key = u();
           }
           return y.prototype.has = function(k) {
-            var C = v(
+            var $ = v(
               k,
               /*create*/
               !1
             );
-            return C !== void 0 ? f.has(C, this._key) : !1;
+            return $ !== void 0 ? f.has($, this._key) : !1;
           }, y.prototype.get = function(k) {
-            var C = v(
+            var $ = v(
               k,
               /*create*/
               !1
             );
-            return C !== void 0 ? f.get(C, this._key) : void 0;
-          }, y.prototype.set = function(k, C) {
+            return $ !== void 0 ? f.get($, this._key) : void 0;
+          }, y.prototype.set = function(k, $) {
             var q = v(
               k,
               /*create*/
               !0
             );
-            return q[this._key] = C, this;
+            return q[this._key] = $, this;
           }, y.prototype.delete = function(k) {
-            var C = v(
+            var $ = v(
               k,
               /*create*/
               !1
             );
-            return C !== void 0 ? delete C[this._key] : !1;
+            return $ !== void 0 ? delete $[this._key] : !1;
           }, y.prototype.clear = function() {
             this._key = u();
           }, y;
@@ -2982,8 +2982,8 @@ var ne;
         return y[l];
       }
       function I(y, k) {
-        for (var C = 0; C < k; ++C)
-          y[C] = Math.random() * 255 | 0;
+        for (var $ = 0; $ < k; ++$)
+          y[$] = Math.random() * 255 | 0;
         return y;
       }
       function w(y) {
@@ -2992,9 +2992,9 @@ var ne;
       function b() {
         var y = w(a);
         y[6] = y[6] & 79 | 64, y[8] = y[8] & 191 | 128;
-        for (var k = "", C = 0; C < a; ++C) {
-          var q = y[C];
-          (C === 4 || C === 6 || C === 8) && (k += "-"), q < 16 && (k += "0"), k += q.toString(16).toLowerCase();
+        for (var k = "", $ = 0; $ < a; ++$) {
+          var q = y[$];
+          ($ === 4 || $ === 6 || $ === 8) && (k += "-"), q < 16 && (k += "0"), k += q.toString(16).toLowerCase();
         }
         return k;
       }

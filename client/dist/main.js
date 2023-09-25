@@ -19,13 +19,13 @@ const a = "liveroom-client-element", d = "0.0.25", v = "module", u = "./dist/mai
   check: "svelte-check --tsconfig ./tsconfig.json",
   lint: "npm run check-format && npm run check"
 }, y = {
-  "phx-live-state": "0.10.1"
+  "phx-live-state": "0.10.2"
 }, g = {
-  "@sveltejs/vite-plugin-svelte": "2.4.5",
+  "@sveltejs/vite-plugin-svelte": "2.4.6",
   "@tsconfig/svelte": "5.0.2",
   prettier: "3.0.3",
-  svelte: "4.2.0",
-  "svelte-check": "3.5.1",
+  svelte: "4.2.1",
+  "svelte-check": "3.5.2",
   tslib: "2.6.2",
   typescript: "5.2.2",
   vite: "4.4.9"
