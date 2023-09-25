@@ -101,6 +101,39 @@
               >Get Started</a
             >
           </div>
+
+          <!-- NOTE: Simple counter to test clicks -->
+          <div
+            class="justify-self-center flex items-center gap-4 p-4 font-semibold"
+          >
+            <button
+              id="minus"
+              class="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded"
+            >
+              -
+            </button>
+            <p id="counter" class="w-[4ch] text-center tabular-nums">0</p>
+            <button
+              id="plus"
+              class="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded"
+            >
+              +
+            </button>
+          </div>
+          <script>
+            let counter = 0;
+            function updateCounter(delta) {
+              counter = counter + delta;
+              document.getElementById("counter").textContent = counter;
+            }
+            document.getElementById("minus").addEventListener("click", () => {
+              updateCounter(-1);
+            });
+            document.getElementById("plus").addEventListener("click", () => {
+              updateCounter(1);
+            });
+          </script>
+
           <img
             src="https://via.placeholder.com/600x400"
             alt="Product Image"
