@@ -3017,6 +3017,7 @@ function sn() {
   return s.textContent = `
     * {
       pointer-events: none !important;
+      user-select: none !important;
     }
   `, s;
 }

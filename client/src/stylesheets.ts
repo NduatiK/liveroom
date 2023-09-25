@@ -19,6 +19,7 @@ export function createBlockClickPointerEventsStyle() {
   blockClickPointerEventsStyle.textContent = `
     * {
       pointer-events: none !important;
+      user-select: none !important;
     }
   `;
 
