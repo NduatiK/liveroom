@@ -1,5 +1,7 @@
 import Config
 
+config :phoenix_live_view, debug_heex_annotations: true
+
 config :liveroom, chrome_extension_id: "cjaebgpalgiknhanmkoplhhnekdcbnne"
 
 config :mix_test_watch, clear: true
