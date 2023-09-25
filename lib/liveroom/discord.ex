@@ -42,6 +42,7 @@ defmodule Liveroom.Discord do
     #   ]
     # }
     """
+
     #{case level do
       :warn -> "⚠️"
       :error -> "🚨"
@@ -50,6 +51,7 @@ defmodule Liveroom.Discord do
     #{module && "**Module**     #{module}"}
     #{function && "**Function**   #{function}"}
     #{file && line && "**File:line**     #{file}:#{line}"}
+
     """
     |> send_message(webhook_url_app_logs())
   end
