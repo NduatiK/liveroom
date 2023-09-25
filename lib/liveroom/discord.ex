@@ -45,7 +45,7 @@ defmodule Liveroom.Discord do
     #{case level do
       :warn -> "⚠️"
       :error -> "🚨"
-    end}   #{msg}
+    end}   #{msg |> String.replace("*", "\*")}
 
     #{module && "**Module**     #{module}"}
     #{function && "**Function**   #{function}"}
