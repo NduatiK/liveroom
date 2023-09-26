@@ -9,9 +9,10 @@
   } from "./stylesheets";
   import type { User } from "./types/User";
 
+  export let version: string | undefined;
   export let url: string;
   export let room_id: string;
-  export let user_name: string;
+  export let user_name: string | undefined = undefined;
 
   let liveState: LiveState;
   let isClickBlocked: boolean = false;
@@ -45,6 +46,8 @@
   }
 
   onMount(async () => {
+    console.log(`[Liveroom] Starting... (v${version})`);
+
     // NOTE: room_id is read from url query param '_liveroom' if present,
     //       else from html custom element attribute 'room_id'
     const params = new URLSearchParams(window.location.search);
