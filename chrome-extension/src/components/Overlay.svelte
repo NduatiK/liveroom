@@ -333,7 +333,7 @@
     // User has to maintain the alt key while clicking (or enabled the "Allow my clicks" toggle)
     if (!(e.altKey || me?.is_alt_key_down)) return;
 
-    if (liveState && me?.id) {
+    if (liveState && me) {
       const to_user_id = findScreensharingUser()?.id;
 
       if (to_user_id) {
@@ -428,24 +428,25 @@
   }
 
   function findScreensharingUser(): User | undefined {
-    if (
-      users &&
-      me &&
-      screensharingVideoElWidth &&
-      screensharingVideoElHeight
-    ) {
-      const videoRatio = screensharingVideoElWidth / screensharingVideoElHeight;
+    if (me && users) {
       const meId = me.id;
+      // NOTE: Don't want to select the current user
+      const otherUsers = Object.values(users).filter((u) => u.id != meId);
 
-      return Object.values(users).find((u) => {
-        // NOTE: Don't want to select the current user
-        if (u.id == meId) return false;
+      // NOTE: Shortcut to make it work even if whole window (or screen) is shared instead of tab (it breaks the aspect ratio hack).
+      if (otherUsers.length === 1) return otherUsers[0];
 
-        const ratio = parseFloat(u.inner_width) / parseFloat(u.inner_height);
+      if (screensharingVideoElWidth && screensharingVideoElHeight) {
+        const videoRatio =
+          screensharingVideoElWidth / screensharingVideoElHeight;
 
-        // NOTE: Small variations are possible, so we dont check for equality
-        return Math.abs(ratio - videoRatio) < 0.008;
-      });
+        return otherUsers.find((u) => {
+          const ratio = parseFloat(u.inner_width) / parseFloat(u.inner_height);
+
+          // NOTE: Small variations are possible, so we dont check for equality
+          return Math.abs(ratio - videoRatio) < 0.008;
+        });
+      }
     }
   }
 
