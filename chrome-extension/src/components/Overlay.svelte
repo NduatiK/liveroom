@@ -129,6 +129,7 @@
 
     screensharingVideoEl.addEventListener("mousemove", handleMouseMove);
     screensharingVideoEl.addEventListener("click", handleMouseClick);
+    screensharingVideoEl.addEventListener("dblclick", handleMouseDblClick);
     screensharingVideoEl.addEventListener("mousedown", handleMouseDown);
     screensharingVideoEl.addEventListener("mouseup", handleMouseUp);
     window.addEventListener("keydown", handleKeyDown);
@@ -285,6 +286,7 @@
     }
     screensharingVideoEl?.removeEventListener("mousemove", handleMouseMove);
     screensharingVideoEl?.removeEventListener("click", handleMouseClick);
+    screensharingVideoEl?.removeEventListener("dblclick", handleMouseDblClick);
     screensharingVideoEl?.removeEventListener("mousedown", handleMouseDown);
     screensharingVideoEl?.removeEventListener("mouseup", handleMouseUp);
     window.removeEventListener("keydown", handleKeyDown);
@@ -327,9 +329,6 @@
   }
 
   function handleMouseClick(e: MouseEvent) {
-    // NOTE: To avoid triggering the full screen mode when double clicking.
-    e.stopPropagation();
-
     // User has to maintain the alt key while clicking (or enabled the "Allow my clicks" toggle)
     if (!(e.altKey || me?.is_alt_key_down)) return;
 
@@ -349,10 +348,11 @@
       }
     }
   }
-  function handleMouseDown(e: MouseEvent) {
+  function handleMouseDblClick(e: MouseEvent) {
     // NOTE: To avoid triggering the full screen mode when double clicking.
-    e.stopPropagation();
-
+    e.stopImmediatePropagation();
+  }
+  function handleMouseDown(e: MouseEvent) {
     if (liveState && me?.id) {
       liveState.dispatchEvent(
         new CustomEvent("mouse_down", { detail: { user_id: me.id } })
