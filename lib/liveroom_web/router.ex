@@ -49,6 +49,8 @@ defmodule LiveroomWeb.Router do
   scope "/", LiveroomWeb do
     pipe_through :browser
 
+    live "/_meet", MeetSimulatorLive
+
     live_session :default, on_mount: [Hooks.Analytics] do
       live "/privacy", PrivacyPolicyLive, :index
     end
