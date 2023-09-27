@@ -77,7 +77,7 @@ defmodule Liveroom.Discord do
     #   ]
     # }
     """
-    🆕   get started cliked     |     location: **#{opts[:location]}**
+    🆕   get started cliked    |     location: **#{opts[:location]}**
     """
     |> send_message(webhook_url_app_notifications())
   end
