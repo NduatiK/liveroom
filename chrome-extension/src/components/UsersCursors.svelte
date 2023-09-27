@@ -2,7 +2,7 @@
   import UserName from "./UserName.svelte";
   import type { User } from "../types/User";
 
-  export let me_id: string;
+  export let me: User<"admin">;
   export let users: { [key: User["id"]]: User };
   export let screensharingVideoEl: HTMLVideoElement | undefined;
   export let screensharingVideoElWidth: number | undefined;
@@ -34,8 +34,8 @@
     <div
       id="user-{user.id}"
       class="user"
-      data-isself={user.id == me_id}
-      data-isclickblocked={users[me_id].is_space_key_down}
+      data-isself={user.id == me.id}
+      data-isclickblocked={users[me.id].is_space_key_down}
       style="
           --color: {user.color};
           --x: {(screensharingVideoElWidth &&
@@ -61,13 +61,13 @@
 
       <UserName
         user_name={user.name}
-        hide={user.id == me_id}
+        hide={user.id == me.id}
         style="position: absolute; top: 18px; left: 15px"
       />
 
       <div
         class="halo-small"
-        data-show={user.id != me_id && user.is_mouse_down}
+        data-show={user.id != me.id && user.is_mouse_down}
       />
     </div>
   {/each}

@@ -9,6 +9,7 @@
   let open = false;
   let started = false;
   let isSessionActive = false;
+  let isAltKeyPressed = false;
 
   onMount(() => {
     // periodically check if the toolbar is ready for injection
@@ -91,6 +92,7 @@
   <Overlay
     bind:open
     bind:started
+    bind:isAltKeyPressed
     on:session_started={() => {
       isSessionActive = true;
       // NOTE: Keep the overlay open to copy the installation code easily.
@@ -99,6 +101,7 @@
     }}
     on:session_ended={() => {
       isSessionActive = false;
+      isAltKeyPressed = false;
       open = false;
     }}
   />
@@ -107,6 +110,7 @@
     class="toggle-btn"
     data-open={open}
     data-issessionactive={isSessionActive}
+    data-isaltkeypressed={isAltKeyPressed}
     on:click={() => (open = !open)}
   >
     {#if open}
@@ -154,6 +158,13 @@
   }
   .toggle-btn[data-issessionactive="true"]:hover {
     border-color: rgb(79, 70, 229, 0.8); /* Tailwind indigo-600 */
+  }
+  .toggle-btn[data-isaltkeypressed="true"] {
+    color: rgb(250, 204, 21); /* Tailwind yellow-400 */
+    border-color: rgb(250, 204, 21, 0.2); /* Tailwind yellow-400 */
+  }
+  .toggle-btn[data-isaltkeypressed="true"]:hover {
+    border-color: rgb(250, 204, 21, 0.8); /* Tailwind yellow-400 */
   }
 
   .toggle-btn .svg-close {

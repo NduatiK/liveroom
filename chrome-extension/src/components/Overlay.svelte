@@ -18,6 +18,11 @@
   export let open = true;
   export let started = false;
 
+  // NOTE: To access this data in the Main component for updating button style
+  export let isAltKeyPressed = false;
+  $: if (me) isAltKeyPressed = me.is_alt_key_down;
+  else isAltKeyPressed = false;
+
   const dispatch = createEventDispatcher();
 
   let selectVideoElStyle = createSelectVideoElStyle();
@@ -629,7 +634,7 @@
 
 {#if screensharingVideoEl && me && users}
   <UsersCursors
-    me_id={me.id}
+    {me}
     {users}
     {screensharingVideoEl}
     {screensharingVideoElWidth}
