@@ -97,6 +97,71 @@
     });
 
     liveState.addEventListener(
+      "wheel-from-another-user",
+      ({
+        detail: { delta_x, delta_y, x, y },
+      }: {
+        detail: {
+          from_user_id: string;
+          from_user_color: string;
+          delta_x: string;
+          delta_y: string;
+          x: string;
+          y: string;
+        };
+      }) => {
+        const delta_x_int = parseInt(delta_x);
+        const delta_y_int = parseInt(delta_y);
+
+        const ev = new WheelEvent("wheel", {
+          view: window,
+          bubbles: true,
+          cancelable: true,
+          clientX: (window.innerWidth * parseFloat(x)) / 100,
+          clientY: (window.innerHeight * parseFloat(y)) / 100,
+          deltaX: delta_x_int,
+          deltaY: delta_y_int,
+          deltaMode: 0,
+        });
+
+        // NOTE: elementFromPoint() is not working correctly if pointer-events is set to none.
+        //       So we remove it temporarly if set, and set it back after the function call.
+
+        const pointerEventsNoneIsSet = document.head.contains(
+          blockClickPointerEventsStyle
+        );
+
+        if (pointerEventsNoneIsSet) {
+          document.head.removeChild(blockClickPointerEventsStyle);
+        }
+
+        const wheeledEl = document.elementFromPoint(ev.clientX, ev.clientY);
+
+        if (pointerEventsNoneIsSet) {
+          document.head.appendChild(blockClickPointerEventsStyle);
+        }
+
+        // NOTE: Not sure it is needed, but keeping it for now.
+        if (
+          wheeledEl instanceof HTMLElement ||
+          wheeledEl instanceof SVGElement
+        ) {
+          // wheeledEl.dispatchEvent(ev);
+
+          // NOTE: We have to prioritize scrolling over 1 single direction
+          //       else with the trackpad it gets glitchy when scrolling horizontally a container
+          //       it also scrolls vertically the window, which is weird.
+          if (Math.abs(delta_y_int) >= Math.abs(delta_x_int)) {
+            const verticalTarget = findScrollTarget(wheeledEl, "vertical");
+            verticalTarget.scrollBy(0, delta_y_int);
+          } else {
+            const horizontalTarget = findScrollTarget(wheeledEl, "horizontal");
+            horizontalTarget.scrollBy(delta_x_int, 0);
+          }
+        }
+      }
+    );
+    liveState.addEventListener(
       "click-from-another-user",
       ({
         detail: { x, y },
@@ -289,6 +354,23 @@
     document.head.removeChild(blockClickMouseStyle);
     document.head.removeChild(blockClickPointerEventsStyle);
     isClickBlocked = false;
+  }
+
+  function findScrollTarget(
+    el: HTMLElement | SVGElement,
+    direction: "vertical" | "horizontal"
+  ): Window | HTMLElement | SVGElement {
+    if (el.tagName === "BODY") return window;
+    if (
+      (direction === "vertical" && el.scrollHeight > el.clientHeight) ||
+      (direction === "horizontal" && el.scrollWidth > el.clientWidth)
+    ) {
+      return el;
+    }
+    if (el.parentElement) {
+      return findScrollTarget(el.parentElement, direction);
+    }
+    return window;
   }
 
   // Types

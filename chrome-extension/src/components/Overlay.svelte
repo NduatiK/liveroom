@@ -128,6 +128,7 @@
     document.head.appendChild(pointerEventsOnVideoElStyle);
 
     screensharingVideoEl.addEventListener("mousemove", handleMouseMove);
+    screensharingVideoEl.addEventListener("wheel", handleMouseWheel);
     screensharingVideoEl.addEventListener("click", handleMouseClick);
     screensharingVideoEl.addEventListener("dblclick", handleMouseDblClick);
     screensharingVideoEl.addEventListener("mousedown", handleMouseDown);
@@ -285,6 +286,7 @@
       resizeObserver = undefined;
     }
     screensharingVideoEl?.removeEventListener("mousemove", handleMouseMove);
+    screensharingVideoEl?.removeEventListener("wheel", handleMouseWheel);
     screensharingVideoEl?.removeEventListener("click", handleMouseClick);
     screensharingVideoEl?.removeEventListener("dblclick", handleMouseDblClick);
     screensharingVideoEl?.removeEventListener("mousedown", handleMouseDown);
@@ -327,7 +329,28 @@
       }
     }
   }
+  function handleMouseWheel(e: WheelEvent) {
+    // User has to maintain the alt key while clicking (or enabled the "Allow my clicks" toggle)
+    if (!(e.altKey || me?.is_alt_key_down)) return;
 
+    if (liveState && me) {
+      const to_user_id = findScreensharingUser()?.id;
+
+      if (to_user_id) {
+        liveState.dispatchEvent(
+          new CustomEvent("mouse_wheel", {
+            detail: {
+              from_user_id: me.id,
+              from_user_color: me.color,
+              to_user_id,
+              delta_x: e.deltaX,
+              delta_y: e.deltaY,
+            },
+          })
+        );
+      }
+    }
+  }
   function handleMouseClick(e: MouseEvent) {
     // User has to maintain the alt key while clicking (or enabled the "Allow my clicks" toggle)
     if (!(e.altKey || me?.is_alt_key_down)) return;

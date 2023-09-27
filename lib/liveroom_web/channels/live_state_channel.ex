@@ -94,6 +94,30 @@ defmodule LiveroomWeb.LiveStateChannel do
   end
 
   def handle_event(
+        "mouse_wheel",
+        %{
+          "from_user_id" => from_user_id,
+          "from_user_color" => from_user_color,
+          "to_user_id" => to_user_id,
+          "delta_x" => delta_x,
+          "delta_y" => delta_y
+        } = _params,
+        state
+      ) do
+    LiveroomWeb.Presence.broadcast(state.room_id, "wheel", %{
+      from_user_id: from_user_id,
+      from_user_color: from_user_color,
+      to_user_id: to_user_id,
+      delta_x: delta_x,
+      delta_y: delta_y,
+      x: state.users[state.me.id].x,
+      y: state.users[state.me.id].y
+    })
+
+    {:noreply, state}
+  end
+
+  def handle_event(
         "mouse_click",
         %{
           "from_user_id" => from_user_id,
@@ -234,6 +258,50 @@ defmodule LiveroomWeb.LiveStateChannel do
         %Phoenix.Socket.Broadcast{
           topic: _topic,
           event: "update_user_name",
+          payload: _payload
+        },
+        state
+      ) do
+    {:noreply, state}
+  end
+
+  # NOTE: If current user is concerned, forward wheel.
+  def handle_message(
+        %Phoenix.Socket.Broadcast{
+          topic: _topic,
+          event: "wheel",
+          payload: %{
+            from_user_id: from_user_id,
+            from_user_color: from_user_color,
+            to_user_id: user_id,
+            delta_x: delta_x,
+            delta_y: delta_y,
+            x: x,
+            y: y
+          }
+        },
+        %{me: %{id: user_id}} = state
+      ) do
+    event = %LiveState.Event{
+      name: "wheel-from-another-user",
+      detail: %{
+        from_user_id: from_user_id,
+        from_user_color: from_user_color,
+        delta_x: delta_x,
+        delta_y: delta_y,
+        x: x,
+        y: y
+      }
+    }
+
+    {:reply, event, state}
+  end
+
+  # NOTE: If current user is not concerned, it is a no-op.
+  def handle_message(
+        %Phoenix.Socket.Broadcast{
+          topic: _topic,
+          event: "wheel",
           payload: _payload
         },
         state
