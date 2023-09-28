@@ -71,7 +71,7 @@ defmodule LiveroomWeb.Components.CheckClientInstallation do
           """
           <script
             type="module"
-            src="https://cdn.jsdelivr.net/npm/liveroom-client-element@0.0.27/dist/main.min.js"
+            src="https://cdn.jsdelivr.net/npm/liveroom-client-element@latest/dist/main.min.js"
           ></script>
           """
           |> String.trim_leading()
