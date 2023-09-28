@@ -44,7 +44,6 @@ defmodule LiveroomWeb.Components.CheckExtensionInstallation do
   def update(assigns, socket) do
     socket =
       assign(socket,
-        # version: "0.0.18"
         version: assigns.version,
         # NOTE: Needed to send analytic events
         analytics_data: assigns.analytics_data,
