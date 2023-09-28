@@ -1,7 +1,7 @@
 {
   "name": "liveroom-client-element",
   "private": false,
-  "version": "0.0.27",
+  "version": "0.0.28",
   "type": "module",
   "module": "./dist/main.js",
   "main": "./dist/main.cjs",
