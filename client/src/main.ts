@@ -6,11 +6,6 @@ let room_id: string | undefined;
 let element: HTMLElement | undefined;
 let script: HTMLScriptElement | null = null;
 
-// MAIN
-
-maybeInjectElement();
-listenForQueryParam();
-
 // CONSTANTS
 
 const ELEMENT_TAG = "liveroom-client-element";
@@ -18,6 +13,11 @@ const ELEMENT_TAG = "liveroom-client-element";
 const VERSION = import.meta.env.PROD
   ? packageJson["version"]
   : `${packageJson["version"]}.dev`;
+
+// MAIN
+
+maybeInjectElement();
+listenForQueryParam();
 
 // HELPERS
 
@@ -31,6 +31,9 @@ async function maybeInjectElement() {
     : // local dev
       document.querySelector("script[src*='/client/dist/main.js']") ||
       document.querySelector("script[src*='/src/main.ts']");
+
+  // Make sure version attribute is set on the script, so easily parsable
+  script?.setAttribute("version", VERSION);
 
   const url_from_attr =
     script?.getAttribute("data-url") || "wss://liveroom.app/client_socket";
